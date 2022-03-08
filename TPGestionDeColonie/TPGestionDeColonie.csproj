@@ -48,16 +48,28 @@
     <Compile Include="Colons\Chasseur.cs" />
     <Compile Include="Colon.cs" />
     <Compile Include="Colons\Mineur.cs" />
+    <Compile Include="Colons\Tavernier.cs" />
+    <Compile Include="Mob.cs" />
+    <Compile Include="Mobs\Loup.cs" />
+    <Compile Include="Mobs\Vache.cs" />
     <Compile Include="Monde.cs" />
     <Compile Include="Colons\Paysan.cs" />
     <Compile Include="ObjetFixe.cs" />
     <Compile Include="ObjetsFixes\Arbre.cs" />
+    <Compile Include="ObjetsFixes\Batiment.cs" />
+    <Compile Include="ObjetsFixes\Batiments\Auberge.cs" />
+    <Compile Include="ObjetsFixes\Batiments\Entrepot.cs" />
+    <Compile Include="ObjetsFixes\Batiments\Ferme.cs" />
+    <Compile Include="ObjetsFixes\Batiments\Maison.cs" />
     <Compile Include="ObjetsFixes\Eau.cs" />
+    <Compile Include="ObjetsFixes\Rocher.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

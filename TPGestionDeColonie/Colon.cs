@@ -16,7 +16,7 @@ namespace TPGestionDeColonie
         protected int sante;
         protected int faim;
         protected int soif;
-        protected List<string> capacites;
+        // protected List<string> capacites;
 
         public Colon (int id, int positionX, int positionY, int fatigue, int sante, int faim, int soif) //, List<string> capacites
         {

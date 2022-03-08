@@ -12,6 +12,8 @@ namespace TPGestionDeColonie.ObjetsFixes.Batiments
 
 
 
+
+
         //Auberge fait perdre de la fatigue
     }
 }
