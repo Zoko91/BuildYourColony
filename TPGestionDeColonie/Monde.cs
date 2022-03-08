@@ -22,7 +22,7 @@ namespace TPGestionDeColonie
             {
                 for (int j = 0; j < grille.GetLength(1); j++)
                 {
-                    grille[i, j] = " 💛 ";
+                    grille[i, j] = " x ";
                 }
                 
             }

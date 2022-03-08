@@ -8,7 +8,7 @@ namespace TPGestionDeColonie
 {
     abstract class ObjetFixe
     {
-        protected List<int[]> positions;  //positions des obstacles naturels 
+        protected List<int[]> positions;  //positions des obstacles, taille implicite 
         
 
         public ObjetFixe (List<int[]> positions)
