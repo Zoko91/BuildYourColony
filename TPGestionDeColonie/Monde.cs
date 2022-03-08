@@ -41,10 +41,13 @@ namespace TPGestionDeColonie
             }
         }
 
-       /* public List<ObjetFixe> GenererListe()
-        {
+        /* public List<ObjetFixe> GenererListe()
+         {
 
-        }*/
-    
+         }*/
+
+
+
+        
     }
 }
