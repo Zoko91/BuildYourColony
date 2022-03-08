@@ -14,9 +14,10 @@ namespace TPGestionDeColonie
 
             Monde planete = new Monde();
             planete.GenererMonde();
-            //planete.AfficherMonde();
-            
+        //planete.AfficherMonde();
+        https://github.com/Zoko91/Gestion-De-colonie/invitations
 
+        https://github.com/ensc-progav/projet-2022-beasse_goncalves
 
             Console.ReadLine();
         }
