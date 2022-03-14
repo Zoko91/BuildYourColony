@@ -61,6 +61,7 @@
     <Compile Include="ObjetsFixes\Batiments\Entrepot.cs" />
     <Compile Include="ObjetsFixes\Batiments\Ferme.cs" />
     <Compile Include="ObjetsFixes\Batiments\Maison.cs" />
+    <Compile Include="ObjetsFixes\Batiments\Puits.cs" />
     <Compile Include="ObjetsFixes\Eau.cs" />
     <Compile Include="ObjetsFixes\Rocher.cs" />
     <Compile Include="Program.cs" />
@@ -68,8 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

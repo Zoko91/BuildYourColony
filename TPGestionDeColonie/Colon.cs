@@ -12,26 +12,75 @@ namespace TPGestionDeColonie
         protected int id;
         protected int positionX;
         protected int positionY;
-        protected int fatigue;
-        protected int sante;
-        protected int faim;
-        protected int soif;
+        protected int Fatigue
+        {
+            get;
+            set;
+        }
+        protected int Sante
+        {
+            get;
+            set;
+        }
+        protected int Faim
+        {
+            get;
+            set;
+        }
+        protected int Soif
+        {
+            get;
+            set;
+        }
         // protected List<string> capacites;
+
 
         public Colon (int id, int positionX, int positionY, int fatigue, int sante, int faim, int soif) //, List<string> capacites
         {
-            this.id = id;
+            this.id = id;               
             this.positionX = positionX;
             this.positionY= positionY;
-            this.fatigue = fatigue;
-            this.sante = sante;
-            this.faim = faim;
-            this.soif = soif;
+            Fatigue = fatigue;
+            Sante = sante;
+            Faim = faim;
+            Soif = soif;
+        }
+        
+        public void EtreFatigue()
+        {
+            if (Fatigue<20)
+            {
+                Console.WriteLine("Tristan est raplapla");
+            }
+        }
+       
+        public void AvoirSoif()
+        {
+            if (Soif < 20)
+            {
+                Console.WriteLine("Glouglou");
+            }
+        }
+        
+        public void SanteFaible()
+        {
+            if (Sante < 20)
+            {
+                Console.WriteLine("Aïe aïe aïe, je ne suis pas en bon état.");
+            }
+            
         }
 
-        // public int santeRestante() { }
-        // public int donnerPosition() { }
-        // public int afficherFaim() { }
+        public int[] getPosition()
+        {
+            int[] position = {  positionX,  positionY  };
+            return position;
+        }
+
+
+
+
+
 
     }
 }

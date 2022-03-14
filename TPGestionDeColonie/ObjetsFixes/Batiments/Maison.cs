@@ -8,9 +8,12 @@ namespace TPGestionDeColonie.ObjetsFixes.Batiments
 {
     class Maison:Batiment
     {
-        public Maison(List<int[]> positions) : base(positions) { }
 
+        int capacite;
 
+        public Maison(List<int[]> positions, int coutBois, int coutPierre,int capacite) : base(positions, coutBois, coutPierre) { this.capacite = capacite; }
+
+        
 
         //Maison
 

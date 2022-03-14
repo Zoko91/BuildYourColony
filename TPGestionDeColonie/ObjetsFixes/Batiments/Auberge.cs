@@ -8,7 +8,13 @@ namespace TPGestionDeColonie.ObjetsFixes.Batiments
 {
     class Auberge:Batiment
     {
-        public Auberge(List<int[]> positions) : base(positions) { }
+        protected bool PresenceTavernier
+        {
+            get;
+            set;
+        }
+
+        public Auberge(List<int[]> positions, int coutBois, int coutPierre) : base(positions, coutBois, coutPierre) { }
 
 
 

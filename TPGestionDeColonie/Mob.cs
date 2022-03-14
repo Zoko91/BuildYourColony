@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace TPGestionDeColonie
 {
-    class Mob
+    class 
+        Mob
     {
         protected int id;
         protected int positionX;
@@ -20,6 +21,7 @@ namespace TPGestionDeColonie
             this.positionY = positionY;
             this.sante = sante;
         }
+
 
 
     }

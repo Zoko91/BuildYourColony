@@ -28,13 +28,6 @@
       <FileName>Colons\Mineur.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TPGestionDeColonie.Paysan" Collapsed="true">
-    <Position X="15" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Colons\Paysan.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="TPGestionDeColonie.Colons.Tavernier" Collapsed="true">
     <Position X="20.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
@@ -45,7 +38,7 @@
   <Class Name="TPGestionDeColonie.ObjetsFixes.Batiments.Auberge" Collapsed="true">
     <Position X="0.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>ObjetsFixes\Batiments\Auberge.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -59,21 +52,14 @@
   <Class Name="TPGestionDeColonie.ObjetsFixes.Batiments.Ferme" Collapsed="true">
     <Position X="5.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ObjetsFixes\Batiments\Ferme.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="TPGestionDeColonie.ObjetsFixes.Batiments.Maison" Collapsed="true">
-    <Position X="4" Y="5.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ObjetsFixes\Batiments\Maison.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TPGestionDeColonie.Colon" Collapsed="true">
     <Position X="13.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAAAAAAAAAAAAIAAAAAAEAABAAAAAAAAAAgA=</HashCode>
+      <HashCode>AAAAIAAAAAIAAAAAAAAAIAQAIAAAAAAAAAAAQAAEAwA=</HashCode>
       <FileName>Colon.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -87,12 +73,12 @@
   <Class Name="TPGestionDeColonie.Monde" Collapsed="true">
     <Position X="17.25" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAAAAAAAAABAAAAAAAAAAAAEAAAAAAAgAAAAAAA=</HashCode>
+      <HashCode>AAAEgAAAAAAAAABAAAAAAAAAAAAEAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Monde.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TPGestionDeColonie.ObjetFixe" Collapsed="true">
-    <Position X="4.75" Y="1" Width="1.5" />
+    <Position X="4.25" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ObjetFixe.cs</FileName>
@@ -101,14 +87,14 @@
   <Class Name="TPGestionDeColonie.ObjetsFixes.Rocher" Collapsed="true">
     <Position X="6.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ObjetsFixes\Rocher.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TPGestionDeColonie.ObjetsFixes.Arbre" Collapsed="true">
     <Position X="4.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ObjetsFixes\Arbre.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -116,21 +102,21 @@
     <Position X="3" Y="3.25" Width="1.5" />
     <InheritanceLine Type="TPGestionDeColonie.ObjetFixe" ManuallyRouted="true" FixedToPoint="true">
       <Path>
-        <Point X="5.5" Y="1.562" />
-        <Point X="5.5" Y="2.875" />
+        <Point X="5" Y="1.562" />
+        <Point X="5" Y="2.875" />
         <Point X="3.75" Y="2.875" />
         <Point X="3.75" Y="3.25" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>ObjetsFixes\Batiment.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TPGestionDeColonie.ObjetsFixes.Eau" Collapsed="true">
     <Position X="8.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ObjetsFixes\Eau.cs</FileName>
     </TypeIdentifier>
   </Class>
