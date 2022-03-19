@@ -75,7 +75,7 @@ namespace TPGestionDeColonie
 
 
 
-        // public void NouvelArrivant() { }
+        // public void NouvelArrivant() { } // quand nouveau colon arrive de façon random
 
         
     
