@@ -8,16 +8,22 @@ namespace TPGestionDeColonie
 {
     abstract class ObjetFixe
     {
-        protected List<int[]> positions;  //positions des obstacles, taille implicite 
+        /*Liste de coordonnées d'un objet
+         * Tuple Item1 = les x
+         * Tuple Item2 = les y
+         */
+        protected List<Tuple<int, int>> positionObjet;
         
-
-        public ObjetFixe (List<int[]> positions)
+        public ObjetFixe (List<Tuple<int, int>> position)
         {
-            this.positions = positions;
+            this.positionObjet = position;
         }
 
 
-
+        public List<Tuple<int, int>> GetPositionObjet()
+        {
+            return positionObjet;
+        }
 
     }
 }

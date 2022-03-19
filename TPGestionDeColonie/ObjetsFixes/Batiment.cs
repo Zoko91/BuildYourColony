@@ -13,7 +13,7 @@ namespace TPGestionDeColonie.ObjetsFixes
         protected int coutPierre;
 
 
-        public Batiment(List<int[]> positions, int coutBois, int coutPierre) : base(positions)
+        public Batiment(List<Tuple<int, int>> positionObjet, int coutBois, int coutPierre) : base(positionObjet)
         {
             this.coutBois = coutBois;
             this.coutPierre= coutPierre;

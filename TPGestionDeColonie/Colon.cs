@@ -44,6 +44,7 @@ namespace TPGestionDeColonie
         {
             return id;
         }
+        private Tuple<int, int> positionColon;
 
         public Colon (string nom, int positionX, int positionY, int endurance, int sante, int faim, int soif) //, List<string> capacites
         {
@@ -56,8 +57,13 @@ namespace TPGestionDeColonie
             Faim = faim;
             Soif = soif;
             Nom = nom;
+            positionColon = new Tuple<int, int>(positionX, positionY);
         }
-        
+        public Tuple<int, int> getPosition()
+        {
+            return positionColon;
+        }
+
         public void EtreFatigue()
         {
             if (Endurance<20)
@@ -83,11 +89,6 @@ namespace TPGestionDeColonie
             
         }
 
-        public int[] getPosition()
-        {
-            int[] position = {  positionX,  positionY  };
-            return position;
-        }
 
         public void VerififierEtat()
         //Vérifie l'état physique du Colon
@@ -109,10 +110,9 @@ namespace TPGestionDeColonie
 
         public override string ToString()
         {
-            return $"Colon n°{idColon} : {GetType()} {Nom}, santé = {Sante}/100 PV, endurance = {Endurance}/100, faim = {Faim}/100, soif = {Soif}/100";
+            return $"Colon n°{idColon} : {GetType().Name} {Nom}, santé = {Sante}/100 PV, endurance = {Endurance}/100, faim = {Faim}/100, soif = {Soif}/100";
         }
 
 
-
-    }
+    }    
 }

@@ -8,7 +8,7 @@ namespace TPGestionDeColonie.ObjetsFixes
 {
     class Arbre:ObjetFixe
     {
-        public Arbre(List<int[]> positions) : base(positions) { }
+        public Arbre(List<Tuple<int, int>> positionObjet) : base(positionObjet) { }
 
     }
 }

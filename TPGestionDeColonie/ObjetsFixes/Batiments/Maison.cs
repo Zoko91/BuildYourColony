@@ -11,7 +11,7 @@ namespace TPGestionDeColonie.ObjetsFixes.Batiments
 
         int capacite;
 
-        public Maison(List<int[]> positions, int coutBois, int coutPierre,int capacite) : base(positions, coutBois, coutPierre) { this.capacite = capacite; }
+        public Maison(List<Tuple<int, int>> positionObjet, int coutBois, int coutPierre,int capacite) : base(positionObjet, coutBois, coutPierre) { this.capacite = capacite; }
 
         
 

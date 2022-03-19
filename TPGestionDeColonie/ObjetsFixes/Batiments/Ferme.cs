@@ -17,7 +17,7 @@ namespace TPGestionDeColonie.ObjetsFixes.Batiments
         // Si paysan, pousse et production ++, sinon --
 
 
-        public Ferme(List<int[]> positions, int coutBois, int coutPierre) : base(positions,coutBois,coutPierre) { }
+        public Ferme(List<Tuple<int, int>> positionObjet, int coutBois, int coutPierre) : base(positionObjet, coutBois,coutPierre) { }
 
 
 

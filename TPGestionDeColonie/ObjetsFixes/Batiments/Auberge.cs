@@ -14,7 +14,7 @@ namespace TPGestionDeColonie.ObjetsFixes.Batiments
             set;
         }
 
-        public Auberge(List<int[]> positions, int coutBois, int coutPierre) : base(positions, coutBois, coutPierre) { }
+        public Auberge(List<Tuple<int, int>> positionObjet, int coutBois, int coutPierre) : base(positionObjet, coutBois, coutPierre) { }
 
 
 

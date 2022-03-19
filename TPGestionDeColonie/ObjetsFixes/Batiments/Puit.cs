@@ -8,7 +8,7 @@ namespace TPGestionDeColonie.ObjetsFixes.Batiments
 {
     class Puits : Batiment
     {
-        public Puits(List<int[]> positions) : base(positions) { }
+        public Puits(List<Tuple<int, int>> positionObjet) : base(positionObjet) { }
 
         //Puits
 

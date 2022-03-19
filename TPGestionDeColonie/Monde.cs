@@ -3,29 +3,118 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TPGestionDeColonie.ObjetsFixes;
 
 namespace TPGestionDeColonie
 {
     class Monde
     {
-        string[,] grille = new string[30, 30];
-               
+        Random rng = new Random();
+
+        private string[,] grille = new string[30, 30];
+
+        public int Hauteur { get; private set; }
+        public int Largeur { get; private set; }
+
         List<Colon> listePJ;
-        // List<ObjetsFixes> Blocs
+        List<ObjetFixe> listeBlocs;
         public Monde() {
-            listePJ = new List<Colon> {};
+            listePJ = new List<Colon>();
+            listeBlocs = new List<ObjetFixe>();
+            Hauteur = grille.GetLength(0);
+            Largeur = grille.GetLength(1);
+        }
+
+        public bool VerifCoordonnees(Tuple<int, int> coordonnees) // Check Si y'a déjà un block OU un co
+        {
+            List<Tuple<int, int>> listeCoordonneesColons = new List<Tuple<int, int>>();
+
+            foreach(Colon col in listePJ)
+            {
+                listeCoordonneesColons.Add(col.getPosition());
+=               if (listeCoordonneesColons.Contains(coordonnees))
+                {
+                    return false; //case non dispo, occupée par Colon
+                }
+            }
+            foreach (ObjetFixe obj in listeBlocs)
+            {
+                List<Tuple<int, int>> listeCoordonnees = obj.GetPositionObjet();
+                if (listeCoordonnees.Contains(coordonnees))
+                {
+                    return false; //case non disponible, occupée par objet fixe
+                }
+            }
+            return true; //case disponible
+        }
+
+
+
+        public Tuple<int, int> GenererCoupleCoordonnees()
+        {
+            Tuple<int,int> coupleXY = new Tuple<int, int>(rng.Next(grille.GetLength(0)),rng.Next(grille.GetLength(1)));
+            return coupleXY;
+        }
+
+        public void GenererBloc(){
+            //Génère un bloc arbre ou rocher
+            Tuple<int, int> coordonnees = GenererCoupleCoordonnees();
+
+            while (VerifCoordonnees(coordonnees)==false){
+                coordonnees=GenererCoupleCoordonnees();
+            }
+            int proba = rng.Next(1,3);
+            List<Tuple<int, int>> listeCoordonnees = new List<Tuple<int, int>>();
+            listeCoordonnees.Add(coordonnees);
+            if (proba==1)
+            {
+                Arbre arbre = new Arbre(listeCoordonnees) ;
+                listeBlocs.Add(arbre);
+            }
+            else {
+                Rocher rocher = new Rocher(listeCoordonnees);
+                listeBlocs.Add(rocher);
+            }
         }
 
         
         public void GenererMonde()
         {
+            for(int i = 0; i<20; i++){
+                GenererBloc(); //génère tous les blocs
+            }
             for (int i=0; i<grille.GetLength(0); i++)
             {
                 for (int j = 0; j < grille.GetLength(1); j++)
                 {
-                    grille[i, j] = " x ";
-                }
-                
+                    Tuple<int, int> coords = new Tuple<int, int>(i, j);
+                    if (VerifCoordonnees(coords)) // si la case est dispo
+                    {
+                        grille[i, j] = " x ";
+                    }
+                    else  //si la case n'est pas dispo
+                    {
+                        foreach (ObjetFixe obj in listeBlocs)
+                        {
+                           if(obj.GetPositionObjet().Contains(coords))
+                            {
+                                if (obj.GetType() == typeof(Arbre))
+                                {
+                                    grille[i, j] = " A ";
+                                    
+                                }
+                                else if(obj.GetType() == typeof(Rocher))
+                                {
+                                    grille[i, j] = " R ";
+                                }
+                                else
+                                {
+                                    grille[i, j] = " C ";
+                                }
+                            }
+                        }
+                    }
+                }   
             }
         }
 
@@ -36,7 +125,24 @@ namespace TPGestionDeColonie
             {
                 for (int j = 0; j < grille.GetLength(1); j++)
                 {
-                    Console.Write(grille[i, j]);
+                    if (grille[i, j] == " A ")
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write(grille[i, j]);
+                        Console.ResetColor();
+                    }
+                    else if (grille[i, j] == " R ")
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write(grille[i, j]);
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.Write(grille[i, j]);
+                    }
                 }
                 Console.WriteLine();
             }
@@ -142,6 +248,10 @@ namespace TPGestionDeColonie
                     listePJ.RemoveAt(i);
                 }
             }
+        }
+
+        public void PresenceItem(){
+            
         }
 
         

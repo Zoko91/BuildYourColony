@@ -8,7 +8,7 @@ namespace TPGestionDeColonie.ObjetsFixes
 {
     class Rocher:ObjetFixe
     {
-        public Rocher(List<int[]> positions) : base(positions) { }
+        public Rocher(List<Tuple<int, int>> positionObjet) : base(positionObjet) { }
 
 
 
