@@ -21,11 +21,11 @@ namespace TPGestionDeColonie
             //papi.SanteFaible();
             //papi.EtreFatigue();
             //papi.AvoirSoif();
-            Bucheron buche = new Bucheron("Bucheron1", 3,4,20,20,20,20);
-            
-            Console.WriteLine(papi.id);
-            Console.WriteLine(buche.id);
+            Bucheron buche = new Bucheron("Bucheron1", 3,4,20,0,20,20);
+            planete.AjouterColon(buche);
+            planete.SupprimerColon();
 
+            
             Console.WriteLine("Ceci est un test");
 
             Console.ReadLine();

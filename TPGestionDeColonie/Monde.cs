@@ -9,11 +9,12 @@ namespace TPGestionDeColonie
     class Monde
     {
         string[,] grille = new string[30, 30];
-        
-        
-        
+               
         List<Colon> listePJ;
         // List<ObjetsFixes> Blocs
+        public Monde() {
+            listePJ = new List<Colon> {};
+        }
 
         
         public void GenererMonde()
@@ -118,12 +119,28 @@ namespace TPGestionDeColonie
 
          }*/
 
-        
+        public void AjouterColon(Colon c)
+        {
+            listePJ.Add(c);
+        }
+
         public void GameOver(){
             /// Fonction Game Over
             if (listePJ.Count == 0){
                 Console.Clear();
                 Console.WriteLine("Game Over");
+            }
+        }
+
+        public void SupprimerColon(){
+            //supprime le colon de la liste
+            for (int i = 0; i < listePJ.Count; i++)
+            {
+                if (listePJ[i].Sante ==0)
+                {
+                    Console.WriteLine($"Le colon: {listePJ[i].Nom} est mort");
+                    listePJ.RemoveAt(i);
+                }
             }
         }
 
