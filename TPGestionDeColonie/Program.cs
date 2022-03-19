@@ -16,17 +16,27 @@ namespace TPGestionDeColonie
             Console.WriteLine();
             planete.AfficherFenetre(7,7);
 
-            Paysan papi = new Paysan(1, 7, 7,  15,  15,  15,  15);
-            papi.SanteFaible();
-            papi.EtreFatigue();
-            papi.AvoirSoif();
-
             
+            Paysan papi = new Paysan("Paysan1", 7, 7,  15,  15,  15,  15);
+            //papi.SanteFaible();
+            //papi.EtreFatigue();
+            //papi.AvoirSoif();
+            Bucheron buche = new Bucheron("Bucheron1", 3,4,20,20,20,20);
+            
+            Console.WriteLine(papi.id);
+            Console.WriteLine(buche.id);
+
             Console.WriteLine("Ceci est un test");
 
             Console.ReadLine();
         }
 
         // public void NouvelArrivant() { }
-    }
+
+        
+    
+
+
+        
+    } 
 }

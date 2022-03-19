@@ -12,7 +12,7 @@ namespace TPGestionDeColonie
         
         
         
-        List<Colon> listePNJ;
+        List<Colon> listePJ;
         // List<ObjetsFixes> Blocs
 
         
@@ -106,9 +106,7 @@ namespace TPGestionDeColonie
                             j = posydroit + 1;
                         }
                     }
-                    
                     Console.Write(grille[i, j]);
-
                 }
                 Console.WriteLine();
             }*/
@@ -120,7 +118,14 @@ namespace TPGestionDeColonie
 
          }*/
 
-
+        
+        public void GameOver(){
+            /// Fonction Game Over
+            if (listePJ.Count == 0){
+                Console.Clear();
+                Console.WriteLine("Game Over");
+            }
+        }
 
         
     }

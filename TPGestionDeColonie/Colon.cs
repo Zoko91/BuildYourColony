@@ -9,10 +9,14 @@ namespace TPGestionDeColonie
     abstract class Colon
     {
 
-        protected int id;
+        protected static int id=0;
+        protected string Nom{
+            get;
+            set;
+        }
         protected int positionX;
         protected int positionY;
-        protected int Fatigue
+        protected int Endurance
         {
             get;
             set;
@@ -35,20 +39,22 @@ namespace TPGestionDeColonie
         // protected List<string> capacites;
 
 
-        public Colon (int id, int positionX, int positionY, int fatigue, int sante, int faim, int soif) //, List<string> capacites
+
+        public Colon (string nom, int positionX, int positionY, int endurance, int sante, int faim, int soif) //, List<string> capacites
         {
-            this.id = id;               
+            this.id = id+1;               
             this.positionX = positionX;
             this.positionY= positionY;
-            Fatigue = fatigue;
+            Endurance = endurance;
             Sante = sante;
             Faim = faim;
             Soif = soif;
+            Nom = nom;
         }
         
         public void EtreFatigue()
         {
-            if (Fatigue<20)
+            if (Endurance<20)
             {
                 Console.WriteLine("Tristan est raplapla");
             }
@@ -77,7 +83,23 @@ namespace TPGestionDeColonie
             return position;
         }
 
+        public void VerififierEtat()
+        //Vérifie l'état physique du Colon
+        {
+            int pdvPerdus;
+            if (0<Endurance && Endurance<= 10){pdvPerdus += 1;}
+            else if(Endurance ==0){pdvPerdus +=2;}
+            
+            if (0<Soif && Soif<= 10){pdvPerdus += 1;}
+            else if(Soif ==0){pdvPerdus +=2;}
 
+            if (0<Faim && Faim<= 10){pdvPerdus += 1;}
+            else if(Faim ==0){pdvPerdus +=2;}       
+
+            Sante -= pdvPerdus;
+
+            Console.WriteLine($"{Nom} a perdu {pdvPerdus} points de vie. Santé restante : {Sante} / 100.");
+        }
 
 
 

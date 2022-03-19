@@ -8,9 +8,9 @@ namespace TPGestionDeColonie.Colons
 {
     class Tavernier:Colon
     {
-        public Tavernier(int id, int positionX, int positionY, int fatigue, int sante, int faim, int soif) : base(id, positionX, positionY, fatigue, sante, faim, soif)
+        public Tavernier(string nom, int positionX, int positionY, int endurance, int sante, int faim, int soif) : base(nom, positionX, positionY, endurance, sante, faim, soif)
         {
-
+                
         }
     }
 }
