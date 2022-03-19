@@ -31,8 +31,8 @@ namespace TPGestionDeColonie
 
             foreach(Colon col in listePJ)
             {
-                listeCoordonneesColons.Add(col.getPosition());
-=               if (listeCoordonneesColons.Contains(coordonnees))
+               listeCoordonneesColons.Add(col.getPosition());
+               if (listeCoordonneesColons.Contains(coordonnees))
                 {
                     return false; //case non dispo, occupée par Colon
                 }
@@ -80,7 +80,13 @@ namespace TPGestionDeColonie
         
         public void GenererMonde()
         {
-            for(int i = 0; i<20; i++){
+            List<Tuple<int, int>> listeCoordonneesColons = new List<Tuple<int, int>>();
+
+            foreach (Colon col in listePJ)
+            {
+                listeCoordonneesColons.Add(col.getPosition());
+            }
+            for (int i = 0; i<20; i++){
                 GenererBloc(); //génère tous les blocs
             }
             for (int i=0; i<grille.GetLength(0); i++)
@@ -107,10 +113,13 @@ namespace TPGestionDeColonie
                                 {
                                     grille[i, j] = " R ";
                                 }
-                                else
-                                {
-                                    grille[i, j] = " C ";
-                                }
+                            }
+                        }
+                        foreach(Colon c in listePJ)
+                        {
+                            if (listeCoordonneesColons.Contains(coords))
+                            {
+                                grille[i, j] = " C ";
                             }
                         }
                     }
@@ -135,6 +144,13 @@ namespace TPGestionDeColonie
                     else if (grille[i, j] == " R ")
                     {
                         Console.BackgroundColor = ConsoleColor.DarkGray;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write(grille[i, j]);
+                        Console.ResetColor();
+                    }
+                    else if (grille[i, j] == " C ")
+                    {
+                        Console.BackgroundColor = ConsoleColor.Red;
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.Write(grille[i, j]);
                         Console.ResetColor();
