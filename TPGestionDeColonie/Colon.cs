@@ -8,10 +8,11 @@ namespace TPGestionDeColonie
 {
     abstract class Colon
     {
-
-        protected static int id=0;
+        // Variables
+        private Tuple<int, int> positionColon;
+        protected static int id  =  0;
         protected int idColon;
-        public string Nom{
+        public string Nom  {
             get;
             set;
         }
@@ -42,11 +43,14 @@ namespace TPGestionDeColonie
         //getter ID;
         public int getId()
         {
-            return id;
+            return idColon;
         }
-        private Tuple<int, int> positionColon;
+        public int[] StockRessources { get; }
 
-        public Colon (string nom, int positionX, int positionY, int endurance, int sante, int faim, int soif) //, List<string> capacites
+        public Monde Planete { get; }
+        // -------------------------------------------
+
+        public Colon (string nom, int positionX, int positionY, int endurance, int sante, int faim, int soif, Monde planete) //, List<string> capacites
         {
             id = id+1;
             idColon = id;
@@ -58,6 +62,8 @@ namespace TPGestionDeColonie
             Soif = soif;
             Nom = nom;
             positionColon = new Tuple<int, int>(positionX, positionY);
+            Planete = planete;
+            StockRessources = new int[]{ 0, 0, 10}; //Bois//Pierre//Eau
         }
         public Tuple<int, int> getPosition()
         {
@@ -113,6 +119,103 @@ namespace TPGestionDeColonie
             return $"Colon n°{idColon} : {GetType().Name} {Nom}, santé = {Sante}/100 PV, endurance = {Endurance}/100, faim = {Faim}/100, soif = {Soif}/100";
         }
 
+        
+        public virtual void Miner(int x, int y){ Console.Write("test"); } //pour Mineur
 
+        public virtual void Couper(int x, int y) { } //pour Bûcheron
+
+        public virtual void Planter() { } //pour Paysan
+
+        public virtual void Recolter(int x, int y) { } //pour Paysan
+
+
+        public void Deplacer(int x, int y)
+        {
+            while(positionX != x && positionY != y)
+            {
+                if(positionX > x && positionY > y)
+                {
+                    positionX -= 1;
+                    positionY -= 1;
+                }
+                else if (positionX < x && positionY > y)
+                {
+                    positionX += 1;
+                    positionY -= 1;
+                }
+                else if (positionX > x && positionY < y)
+                {
+                    positionX -= 1;
+                    positionY += 1;
+                }
+                else if (positionX < x && positionY < y)
+                {
+                    positionX += 1;
+                    positionY += 1;
+                }
+            }
+            if(positionX == x)
+            {
+                if (positionY > y)
+                {
+                    while (positionY != y)
+                    {
+                        positionY -= 1;
+                    }
+                }
+                else if(positionY<y)
+                {
+                    while (positionY != y)
+                    {
+                        positionY += 1;
+                    }
+                }
+            }
+            if (positionY == y)
+            {
+                if (positionX > x)
+                {
+                    while (positionX != x)
+                    {
+                        positionX -= 1;
+                    }
+                }
+                else if (positionX < y)
+                {
+                    while (positionX != x)
+                    {
+                        positionX += 1;
+                    }
+                }
+            }
+            positionColon = new Tuple<int, int>(positionX,  positionY);
+        }
+
+        public void SeDeplacerVersItem(int x, int y)
+        {
+            //cases autour de la cible : { x , y , distance au colon }
+            int[] haut = new int[] {  x  -  1,  y, Math.Abs(positionX-(x-1))+Math.Abs(positionY-y)  };
+            int[] bas = new int[] {  x  +  1,  y, Math.Abs(positionX - (x +1)) + Math.Abs(positionY - y) };
+            int[] gauche = new int[] { x, y-1, Math.Abs(positionX - x) + Math.Abs(positionY - (y-1)) };
+            int[] droite = new int[] { x, y+1, Math.Abs(positionX - x) + Math.Abs(positionY - (y + 1)) };
+
+            int distanceMin = Math.Min(Math.Min(Math.Min(haut[2],  bas[2]),  gauche[2]),  droite[2]);  
+            if(haut[2] == distanceMin)
+            {
+                Deplacer(haut[0], haut[1]);
+            }
+            else if(bas[2] == distanceMin)
+            {
+                Deplacer(bas[0], bas[1]);
+            }
+            else if (gauche[2] == distanceMin)
+            {
+                Deplacer(gauche[0], gauche[1]);
+            }
+            else if (droite[2] == distanceMin)
+            {
+                Deplacer(droite[0], droite[1]);
+            }
+        }
     }    
 }

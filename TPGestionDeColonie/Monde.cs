@@ -9,18 +9,21 @@ namespace TPGestionDeColonie
 {
     class Monde
     {
+        // Variables -------------------
         Random rng = new Random();
 
-        private string[,] grille = new string[30, 30];
+        public string[,] grille = new string[30, 30];
 
         public int Hauteur { get; private set; }
         public int Largeur { get; private set; }
 
-        List<Colon> listePJ;
-        List<ObjetFixe> listeBlocs;
+        public List<Colon> ListePJ { get; }
+        public List<ObjetFixe> ListeBlocs { get ;  }
+        // -----------------------------
+
         public Monde() {
-            listePJ = new List<Colon>();
-            listeBlocs = new List<ObjetFixe>();
+            ListePJ = new List<Colon>();
+            ListeBlocs = new List<ObjetFixe>();
             Hauteur = grille.GetLength(0);
             Largeur = grille.GetLength(1);
         }
@@ -29,7 +32,7 @@ namespace TPGestionDeColonie
         {
             List<Tuple<int, int>> listeCoordonneesColons = new List<Tuple<int, int>>();
 
-            foreach(Colon col in listePJ)
+            foreach(Colon col in ListePJ)
             {
                listeCoordonneesColons.Add(col.getPosition());
                if (listeCoordonneesColons.Contains(coordonnees))
@@ -37,7 +40,7 @@ namespace TPGestionDeColonie
                     return false; //case non dispo, occupée par Colon
                 }
             }
-            foreach (ObjetFixe obj in listeBlocs)
+            foreach (ObjetFixe obj in ListeBlocs)
             {
                 List<Tuple<int, int>> listeCoordonnees = obj.GetPositionObjet();
                 if (listeCoordonnees.Contains(coordonnees))
@@ -68,12 +71,12 @@ namespace TPGestionDeColonie
             listeCoordonnees.Add(coordonnees);
             if (proba==1)
             {
-                Arbre arbre = new Arbre(listeCoordonnees) ;
-                listeBlocs.Add(arbre);
+                Arbre arbre = new Arbre(listeCoordonnees,this) ;
+                ListeBlocs.Add(arbre);
             }
             else {
-                Rocher rocher = new Rocher(listeCoordonnees);
-                listeBlocs.Add(rocher);
+                Rocher rocher = new Rocher(listeCoordonnees,this);
+                ListeBlocs.Add(rocher);
             }
         }
 
@@ -82,7 +85,7 @@ namespace TPGestionDeColonie
         {
             List<Tuple<int, int>> listeCoordonneesColons = new List<Tuple<int, int>>();
 
-            foreach (Colon col in listePJ)
+            foreach (Colon col in ListePJ)
             {
                 listeCoordonneesColons.Add(col.getPosition());
             }
@@ -100,7 +103,7 @@ namespace TPGestionDeColonie
                     }
                     else  //si la case n'est pas dispo
                     {
-                        foreach (ObjetFixe obj in listeBlocs)
+                        foreach (ObjetFixe obj in ListeBlocs)
                         {
                            if(obj.GetPositionObjet().Contains(coords))
                             {
@@ -113,9 +116,13 @@ namespace TPGestionDeColonie
                                 {
                                     grille[i, j] = " R ";
                                 }
+                                else if (obj.GetType() == typeof(Ble))
+                                {
+                                    grille[i, j] = " B ";
+                                }
                             }
                         }
-                        foreach(Colon c in listePJ)
+                        foreach(Colon c in ListePJ)
                         {
                             if (listeCoordonneesColons.Contains(coords))
                             {
@@ -126,7 +133,55 @@ namespace TPGestionDeColonie
                 }   
             }
         }
+        public void MettreAJourMonde()
+        {
+            List<Tuple<int, int>> listeCoordonneesColons = new List<Tuple<int, int>>();
 
+            foreach (Colon col in ListePJ)
+            {
+                listeCoordonneesColons.Add(col.getPosition());
+            }
+            for (int i = 0; i < grille.GetLength(0); i++)
+            {
+                for (int j = 0; j < grille.GetLength(1); j++)
+                {
+                    Tuple<int, int> coords = new Tuple<int, int>(i, j);
+                    if (VerifCoordonnees(coords)) // si la case est dispo
+                    {
+                        grille[i, j] = " x ";
+                    }
+                    else  //si la case n'est pas dispo
+                    {
+                        foreach (ObjetFixe obj in ListeBlocs)
+                        {
+                            if (obj.GetPositionObjet().Contains(coords))
+                            {
+                                if (obj.GetType() == typeof(Arbre))
+                                {
+                                    grille[i, j] = " A ";
+
+                                }
+                                else if (obj.GetType() == typeof(Rocher))
+                                {
+                                    grille[i, j] = " R ";
+                                }
+                                else if (obj.GetType() == typeof(Ble))
+                                {
+                                    grille[i, j] = " B ";
+                                }
+                            }
+                        }
+                        foreach (Colon c in ListePJ)
+                        {
+                            if (listeCoordonneesColons.Contains(coords))
+                            {
+                                grille[i, j] = " C ";
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         public void AfficherMonde()
         {
@@ -155,6 +210,13 @@ namespace TPGestionDeColonie
                         Console.Write(grille[i, j]);
                         Console.ResetColor();
                     }
+                    else if (grille[i, j] == " B ")
+                    {
+                        Console.BackgroundColor = ConsoleColor.Yellow;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write(grille[i, j]);
+                        Console.ResetColor();
+                    }
                     else
                     {
                         Console.Write(grille[i, j]);
@@ -163,6 +225,9 @@ namespace TPGestionDeColonie
                 Console.WriteLine();
             }
         }
+
+
+
 
         public void AfficherFenetre(int x,int y)
         {
@@ -243,12 +308,12 @@ namespace TPGestionDeColonie
 
         public void AjouterColon(Colon c)
         {
-            listePJ.Add(c);
+            ListePJ.Add(c);
         }
 
         public void GameOver(){
             /// Fonction Game Over
-            if (listePJ.Count == 0){
+            if (ListePJ.Count == 0){
                 Console.Clear();
                 Console.WriteLine("Game Over");
             }
@@ -256,12 +321,12 @@ namespace TPGestionDeColonie
 
         public void SupprimerColon(){
             //supprime le colon de la liste
-            for (int i = 0; i < listePJ.Count; i++)
+            for (int i = 0; i < ListePJ.Count; i++)
             {
-                if (listePJ[i].Sante ==0)
+                if (ListePJ[i].Sante ==0)
                 {
-                    Console.WriteLine($"Le colon: {listePJ[i].Nom} est mort");
-                    listePJ.RemoveAt(i);
+                    Console.WriteLine($"Le colon: {ListePJ[i].Nom} est mort");
+                    ListePJ.RemoveAt(i);
                 }
             }
         }
