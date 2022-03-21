@@ -131,7 +131,8 @@ namespace TPGestionDeColonie
 
         public void Deplacer(int x, int y)
         {
-            while(positionX != x && positionY != y)
+            Endurance -= Math.Abs(positionX - x) + Math.Abs(positionY - y);
+            while (positionX != x && positionY != y)
             {
                 if(positionX > x && positionY > y)
                 {
@@ -189,6 +190,7 @@ namespace TPGestionDeColonie
                 }
             }
             positionColon = new Tuple<int, int>(positionX,  positionY);
+            
         }
 
         public void SeDeplacerVersItem(int x, int y)
