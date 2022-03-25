@@ -9,7 +9,7 @@ namespace TPGestionDeColonie.ObjetsFixes.Batiments
     class Entrepot:Batiment
     {
 
-        public Entrepot(List<Tuple<int, int>> positionObjet, int coutBois, int coutPierre) : base(positionObjet,coutBois,coutPierre) { }
+        public Entrepot(List<Tuple<int, int>> positionObjet, int coutBois, int coutPierre, Monde planete) : base(positionObjet,coutBois,coutPierre,planete) { }
 
 
 

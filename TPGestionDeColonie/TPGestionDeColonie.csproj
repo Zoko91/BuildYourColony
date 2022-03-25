@@ -62,6 +62,7 @@
     <Compile Include="ObjetsFixes\Batiments\Ferme.cs" />
     <Compile Include="ObjetsFixes\Batiments\Maison.cs" />
     <Compile Include="ObjetsFixes\Batiments\Puits.cs" />
+    <Compile Include="ObjetsFixes\Ble.cs" />
     <Compile Include="ObjetsFixes\Eau.cs" />
     <Compile Include="ObjetsFixes\Rocher.cs" />
     <Compile Include="Program.cs" />

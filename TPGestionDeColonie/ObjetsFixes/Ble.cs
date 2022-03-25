@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace TPGestionDeColonie.ObjetsFixes
 {
-    class Arbre:ObjetFixe
+    class Ble : ObjetFixe
     {
-        public Arbre(List<Tuple<int, int>> positionObjet, Monde planete) : base(positionObjet, planete) { }
+        public Ble(List<Tuple<int, int>> positionObjet, Monde planete) : base(positionObjet, planete) { }
+
+
+        
 
     }
 }

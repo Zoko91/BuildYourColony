@@ -8,7 +8,7 @@ namespace TPGestionDeColonie.ObjetsFixes
 {
     class Eau:ObjetFixe
     {
-        public Eau(List<Tuple<int, int>> positionObjet):base(positionObjet) { }
+        public Eau(List<Tuple<int, int>> positionObjet, Monde planete) :base(positionObjet, planete) { }
 
     }
 }
