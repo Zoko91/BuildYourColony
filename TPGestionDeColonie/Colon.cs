@@ -52,6 +52,7 @@ namespace TPGestionDeColonie
         public int[] StockRessources { get; }
 
         public Monde Planete { get; }
+
         // -------------------------------------------
 
         public Colon (string nom, int positionX, int positionY, int endurance, int sante, int faim, int soif, Monde planete) //, List<string> capacites
@@ -73,7 +74,6 @@ namespace TPGestionDeColonie
         {
             return positionColon;
         }
-
         public void EtreFatigue()
         {
             if (Endurance<20)
@@ -273,8 +273,19 @@ namespace TPGestionDeColonie
                                  coordonnees[1] = ble.GetPositionObjet().FirstOrDefault().Item2;
                              }
                          }
+                         break;        
+                 case "TPGestionDeColonie.Batisseur" :
+                         foreach (Entrepot ent in Planete.ListeBlocs)
+                         {
+                             if (Math.Min(indiceDeDistance,CalculerDistancePlusProche(ent))==CalculerDistancePlusProche(ent))
+                             {
+                                 indiceDeDistance = CalculerDistancePlusProche(ent);
+                                 coordonnees[0] = ent.GetPositionObjet().FirstOrDefault().Item1;
+                                 coordonnees[1] = ent.GetPositionObjet().FirstOrDefault().Item2;
+                             }
+                         }
                          break;                       
-            }
+            }               
             return coordonnees;
 
         }

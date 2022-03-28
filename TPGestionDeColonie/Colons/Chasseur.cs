@@ -11,7 +11,7 @@ namespace TPGestionDeColonie
         // List<string> capacites
         public Chasseur(string nom, int positionX, int positionY, int endurance, int sante, int faim, int soif, Monde planete) : base(nom, positionX, positionY, endurance, sante, faim, soif, planete)
         {
-
+            
         }
     }
 }
