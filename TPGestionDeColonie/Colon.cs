@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TPGestionDeColonie.ObjetsFixes;
+using TPGestionDeColonie.ObjetsFixes.Batiments;
+
 
 namespace TPGestionDeColonie
 {
@@ -218,6 +222,131 @@ namespace TPGestionDeColonie
             {
                 Deplacer(droite[0], droite[1]);
             }
+        }
+
+
+        public int CalculerDistancePlusProche(ObjetFixe obj)
+        {
+            int objX = obj.GetPositionObjet().FirstOrDefault().Item1;
+            int objY = obj.GetPositionObjet().FirstOrDefault().Item2;
+                        
+            return Math.Abs(objY-positionY)+Math.Abs(objX-positionX);
+        }
+
+        public List<int> RechercherPlusProcheItem()
+        {
+            string typeDuColon = this.GetType().ToString();
+            int indiceDeDistance = Planete.Hauteur*Planete.Largeur; //indice très grand
+            List<int> coordonnees = new List<int>();
+            
+            switch (typeDuColon)
+            {
+                case "TPGestionDeColonie.Bucheron" :
+                        foreach (Arbre arb in Planete.ListeBlocs)
+                        {
+                            if (Math.Min(indiceDeDistance,CalculerDistancePlusProche(arb))==CalculerDistancePlusProche(arb))
+                            {
+                                indiceDeDistance = CalculerDistancePlusProche(arb);
+                                coordonnees[0] = arb.GetPositionObjet().FirstOrDefault().Item1;
+                                coordonnees[1] = arb.GetPositionObjet().FirstOrDefault().Item2;
+                            }
+                        }
+                        break;
+                case "TPGestionDeColonie.Mineur" :
+                        foreach (Rocher roc in Planete.ListeBlocs)
+                        {
+                            if (Math.Min(indiceDeDistance,CalculerDistancePlusProche(roc))==CalculerDistancePlusProche(roc))
+                            {
+                                indiceDeDistance = CalculerDistancePlusProche(roc);
+                                coordonnees[0] = roc.GetPositionObjet().FirstOrDefault().Item1;
+                                coordonnees[1] = roc.GetPositionObjet().FirstOrDefault().Item2;
+                            }
+                        }
+                        break;
+                 case "TPGestionDeColonie.Paysan" :
+                         foreach (Ble ble in Planete.ListeBlocs)
+                         {
+                             if (Math.Min(indiceDeDistance,CalculerDistancePlusProche(ble))==CalculerDistancePlusProche(ble))
+                             {
+                                 indiceDeDistance = CalculerDistancePlusProche(ble);
+                                 coordonnees[0] = ble.GetPositionObjet().FirstOrDefault().Item1;
+                                 coordonnees[1] = ble.GetPositionObjet().FirstOrDefault().Item2;
+                             }
+                         }
+                         break;                       
+            }
+            return coordonnees;
+
+        }
+
+        public bool EtreRempli() ///// ATTENTION, A DIVISER EN SOUS FONCTIONS
+            // vérifie si rempli, et se déplace s'il peut aller déposer dans l'entrepot
+        {
+            Entrepot ent = Planete.ListeBlocs.OfType<Entrepot>().FirstOrDefault();
+
+            if (GetType() == typeof(Bucheron))
+            {
+                if (StockRessources[0] == 100)
+                {
+                    if (Planete.ListeBlocs.OfType<Entrepot>().Any())
+                    {
+                        // Se déplace vers l'entrepot et y stocke les ressources puis recommence
+                        Deplacer(ent.GetPositionObjet().FirstOrDefault().Item1,
+                            ent.GetPositionObjet().FirstOrDefault().Item2);
+                        return true;
+                    }
+                    else
+                    {
+                        //Reste sur place, ne fait rien
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+            else if (GetType() == typeof(Mineur))
+            {
+                if (StockRessources[1] == 100)
+                {
+                    if (Planete.ListeBlocs.OfType<Entrepot>().Any())
+                    {
+
+                        // Se déplace vers l'entrepot et y stocke les ressources puis recommence
+                        Deplacer(ent.GetPositionObjet().FirstOrDefault().Item1,
+                            ent.GetPositionObjet().FirstOrDefault().Item2);
+                        return true;
+                    }
+                    else
+                    {
+                        //Reste sur place, ne fait rien
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+            else if (GetType() == typeof(Paysan))
+            {
+                if (StockRessources[1] == 100)
+                {
+                    if (Planete.ListeBlocs.OfType<Entrepot>().Any())
+                    {
+
+                        // Se déplace vers l'entrepot et y stocke les ressources puis recommence
+                        Deplacer(ent.GetPositionObjet().FirstOrDefault().Item1,
+                            ent.GetPositionObjet().FirstOrDefault().Item2);
+                        return true;
+                    }
+                    else
+                    {
+                        //Reste sur place, ne fait rien
+                        return true;
+                    }
+
+                }
+                return false;
+            }
+            return false;
         }
     }    
 }

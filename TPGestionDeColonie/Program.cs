@@ -14,14 +14,12 @@ namespace TPGestionDeColonie
 
     class Program
     {
-        public static class Mouse {
-            
-        }
-
+        //public static class Mouse {}
+        
         static void Main(string[] args)
         {
-            Console.WindowHeight = 50;
-            Console.WindowWidth = 200;
+           // Console.WindowHeight = 50;
+          //  Console.WindowWidth = 200;
   
             Monde planete = new Monde();
 
@@ -91,7 +89,7 @@ namespace TPGestionDeColonie
             // ==================================== //
 
 
-
+            listeColons[0].RechercherPlusProcheItem();
             Console.ReadLine();
         }
 
