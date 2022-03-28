@@ -279,9 +279,10 @@ namespace TPGestionDeColonie
 
         }
 
-        public bool EtreRempli() ///// ATTENTION, A DIVISER EN SOUS FONCTIONS
-            // vérifie si rempli, et se déplace s'il peut aller déposer dans l'entrepot
+        public bool EtreRempli() 
         {
+            ///// ATTENTION, A DIVISER EN SOUS FONCTIONS
+            // vérifie si rempli, et se déplace s'il peut aller déposer dans l'entrepot
             Entrepot ent = Planete.ListeBlocs.OfType<Entrepot>().FirstOrDefault();
 
             if (GetType() == typeof(Bucheron))
@@ -348,5 +349,7 @@ namespace TPGestionDeColonie
             }
             return false;
         }
+        
+        
     }    
 }

@@ -158,12 +158,12 @@ namespace TPGestionDeColonie
                             {
                                 if (obj.GetType() == typeof(Arbre))
                                 {
-                                    grille[i, j] = " A ";
+                                    grille[i, j] = " 🌴 ";
 
                                 }
                                 else if (obj.GetType() == typeof(Rocher))
                                 {
-                                    grille[i, j] = " R ";
+                                    grille[i, j] = " ⛰ ";
                                 }
                                 else if (obj.GetType() == typeof(Ble))
                                 {
@@ -175,7 +175,7 @@ namespace TPGestionDeColonie
                         {
                             if (listeCoordonneesColons.Contains(coords))
                             {
-                                grille[i, j] = " C ";
+                                grille[i, j] = " 🤵 ";
                             }
                         }
                     }
@@ -189,21 +189,21 @@ namespace TPGestionDeColonie
             {
                 for (int j = 0; j < grille.GetLength(1); j++)
                 {
-                    if (grille[i, j] == " A ")
+                    if (grille[i, j] == " 🌴 ")
                     {
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.Write(grille[i, j]);
                         Console.ResetColor();
                     }
-                    else if (grille[i, j] == " R ")
+                    else if (grille[i, j] == " ⛰ ")
                     {
                         Console.BackgroundColor = ConsoleColor.DarkGray;
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.Write(grille[i, j]);
                         Console.ResetColor();
                     }
-                    else if (grille[i, j] == " C ")
+                    else if (grille[i, j] == " 🤵 ")
                     {
                         Console.BackgroundColor = ConsoleColor.Red;
                         Console.ForegroundColor = ConsoleColor.Black;
