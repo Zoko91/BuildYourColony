@@ -12,6 +12,11 @@ namespace TPGestionDeColonie.ObjetsFixes.Batiments
 
 
 
+        public override void Construire(int positionX, int positionY)
+        {//Créer une méthode Construire dans Colons qui appelle cette méthode une fois avoir instancié le batiment
+            Planete.grille[positionX, positionY] = " P ";
+        }
+
         //Puit
 
     }

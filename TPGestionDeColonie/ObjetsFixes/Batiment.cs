@@ -19,5 +19,8 @@ namespace TPGestionDeColonie.ObjetsFixes
             this.coutPierre= coutPierre;
         }
 
+
+        public virtual void Construire(int x, int y){}
+
     }
 }

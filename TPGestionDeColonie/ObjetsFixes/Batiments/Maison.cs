@@ -13,7 +13,12 @@ namespace TPGestionDeColonie.ObjetsFixes.Batiments
 
         public Maison(List<Tuple<int, int>> positionObjet, int coutBois, int coutPierre,int capacite, Monde planete) : base(positionObjet, coutBois, coutPierre,planete) { this.capacite = capacite; }
 
-        
+        public override void Construire(int positionX, int positionY)
+        {//Créer une méthode Construire dans Colons qui appelle cette méthode une fois avoir instancié le batiment
+
+            Planete.grille[positionX, positionY] = " M ";
+
+        }
 
         //Maison
 

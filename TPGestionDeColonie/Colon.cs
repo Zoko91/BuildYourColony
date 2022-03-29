@@ -361,6 +361,11 @@ namespace TPGestionDeColonie
             return false;
         }
         
-        
+        public void ColonConstruire()
+        {
+            // Demande à l'utilisateur quel batiment il veut construire et ensuite appelle la méthode Construire() du bâtiment correspondant
+
+
+        }
     }    
 }
