@@ -21,7 +21,7 @@ namespace TPGestionDeColonie
             if (Planete.grille[x, y] == " A ")
             {
 
-                StockRessources[2] += 10;
+                Backpack[2] += 10;
                 Planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(positionBle)).DestructionEnCours(x, y);
 
             }
@@ -29,7 +29,7 @@ namespace TPGestionDeColonie
         
         public override void Planter() {
 
-            if (StockRessources[2] > 3)
+            if (Backpack[2] > 3)
             {
                 Tuple<int, int> positionPaysan = getPosition();
                 List<Tuple<int, int>> listePositionPaysan = new List<Tuple<int, int>>();
@@ -38,7 +38,7 @@ namespace TPGestionDeColonie
                 listePositionPaysan.Add(positionPaysan);
                 Ble nouveauBle = new Ble(listePositionPaysan, Planete);
                 Planete.ListeBlocs.Add(nouveauBle);
-                StockRessources[2] -= 3; 
+                Backpack[2] -= 3; 
 
             }
             else

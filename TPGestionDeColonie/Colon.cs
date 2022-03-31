@@ -49,7 +49,7 @@ namespace TPGestionDeColonie
         {
             return idColon;
         }
-        public int[] StockRessources { get; }
+        public int[] Backpack { get; }
 
         public Monde Planete { get; }
 
@@ -68,7 +68,7 @@ namespace TPGestionDeColonie
             Nom = nom;
             positionColon = new Tuple<int, int>(positionX, positionY);
             Planete = planete;
-            StockRessources = new int[]{ 0, 0, 10}; //Bois//Pierre//Eau
+            Backpack = new int[]{ 0, 0, 10}; //Bois//Pierre//Eau
         }
         public Tuple<int, int> getPosition()
         {
@@ -298,7 +298,7 @@ namespace TPGestionDeColonie
 
             if (GetType() == typeof(Bucheron))
             {
-                if (StockRessources[0] == 100)
+                if (Backpack[0] == 100)
                 {
                     if (Planete.ListeBlocs.OfType<Entrepot>().Any())
                     {
@@ -318,7 +318,7 @@ namespace TPGestionDeColonie
             }
             else if (GetType() == typeof(Mineur))
             {
-                if (StockRessources[1] == 100)
+                if (Backpack[1] == 100)
                 {
                     if (Planete.ListeBlocs.OfType<Entrepot>().Any())
                     {
@@ -339,7 +339,7 @@ namespace TPGestionDeColonie
             }
             else if (GetType() == typeof(Paysan))
             {
-                if (StockRessources[1] == 100)
+                if (Backpack[1] == 100)
                 {
                     if (Planete.ListeBlocs.OfType<Entrepot>().Any())
                     {

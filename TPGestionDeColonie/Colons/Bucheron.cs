@@ -19,7 +19,7 @@ namespace TPGestionDeColonie
             Tuple<int, int> positionArbre = new Tuple<int, int>(x, y);
             if (Planete.grille[x, y] == " A ")
             {
-                StockRessources[2] += 10;
+                Backpack[2] += 10;
                 Planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(positionArbre)).DestructionEnCours(x, y);
             }
         }

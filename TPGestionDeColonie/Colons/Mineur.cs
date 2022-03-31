@@ -23,7 +23,7 @@ namespace TPGestionDeColonie
              if(Planete.grille[x,y] == " R ")
              {
                 //Planete.ListeBlocs
-                StockRessources[1] += 10;
+                Backpack[1] += 10;
                 //Console.WriteLine(Planete.ListeBlocs[0].GetPositionObjet().First());
                 Planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(positionRocher)).DestructionEnCours(x,y);
 

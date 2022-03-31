@@ -20,8 +20,8 @@ namespace TPGestionDeColonie
         
         public void ViderEntrepot(int bois, int pierre){
             Entrepot ent = Planete.ListeBlocs.OfType<Entrepot>().FirstOrDefault();
-            StockRessources[0]+= bois;
-            StockRessources[1]+= pierre;
+            Backpack[0]+= bois;
+            Backpack[1]+= pierre;
             ent.StockRessources[0] -= bois;
             ent.StockRessources[1] -= pierre;
         }
@@ -35,68 +35,68 @@ namespace TPGestionDeColonie
             int besoinBois = 0;
             Entrepot ent = Planete.ListeBlocs.OfType<Entrepot>().FirstOrDefault();
             if(numBat == 1){
-                if(StockRessources[0]<20 || StockRessources[1]<30) {
+                if(Backpack[0]<20 || Backpack[1]<30) {
                     if(Planete.ListeBlocs.OfType<Entrepot>().Any()){
-                        if(StockRessources[0]<20){
-                            besoinBois = 20 - StockRessources[0];
+                        if(Backpack[0]<20){
+                            besoinBois = 20 - Backpack[0];
                         }
-                        if(StockRessources[1]<30){
-                            besoinPierre = 30 - StockRessources[1];
+                        if(Backpack[1]<30){
+                            besoinPierre = 30 - Backpack[1];
                         }
 
-                        Deplacer(ent.GetPositionObjet().FirstOrDefault.Item1,ent.GetPositionObjet().FirstOrDefault.Item2);
+                        Deplacer(ent.GetPositionObjet().FirstOrDefault().Item1,ent.GetPositionObjet().FirstOrDefault().Item2);
                         ViderEntrepot(besoinBois,besoinPierre);
                     }
                 }
             }
             else if(numBat == 2){
-                if(StockRessources[0]<30 || StockRessources[1]<10) {
+                if(Backpack[0]<30 || Backpack[1]<10) {
                     if(Planete.ListeBlocs.OfType<Entrepot>().Any()){
-                        if(StockRessources[0]<30){
-                            besoinBois = 30 - StockRessources[0];
+                        if(Backpack[0]<30){
+                            besoinBois = 30 - Backpack[0];
                         }
-                        if(StockRessources[1]<10){
-                            besoinPierre = 10 - StockRessources[1];
+                        if(Backpack[1]<10){
+                            besoinPierre = 10 - Backpack[1];
                         }
 
-                        Deplacer(ent.GetPositionObjet().FirstOrDefault.Item1,ent.GetPositionObjet().FirstOrDefault.Item2);
+                        Deplacer(ent.GetPositionObjet().FirstOrDefault().Item1,ent.GetPositionObjet().FirstOrDefault().Item2);
                         ViderEntrepot(besoinBois,besoinPierre);
                     }
                 }
                 
             }
             else if(numBat == 3){
-                if(StockRessources[0]<30) {
+                if(Backpack[0]<30) {
                     if(Planete.ListeBlocs.OfType<Entrepot>().Any()){
-                        if(StockRessources[0]<30){
-                            besoinBois = 30 - StockRessources[0];
+                        if(Backpack[0]<30){
+                            besoinBois = 30 - Backpack[0];
                         }
-                        Deplacer(ent.GetPositionObjet().FirstOrDefault.Item1,ent.GetPositionObjet().FirstOrDefault.Item2);
+                        Deplacer(ent.GetPositionObjet().FirstOrDefault().Item1,ent.GetPositionObjet().FirstOrDefault().Item2);
                         ViderEntrepot(besoinBois,besoinPierre);
                     }
                 }
             }
             else if(numBat == 4){
-                if(StockRessources[0]<5 || StockRessources[1]<15) {
+                if(Backpack[0]<5 || Backpack[1]<15) {
                     if(Planete.ListeBlocs.OfType<Entrepot>().Any()){
-                        if(StockRessources[0]<5){
-                            besoinBois = 5 - StockRessources[0];
+                        if(Backpack[0]<5){
+                            besoinBois = 5 - Backpack[0];
                         }
-                        if(StockRessources[1]<15){
-                            besoinPierre = 15 - StockRessources[1];
+                        if(Backpack[1]<15){
+                            besoinPierre = 15 - Backpack[1];
                         }
-                        Deplacer(ent.GetPositionObjet().FirstOrDefault.Item1,ent.GetPositionObjet().FirstOrDefault.Item2);
+                        Deplacer(ent.GetPositionObjet().FirstOrDefault().Item1,ent.GetPositionObjet().FirstOrDefault().Item2);
                         ViderEntrepot(besoinBois,besoinPierre);
                     }
                 }
             }
             else if(numBat == 5){
-                if(StockRessources[0]<40) {
+                if(Backpack[0]<40) {
                     if(Planete.ListeBlocs.OfType<Entrepot>().Any()){
-                        if(StockRessources[0]<40){
-                            besoinBois = 40 - StockRessources[0];
+                        if(Backpack[0]<40){
+                            besoinBois = 40 - Backpack[0];
                         }
-                        Deplacer(ent.GetPositionObjet().FirstOrDefault.Item1,ent.GetPositionObjet().FirstOrDefault.Item2);
+                        Deplacer(ent.GetPositionObjet().FirstOrDefault().Item1,ent.GetPositionObjet().FirstOrDefault().Item2);
                         ViderEntrepot(besoinBois,besoinPierre);
                     }
                 }
