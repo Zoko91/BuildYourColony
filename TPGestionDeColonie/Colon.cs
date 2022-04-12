@@ -96,9 +96,12 @@ namespace TPGestionDeColonie
             {
                 Console.WriteLine("Aïe aïe aïe, je ne suis pas en bon état.");
             }
-            
         }
 
+        public void PrendreDegats(int degats)
+        {
+            Sante -= degats;
+        }
 
         public void VerififierEtat()
         //Vérifie l'état physique du Colon

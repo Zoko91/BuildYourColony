@@ -35,7 +35,7 @@ namespace TPGestionDeColonie
             Sante -= 100;
             if (Sante == 0)
             {
-                Console.WriteLine("Le rocher est cassé");
+                Console.WriteLine("L'élément "+ GetType().Name + " est cassé");
                 Planete.grille[x,  y] = " x ";
                 Planete.ListeBlocs.Remove(Planete.ListeBlocs.Find(z => z.positionObjet.First() == position ));
                 //return true; Lors de l'action de destruction on peut lui dire tant que = true;

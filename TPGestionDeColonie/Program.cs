@@ -14,7 +14,15 @@ namespace TPGestionDeColonie
 
     class Program
     {
-        //public static class Mouse {}
+        /*
+         * Exemple de comment faire fonctionner le menu => renvoie un entier lors de l'appui d'Entrée, -1 si Echap
+        int selectedClass = ConsoleHelper.MultipleChoice(true, "Warrior", "Bard", "Mage", "Archer",
+"Thief", "Assassin", "Cleric", "Paladin", "etc.");
+        Console.WriteLine();
+            Console.WriteLine(selectedClass);
+        */
+
+        
         
         static void Main(string[] args)
         {
