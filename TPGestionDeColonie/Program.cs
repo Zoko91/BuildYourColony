@@ -28,8 +28,8 @@ namespace TPGestionDeColonie
         {
            // Console.WindowHeight = 50;
           //  Console.WindowWidth = 200;
-  
-            Monde planete = new Monde();
+
+          Monde planete = new Monde();
 
             List<Colon> listeColons = CreerColonsDepart(planete);
 
@@ -110,18 +110,18 @@ namespace TPGestionDeColonie
             List<Colon> listeDepart = new List<Colon>();
 
             Paysan p = new Paysan("p", milieuGrilleHauteur, milieuGrilleLargeur-1, 100, 100, 100, 100, planete);
-            Bucheron b = new Bucheron("p", milieuGrilleHauteur, milieuGrilleLargeur, 100, 100, 100, 100, planete);
+            Bucheron b1 = new Bucheron("p", milieuGrilleHauteur, milieuGrilleLargeur, 100, 100, 100, 100, planete);
             Batisseur ba = new Batisseur("p", milieuGrilleHauteur, milieuGrilleLargeur+1, 100, 100, 100, 100, planete);
             Mineur m = new Mineur("Mineur", milieuGrilleHauteur+1, milieuGrilleLargeur-1, 100, 100, 100, 100, planete);
             Tavernier t = new Tavernier("p", milieuGrilleHauteur+1, milieuGrilleHauteur, 100, 100, 100, 100, planete);
-            Chasseur c = new Chasseur("p", milieuGrilleHauteur+1, milieuGrilleLargeur+1, 100, 100, 100, 100, planete);
+            Bucheron b2 = new Bucheron("p", milieuGrilleHauteur+1, milieuGrilleLargeur+1, 100, 100, 100, 100, planete);
 
             listeDepart.Add(p); 
-            listeDepart.Add(b); 
+            listeDepart.Add(b1); 
             listeDepart.Add(ba); 
             listeDepart.Add(m); 
             listeDepart.Add(t); 
-            listeDepart.Add(c); 
+            listeDepart.Add(b2); 
             
             for (int i = 0; i < listeDepart.Count; i++)
             {

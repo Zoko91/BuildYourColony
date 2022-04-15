@@ -19,14 +19,11 @@ namespace TPGestionDeColonie
 
         public List<Colon> ListePJ { get; }
         public List<ObjetFixe> ListeBlocs { get ;  }
-        
-        public List<Batiment> ListeBatiments { get; }
         // -----------------------------
 
         public Monde() {
             ListePJ = new List<Colon>();
             ListeBlocs = new List<ObjetFixe>();
-            ListeBatiments = new List<Batiment>();
             Hauteur = grille.GetLength(0);
             Largeur = grille.GetLength(1);
         }
@@ -112,16 +109,16 @@ namespace TPGestionDeColonie
                             {
                                 if (obj.GetType() == typeof(Arbre))
                                 {
-                                    grille[i, j] = " A ";
+                                    grille[i, j] = " 🌴";
                                     
                                 }
                                 else if(obj.GetType() == typeof(Rocher))
                                 {
-                                    grille[i, j] = " R ";
+                                    grille[i, j] = " ⛰ ";
                                 }
                                 else if (obj.GetType() == typeof(Ble))
                                 {
-                                    grille[i, j] = " B ";
+                                    grille[i, j] = " 🟨";
                                 }
                             }
                         }
@@ -129,7 +126,7 @@ namespace TPGestionDeColonie
                         {
                             if (listeCoordonneesColons.Contains(coords))
                             {
-                                grille[i, j] = " C ";
+                                grille[i, j] = "🤵 ";
                             }
                         }
                     }
@@ -161,7 +158,7 @@ namespace TPGestionDeColonie
                             {
                                 if (obj.GetType() == typeof(Arbre))
                                 {
-                                    grille[i, j] = " 🌴 ";
+                                    grille[i, j] = " 🌴";
 
                                 }
                                 else if (obj.GetType() == typeof(Rocher))
@@ -170,7 +167,7 @@ namespace TPGestionDeColonie
                                 }
                                 else if (obj.GetType() == typeof(Ble))
                                 {
-                                    grille[i, j] = " B ";
+                                    grille[i, j] = " 🟨";
                                 }
                             }
                         }
@@ -178,7 +175,7 @@ namespace TPGestionDeColonie
                         {
                             if (listeCoordonneesColons.Contains(coords))
                             {
-                                grille[i, j] = " 🤵 ";
+                                grille[i, j] = "🤵 ";
                             }
                         }
                     }
@@ -192,7 +189,7 @@ namespace TPGestionDeColonie
             {
                 for (int j = 0; j < grille.GetLength(1); j++)
                 {
-                    if (grille[i, j] == " 🌴 ")
+                    if (grille[i, j] == " 🌴")
                     {
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
                         Console.ForegroundColor = ConsoleColor.Black;
@@ -206,14 +203,14 @@ namespace TPGestionDeColonie
                         Console.Write(grille[i, j]);
                         Console.ResetColor();
                     }
-                    else if (grille[i, j] == " 🤵 ")
+                    else if (grille[i, j] == "🤵 ")
                     {
                         Console.BackgroundColor = ConsoleColor.Red;
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.Write(grille[i, j]);
                         Console.ResetColor();
                     }
-                    else if (grille[i, j] == " B ")
+                    else if (grille[i, j] == " 🟨")
                     {
                         Console.BackgroundColor = ConsoleColor.Yellow;
                         Console.ForegroundColor = ConsoleColor.Black;

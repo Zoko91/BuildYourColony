@@ -287,11 +287,58 @@ namespace TPGestionDeColonie
                                  coordonnees[1] = ent.GetPositionObjet().FirstOrDefault().Item2;
                              }
                          }
-                         break;                       
+                         break; 
+                case "TPGestionDeColonie.Tavernier" :
+                    foreach (Puits puits in Planete.ListeBlocs)
+                    {
+                        if (Math.Min(indiceDeDistance,CalculerDistancePlusProche(puits))==CalculerDistancePlusProche(puits))
+                        {
+                            indiceDeDistance = CalculerDistancePlusProche(puits);
+                            coordonnees[0] = puits.GetPositionObjet().FirstOrDefault().Item1;
+                            coordonnees[1] = puits.GetPositionObjet().FirstOrDefault().Item2;
+                        }
+                    }
+                    break;     
             }               
             return coordonnees;
 
         }
+
+        public void AllerVersBatiment(string nomBatiment)
+        {
+            
+            int indiceDeDistance = Planete.Hauteur*Planete.Largeur; //indice très grand
+            List<int> coordonnees = new List<int>();
+            if (nomBatiment == "Auberge")
+            {
+                foreach (Auberge auberge in Planete.ListeBlocs)
+                {
+                    if (Math.Min(indiceDeDistance,CalculerDistancePlusProche(auberge))==CalculerDistancePlusProche(auberge))
+                    {
+                        indiceDeDistance = CalculerDistancePlusProche(auberge);
+                        coordonnees[0] = auberge.GetPositionObjet().FirstOrDefault().Item1;
+                        coordonnees[1] = auberge.GetPositionObjet().FirstOrDefault().Item2;
+                    }
+                }
+                
+            }
+
+            if (nomBatiment == "Entrepot")
+            {
+                foreach (Auberge auberge in Planete.ListeBlocs)
+                {
+                    if (Math.Min(indiceDeDistance,CalculerDistancePlusProche(auberge))==CalculerDistancePlusProche(auberge))
+                    {
+                        indiceDeDistance = CalculerDistancePlusProche(auberge);
+                        coordonnees[0] = auberge.GetPositionObjet().FirstOrDefault().Item1;
+                        coordonnees[1] = auberge.GetPositionObjet().FirstOrDefault().Item2;
+                    }
+                }
+            }
+            Deplacer(coordonnees[0],coordonnees[1]);
+        }
+        
+        
 
         public bool EtreRempli() 
         {

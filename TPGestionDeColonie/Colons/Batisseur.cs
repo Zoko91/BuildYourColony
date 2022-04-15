@@ -108,7 +108,7 @@ namespace TPGestionDeColonie
             // Detecte quel batiment la personne veut construire (utilisé dnas remplir les stocks, refaire une fonction)
         }
         
-        public void AjouterBatiment(Batiment b) { Planete.ListeBatiments.Add(b); }
+        public void AjouterBatiment(Batiment b) { Planete.ListeBlocs.Add(b); }
 
     }
 

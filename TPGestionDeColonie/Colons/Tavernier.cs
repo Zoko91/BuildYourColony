@@ -14,14 +14,13 @@ using System.Threading.Tasks;
         {
               Backpack = new int[]{ 0, 0, 10, 0};  //Bois/Pierre/Eau/Seau d'eau
         }
-
-
+        
         public bool VerifierStock(int ressource) // Ressource = 0 => eau, = 1 => blé , = 2 => viande
         {
             //On a le monde, vérifier si il est sur la taverne
             bool verifPresence = false;
             bool verifStock = true;
-            foreach (Auberge b in Planete.ListeBatiments)
+            foreach (Auberge b in Planete.ListeBlocs)
             {
                 if (b.PresenceTavernier == true)
                 {
@@ -35,11 +34,26 @@ using System.Threading.Tasks;
             return verifStock;
         }
 
-        public void RemplirLeStockEau()
+        public void AllerRemplirLeSeauDeau()
         {
-            
+            if (Planete.ListeBlocs.OfType<Puits>().Any())
+            {
+                int x = RechercherPlusProcheItem()[0];
+                int y = RechercherPlusProcheItem()[1];
+                SeDeplacerVersItem(x,y);
+                while (Backpack[3]< 100)
+                {
+                    RemplirLeSeau();
+                }
+                AllerVersBatiment("Auberge");
+                
+            }
         }
-
+        public void RemplirLeSeau()
+        {
+            Backpack[3] += 20;
+        }
+        
 
     }
 }
