@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+    using TPGestionDeColonie.ObjetsFixes;
+    using TPGestionDeColonie.ObjetsFixes.Batiments;
 
-namespace TPGestionDeColonie.Colons
+    namespace TPGestionDeColonie.Colons
 {
     class Tavernier:Colon
     {
@@ -14,17 +16,28 @@ namespace TPGestionDeColonie.Colons
         }
 
 
-        public void VerifierStockEau()
+        public bool VerifierStock(int ressource) // Ressource = 0 => eau, = 1 => blé , = 2 => viande
         {
             //On a le monde, vérifier si il est sur la taverne
+            bool verifPresence = false;
+            bool verifStock = true;
+            foreach (Auberge b in Planete.ListeBatiments)
+            {
+                if (b.PresenceTavernier == true)
+                {
+                    if (b.StockRessources[ressource] <= 0)
+                    {
+                        verifStock = false;
+                    }
+                    break; // Le Tavernier est présent dans la taverne
+                } ;
+            }
+            return verifStock;
         }
-        public void VerifierStockBle()
-        {
 
-        }
-        public void VerifierStockViande()
+        public void RemplirLeStockEau()
         {
-
+            
         }
 
 

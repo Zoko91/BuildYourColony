@@ -49,7 +49,7 @@ namespace TPGestionDeColonie
         {
             return idColon;
         }
-        public int[] Backpack { get; }
+        public int[] Backpack { get; set; }
 
         public Monde Planete { get; }
 

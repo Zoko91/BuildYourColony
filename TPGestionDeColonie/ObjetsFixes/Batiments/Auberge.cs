@@ -8,13 +8,18 @@ namespace TPGestionDeColonie.ObjetsFixes.Batiments
 {
     class Auberge:Batiment
     {
-        protected bool PresenceTavernier
+        public bool PresenceTavernier
         {
             get;
             set;
         }
+        public int[] StockRessources{get;set;}
 
-        public Auberge(List<Tuple<int, int>> positionObjet, int coutBois, int coutPierre, Monde planete) : base(positionObjet, coutBois, coutPierre, planete) { }
+        public Auberge(List<Tuple<int, int>> positionObjet, int coutBois, int coutPierre, Monde planete) : base(
+            positionObjet, coutBois, coutPierre, planete)
+        {
+            StockRessources = new int[] {0, 0, 0}; // Eau, blé, viande
+        }
 
 
         public override void Construire(int positionX, int positionY)

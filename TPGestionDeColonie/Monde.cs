@@ -19,11 +19,14 @@ namespace TPGestionDeColonie
 
         public List<Colon> ListePJ { get; }
         public List<ObjetFixe> ListeBlocs { get ;  }
+        
+        public List<Batiment> ListeBatiments { get; }
         // -----------------------------
 
         public Monde() {
             ListePJ = new List<Colon>();
             ListeBlocs = new List<ObjetFixe>();
+            ListeBatiments = new List<Batiment>();
             Hauteur = grille.GetLength(0);
             Largeur = grille.GetLength(1);
         }

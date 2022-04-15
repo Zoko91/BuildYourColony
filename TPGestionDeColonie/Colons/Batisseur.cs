@@ -107,6 +107,8 @@ namespace TPGestionDeColonie
         public void Construire(int numBat){
             // Detecte quel batiment la personne veut construire (utilisé dnas remplir les stocks, refaire une fonction)
         }
+        
+        public void AjouterBatiment(Batiment b) { Planete.ListeBatiments.Add(b); }
 
     }
 
