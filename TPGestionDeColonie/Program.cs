@@ -26,8 +26,8 @@ namespace TPGestionDeColonie
         
         static void Main(string[] args)
         {
-            //Console.WindowHeight = 50;
-            //Console.WindowWidth = 200;
+            Console.WindowHeight = 50;
+            Console.WindowWidth = 200;
             /*
             Console.WriteLine("==========================");
             Console.WriteLine();
@@ -120,10 +120,14 @@ namespace TPGestionDeColonie
                 string demande = $"Indiquez le nom du colon {listeDepart[i].GetType().Name} : ";
                 string space = new string(' ', demande.Length-2);
                 //Console.Write(space);
+                Console.SetCursorPosition(Console.WindowWidth / 3, Console.WindowHeight / 3);
+                
                 Console.WriteLine("╔" + new string('═',demande.Length*2) + "╗");
+                Console.Write(new string(' ', Console.WindowWidth / 3));
                 Console.WriteLine('║' + demande + new string(' ',demande.Length) + "║");
+                Console.Write(new string(' ', Console.WindowWidth / 3));
                 Console.WriteLine("╚" + new string('═', demande.Length * 2) + "╝");
-                Console.SetCursorPosition(demande.Length + 1, 1);
+                Console.SetCursorPosition(Console.WindowWidth / 3 + demande.Length +1, Console.WindowHeight / 3 + 1);
 
 
                 string nom = Console.ReadLine();

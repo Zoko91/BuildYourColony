@@ -196,19 +196,19 @@ namespace TPGestionDeColonie
                             {
                                 if (obj.GetType() == typeof(Arbre))
                                 {
-                                    grille[i, j] = " 🌴";
+                                    grille[i, j] = " A ";
                                     
                                 }
                                 else if(obj.GetType() == typeof(Rocher))
                                 {
-                                    grille[i, j] = " ⛰ ";
+                                    grille[i, j] = " R ";
                                 }
                                 else if (obj.GetType() == typeof(Ble))
                                 {
-                                    grille[i, j] = " 🟨";
+                                    grille[i, j] = " B ";
                                 }
                                 else if (obj.GetType()== typeof(Eau)){
-                                    grille[i,j] = " 🌊";
+                                    grille[i,j] = " E ";
                                 }
                             }
                         }
@@ -216,7 +216,7 @@ namespace TPGestionDeColonie
                         {
                             if (listeCoordonneesColons.Contains(coords))
                             {
-                                grille[i, j] = "🤵 ";
+                                grille[i, j] = " C ";
                             }
                         }
                     }
@@ -250,20 +250,20 @@ namespace TPGestionDeColonie
                             {
                                 if (obj.GetType() == typeof(Arbre))
                                 {
-                                    grille[i, j] = " 🌴";
+                                    grille[i, j] = " A ";
 
                                 }
                                 else if (obj.GetType() == typeof(Rocher))
                                 {
-                                    grille[i, j] = " ⛰ ";
+                                    grille[i, j] = " R ";
                                 }
                                 else if (obj.GetType() == typeof(Ble))
                                 {
-                                    grille[i, j] = " 🟨";
+                                    grille[i, j] = " B ";
                                 }
                                 else if (obj.GetType() == typeof(Eau))
                                 {
-                                    grille[i, j] = " 🌊";
+                                    grille[i, j] = " E ";
                                 }
                             }
                         }
@@ -271,7 +271,7 @@ namespace TPGestionDeColonie
                         {
                             if (listeCoordonneesColons.Contains(coords))
                             {
-                                grille[i, j] = "🤵 ";
+                                grille[i, j] = " C ";
                             }
                         }
                     }
@@ -286,38 +286,38 @@ namespace TPGestionDeColonie
             {
                 for (int j = 0; j < grille.GetLength(1); j++)
                 {
-                    if (grille[i, j] == " 🌴")
+                    if (grille[i, j] == " A ")
                     {
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
                         Console.Write(grille[i, j]);
                         Console.ResetColor();
                     }
-                    else if (grille[i, j] == " ⛰ ")
+                    else if (grille[i, j] == " R ")
                     {
                         Console.BackgroundColor = ConsoleColor.DarkGray;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
                         Console.Write(grille[i, j]);
                         Console.ResetColor();
                     }
-                    else if (grille[i, j] == "🤵 ")
+                    else if (grille[i, j] == " C ")
                     {
                         Console.BackgroundColor = ConsoleColor.Red;
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.Write(grille[i, j]);
                         Console.ResetColor();
                     }
-                    else if (grille[i, j] == " 🟨")
+                    else if (grille[i, j] == " B ")
                     {
                         Console.BackgroundColor = ConsoleColor.Yellow;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.Write(grille[i, j]);
                         Console.ResetColor();
                     }
-                    else if (grille[i, j] == " 🌊")
+                    else if (grille[i, j] == " E ")
                     {
                         Console.BackgroundColor = ConsoleColor.DarkBlue;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.ForegroundColor = ConsoleColor.DarkBlue;
                         Console.Write(grille[i, j]);
                         Console.ResetColor();
                     }
