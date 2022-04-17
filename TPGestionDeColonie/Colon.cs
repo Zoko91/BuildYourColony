@@ -196,6 +196,7 @@ namespace TPGestionDeColonie
                     }
                 }
             }
+
             positionColon = new Tuple<int, int>(positionX,  positionY);
 
         }

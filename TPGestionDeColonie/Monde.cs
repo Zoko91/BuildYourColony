@@ -51,16 +51,23 @@ namespace TPGestionDeColonie
             return true; //case disponible
         }
 
+        
+        public bool VerifListeCoordonnees(List<Tuple<int, int>> coordonnees) // Pour la construction des batiments ou des plans d'eau
+        {
+            for (int i = 0; i < coordonnees.Count; i++)
+            {
+                if (VerifCoordonnees(coordonnees[i])==false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
 
         public Tuple<int, int> GenererCoupleCoordonnees()
         {
-
-            //do{
             Tuple<int,int> coupleXY = new Tuple<int, int>(rng.Next(grille.GetLength(0)),rng.Next(grille.GetLength(1)));
-            //}
-            //while()
-
 
             return coupleXY;
         }
@@ -72,7 +79,7 @@ namespace TPGestionDeColonie
             while (VerifCoordonnees(coordonnees)==false){
                 coordonnees=GenererCoupleCoordonnees();
             }
-            int proba = rng.Next(1,4);
+            int proba = rng.Next(1,3);
             List<Tuple<int, int>> listeCoordonnees = new List<Tuple<int, int>>();
             listeCoordonnees.Add(coordonnees);
             if (proba==1)
@@ -80,17 +87,60 @@ namespace TPGestionDeColonie
                 Arbre arbre = new Arbre(listeCoordonnees,this) ;
                 ListeBlocs.Add(arbre);
             }
-            else if(proba ==2) {
+            else {
                 Rocher rocher = new Rocher(listeCoordonnees,this);
                 ListeBlocs.Add(rocher);
             }
-            else {
-                Eau eau = new Eau(listeCoordonnees,this);
-                ListeBlocs.Add(eau);
-            }
         }
 
-        
+        public List<Tuple<int,int>> GenererPremierPlanDEau()
+        {
+            List<Tuple<int, int>> listeCoordEau = new List<Tuple<int, int>>();
+            int positionXEau = rng.Next(0, Hauteur - 1);
+            int positionYEau = rng.Next(0, Largeur - 1);
+            /* forme 
+             * E E E    00 01 02
+             * E E      10 11
+             * E        20
+             */
+            Tuple<int, int> coordEau00 = new Tuple<int, int>(positionXEau, positionYEau);
+            Tuple<int, int> coordEau01 = new Tuple<int, int>(positionXEau, positionYEau + 1);
+            Tuple<int, int> coordEau02 = new Tuple<int, int>(positionXEau, positionYEau + 2);
+            Tuple<int, int> coordEau10 = new Tuple<int, int>(positionXEau + 1, positionYEau);
+            Tuple<int, int> coordEau11 = new Tuple<int, int>(positionXEau + 1, positionYEau + 1);
+            Tuple<int, int> coordEau20 = new Tuple<int, int>(positionXEau + 2, positionYEau);
+            listeCoordEau.Add(coordEau00);
+            listeCoordEau.Add(coordEau01);
+            listeCoordEau.Add(coordEau02);
+            listeCoordEau.Add(coordEau10);
+            listeCoordEau.Add(coordEau11);
+            listeCoordEau.Add(coordEau20);
+            return listeCoordEau;
+        }
+
+        public List<Tuple<int, int>> GenererDeuxiemePlanDEau()
+        {
+            List<Tuple<int, int>> listeCoordEau = new List<Tuple<int, int>>();
+            int positionXEau = rng.Next(0, Hauteur - 1);
+            int positionYEau = rng.Next(1, Largeur - 1);
+            /* forme 
+             *   E           01 
+             * E E E      10 11 12
+             *   E           21
+             */
+            Tuple<int, int> coordEau01 = new Tuple<int, int>(positionXEau, positionYEau);
+            Tuple<int, int> coordEau10 = new Tuple<int, int>(positionXEau+1, positionYEau - 1);
+            Tuple<int, int> coordEau11 = new Tuple<int, int>(positionXEau+1, positionYEau);
+            Tuple<int, int> coordEau12 = new Tuple<int, int>(positionXEau + 1, positionYEau + 1);
+            Tuple<int, int> coordEau21 = new Tuple<int, int>(positionXEau + 2, positionYEau);
+
+            listeCoordEau.Add(coordEau01);
+            listeCoordEau.Add(coordEau10);
+            listeCoordEau.Add(coordEau11);
+            listeCoordEau.Add(coordEau12);
+            listeCoordEau.Add(coordEau21);
+            return listeCoordEau;
+        }
         public void GenererMonde()
         {
             List<Tuple<int, int>> listeCoordonneesColons = new List<Tuple<int, int>>();
@@ -99,7 +149,34 @@ namespace TPGestionDeColonie
             {
                 listeCoordonneesColons.Add(col.getPosition());
             }
-            for (int i = 0; i<40; i++){
+
+            // Générer les plans d'eau
+            // ============================================================= //
+
+            int nombrePlansEau = Hauteur/10;
+            int nbPremierPlan = rng.Next(1,3);
+            int nbDeuxiemePlan = nombrePlansEau - nbPremierPlan;
+            for(int j = 0; j< nbPremierPlan; j++){
+                List<Tuple<int, int>> listeCoordEau = GenererPremierPlanDEau(); 
+                while(VerifListeCoordonnees(listeCoordEau)==false){ // tant qu'il y a des blocs / colons bloquant la génération
+                    listeCoordEau=GenererPremierPlanDEau();
+                }
+                Eau eau = new Eau(listeCoordEau,this);
+                ListeBlocs.Add(eau); // ajout de l'eau à la liste des blocs
+                
+            }
+            for(int l = 0; l< nbDeuxiemePlan; l++){
+                List<Tuple<int, int>> listeCoordEau = GenererDeuxiemePlanDEau(); 
+                while(VerifListeCoordonnees(listeCoordEau)==false){ // tant qu'il y a des blocs / colons bloquant la génération
+                    listeCoordEau=GenererDeuxiemePlanDEau();        // on regénère un plan d'eau
+                }
+                Eau eau = new Eau(listeCoordEau,this);
+                ListeBlocs.Add(eau);
+            }
+
+            // ============================================================= //
+
+            for (int i = 0; i< Math.Floor(Largeur*1.57); i++){
                 GenererBloc(); //génère tous les blocs
             }
             for (int i=0; i<grille.GetLength(0); i++)
@@ -146,6 +223,8 @@ namespace TPGestionDeColonie
                 }   
             }
         }
+
+
         public void MettreAJourMonde()
         {
             List<Tuple<int, int>> listeCoordonneesColons = new List<Tuple<int, int>>();

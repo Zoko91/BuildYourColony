@@ -28,11 +28,17 @@ namespace TPGestionDeColonie
         {
             //Console.WindowHeight = 50;
             //Console.WindowWidth = 200;
-
+            /*
+            Console.WriteLine("==========================");
+            Console.WriteLine();
+            Console.WriteLine("==========================");
+            Console.SetCursorPosition(0, 1);
+            */
+            
             Monde planete = new Monde();
 
             List<Colon> listeColons = CreerColonsDepart(planete);
-
+            
             planete.GenererMonde();
             planete.AfficherMonde();
             Console.WriteLine();
@@ -61,17 +67,11 @@ namespace TPGestionDeColonie
             }
             */
 
+
+            
             int x = int.Parse(Console.ReadLine());
             int y = int.Parse(Console.ReadLine());
 
-            /*
-            foreach (Colon c in listeColons)
-            {             
-                if (c.getId() == 1)
-                {
-                    c.Planter();
-                }                 
-            }*/
 
             listeColons[0].SeDeplacerVersItem(x,y);
             // listeColons[1].Deplacer(0,25);
@@ -87,6 +87,8 @@ namespace TPGestionDeColonie
             listeColons[1].SeDeplacerVersItem(targetX,targetY);
 
             planete.MettreAJourMonde();
+            
+
 
             Console.ReadLine();
         }
@@ -115,8 +117,17 @@ namespace TPGestionDeColonie
             
             for (int i = 0; i < listeDepart.Count; i++)
             {
-                Console.Write($"Indiquez le nom du colon {listeDepart[i].GetType().Name} : ");
+                string demande = $"Indiquez le nom du colon {listeDepart[i].GetType().Name} : ";
+                string space = new string(' ', demande.Length-2);
+                //Console.Write(space);
+                Console.WriteLine("╔" + new string('═',demande.Length*2) + "╗");
+                Console.WriteLine('║' + demande + new string(' ',demande.Length) + "║");
+                Console.WriteLine("╚" + new string('═', demande.Length * 2) + "╝");
+                Console.SetCursorPosition(demande.Length + 1, 1);
+
+
                 string nom = Console.ReadLine();
+                Console.Clear();
                 listeDepart[i].Nom = nom;
                 planete.AjouterColon(listeDepart[i]);
             }
