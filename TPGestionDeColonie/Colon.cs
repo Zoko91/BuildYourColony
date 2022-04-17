@@ -78,7 +78,7 @@ namespace TPGestionDeColonie
         {
             if (Endurance<20)
             {
-                Console.WriteLine("Tristan est raplapla");
+                Console.WriteLine($"{Nom} est raplapla.");
             }
         }
        
@@ -199,7 +199,114 @@ namespace TPGestionDeColonie
             positionColon = new Tuple<int, int>(positionX,  positionY);
 
         }
+        public void SeDeplacer1Iteration(int x, int y)
+        {
+            Endurance -= 1;
+            if (positionX != x && positionY != y)
+            {
+                if (positionX > x && positionY > y) // vers haut gauche
+                {
+                    if (Planete.VerifCoordonnees(new Tuple<int,int>(positionX-1, positionY-1))) // case en diagonale disponible, peut se déplacer
+                    {
+                        positionX -= 1;
+                        positionY -= 1;
+                    }
+                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX - 1, positionY))) //case du dessus disponible
+                    {
+                        positionX -= 1;
+                    }
+                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX , positionY-1))) //case de gauche disponible
+                    {
+                        positionY -= 1;
+                    }
+                }
+                else if (positionX < x && positionY > y) // vers bas gauche
+                {
+                    if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX + 1, positionY - 1))) // case en diagonale disponible, peut se déplacer
+                    {
+                        positionX += 1;
+                        positionY -= 1;
+                    }
+                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX + 1, positionY))) //case du bas disponible
+                    {
+                        positionX += 1;
+                    }
+                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX, positionY - 1))) //case de gauche disponible
+                    {
+                        positionY -= 1;
+                    }
+                }
+                else if (positionX > x && positionY < y) // vers haut droite
+                {
+                    if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX - 1, positionY + 1))) // case en diagonale disponible, peut se déplacer
+                    {
+                        positionX -= 1;
+                        positionY += 1;
+                    }
+                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX - 1, positionY))) //case du haut disponible
+                    {
+                        positionX -= 1;
+                    }
+                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX, positionY + 1))) //case de droite disponible
+                    {
+                        positionY += 1;
+                    }
+                }
+                else if (positionX < x && positionY < y) // vers bas droite
+                {
+                    if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX + 1, positionY + 1))) // case en diagonale disponible, peut se déplacer
+                    {
+                        positionX += 1;
+                        positionY += 1;
+                    }
+                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX + 1, positionY))) //case du bas disponible
+                    {
+                        positionX += 1;
+                    }
+                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX, positionY + 1))) //case de gauche disponible
+                    {
+                        positionY += 1;
+                    }
+                }
+            }
+            if (positionX == x) // on est sur la bonne ligne
+            {
+                if (positionY > y) // il faut se déplacer sur la gauche
+                {
+                    if (positionY != y)
+                    {
+                        positionY -= 1;
+                    }
+                }
+                else if (positionY < y) // il faut se déplacer sur la droite
+                {
+                    if (positionY != y)
+                    {
+                        positionY += 1;
+                    }
+                }
+            }
 
+            if (positionY == y) // on est sur la bonne colonne
+            {
+                if (positionX > x)
+                {
+                    if (positionX != x)
+                    {
+                        positionX -= 1;
+                    }
+                }
+                else if (positionX < y)
+                {
+                    if (positionX != x)
+                    {
+                        positionX += 1;
+                    }
+                }
+            }
+            positionColon = new Tuple<int, int>(positionX, positionY);
+
+        }
         public void SeDeplacerVersItem(int x, int y)
         {
             //cases autour de la cible : { x , y , distance au colon }
