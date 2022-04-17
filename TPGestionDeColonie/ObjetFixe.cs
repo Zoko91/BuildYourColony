@@ -43,5 +43,11 @@ namespace TPGestionDeColonie
             //return false;
         }
 
+
+        public override string ToString()
+        {
+            return $"{positionObjet.FirstOrDefault().Item1} et {positionObjet.FirstOrDefault().Item2} + nature: {this.GetType().Name}";
+        }
+
     }
 }

@@ -26,32 +26,40 @@ namespace TPGestionDeColonie
         
         static void Main(string[] args)
         {
-           // Console.WindowHeight = 50;
-          //  Console.WindowWidth = 200;
+            //Console.WindowHeight = 50;
+            //Console.WindowWidth = 200;
 
-          Monde planete = new Monde();
+            Monde planete = new Monde();
 
             List<Colon> listeColons = CreerColonsDepart(planete);
 
             planete.GenererMonde();
             planete.AfficherMonde();
             Console.WriteLine();
-            planete.AfficherFenetre(7,7);
+            //planete.AfficherFenetre(7,7);
 
             Console.WriteLine();
             Console.WriteLine();
 
+/*
+            Tuple<int,int> testTuple = new Tuple<int, int>(1,2);
+            List<Tuple<int,int>> testList = new List<Tuple<int, int>>();
+            testList.Add(testTuple);
+            Arbre arb = new Arbre(testList, planete);
+            Console.WriteLine(arb.GetPositionObjet().FirstOrDefault().Item1);
+            Console.WriteLine(arb.GetPositionObjet().FirstOrDefault().Item2);
 
-
-
+            Console.WriteLine(listeColons[1].CalculerDistancePlusProche(arb));
+*/
             // ======= ZONE TEST FONCTIONS ======== //
-
+            /*
             foreach (Colon col in listeColons)
             {
                 Console.WriteLine(col.ToString());
                 Console.WriteLine(col.getPosition());
                 Console.WriteLine();
             }
+            */
 
             int x = int.Parse(Console.ReadLine());
             int y = int.Parse(Console.ReadLine());
@@ -65,39 +73,21 @@ namespace TPGestionDeColonie
                 }                 
             }*/
 
-            listeColons[1].SeDeplacerVersItem(x,y);
+            listeColons[0].SeDeplacerVersItem(x,y);
             // listeColons[1].Deplacer(0,25);
             // listeColons[2].Deplacer(3, 27);
 
             planete.MettreAJourMonde();
-            foreach (Colon col in listeColons)
-            {
-                Console.WriteLine(col.ToString());
-                Console.WriteLine(col.getPosition());
-                Console.WriteLine();
-            }
-
-            planete.AfficherMonde();
-
-            /*
-            Mineur bla = listeColons.FirstOrDefault(predicate: bla  =>  bla.Sante  ==  100);
-            Console.WriteLine(bla.ToString());
-
-            /*
-            if (Mouse.LeftButton == MouseDownEvent)
-            {
-                Console.WriteLine("CLICK");
-            }
-
-            if (Mouse.LeftButton == MouseDownEvent)
-            {
-                Console.WriteLine("CLICK 2");
-            }*/
 
             // ==================================== //
 
 
-            listeColons[0].RechercherPlusProcheItem();
+            int targetX = listeColons[1].RechercherPlusProcheItem().Item1;
+            int targetY = listeColons[1].RechercherPlusProcheItem().Item2;
+            listeColons[1].SeDeplacerVersItem(targetX,targetY);
+
+            planete.MettreAJourMonde();
+
             Console.ReadLine();
         }
 

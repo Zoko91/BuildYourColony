@@ -38,14 +38,14 @@ using System.Threading.Tasks;
         {
             if (Planete.ListeBlocs.OfType<Puits>().Any())
             {
-                int x = RechercherPlusProcheItem()[0];
-                int y = RechercherPlusProcheItem()[1];
+                int x = RechercherPlusProcheItem().Item1;
+                int y = RechercherPlusProcheItem().Item2;
                 SeDeplacerVersItem(x,y);
                 while (Backpack[3]< 100)
                 {
                     RemplirLeSeau();
                 }
-                AllerVersBatiment("Auberge");
+               // AllerVersBatiment("Auberge");
                 
             }
         }

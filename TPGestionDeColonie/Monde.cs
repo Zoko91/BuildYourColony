@@ -12,7 +12,7 @@ namespace TPGestionDeColonie
         // Variables -------------------
         Random rng = new Random();
 
-        public string[,] grille = new string[30, 30];
+        public string[,] grille = new string[35, 35];
 
         public int Hauteur { get; private set; }
         public int Largeur { get; private set; }
@@ -55,7 +55,13 @@ namespace TPGestionDeColonie
 
         public Tuple<int, int> GenererCoupleCoordonnees()
         {
+
+            //do{
             Tuple<int,int> coupleXY = new Tuple<int, int>(rng.Next(grille.GetLength(0)),rng.Next(grille.GetLength(1)));
+            //}
+            //while()
+
+
             return coupleXY;
         }
 
@@ -66,7 +72,7 @@ namespace TPGestionDeColonie
             while (VerifCoordonnees(coordonnees)==false){
                 coordonnees=GenererCoupleCoordonnees();
             }
-            int proba = rng.Next(1,3);
+            int proba = rng.Next(1,4);
             List<Tuple<int, int>> listeCoordonnees = new List<Tuple<int, int>>();
             listeCoordonnees.Add(coordonnees);
             if (proba==1)
@@ -74,9 +80,13 @@ namespace TPGestionDeColonie
                 Arbre arbre = new Arbre(listeCoordonnees,this) ;
                 ListeBlocs.Add(arbre);
             }
-            else {
+            else if(proba ==2) {
                 Rocher rocher = new Rocher(listeCoordonnees,this);
                 ListeBlocs.Add(rocher);
+            }
+            else {
+                Eau eau = new Eau(listeCoordonnees,this);
+                ListeBlocs.Add(eau);
             }
         }
 
@@ -89,7 +99,7 @@ namespace TPGestionDeColonie
             {
                 listeCoordonneesColons.Add(col.getPosition());
             }
-            for (int i = 0; i<20; i++){
+            for (int i = 0; i<40; i++){
                 GenererBloc(); //génère tous les blocs
             }
             for (int i=0; i<grille.GetLength(0); i++)
@@ -119,6 +129,9 @@ namespace TPGestionDeColonie
                                 else if (obj.GetType() == typeof(Ble))
                                 {
                                     grille[i, j] = " 🟨";
+                                }
+                                else if (obj.GetType()== typeof(Eau)){
+                                    grille[i,j] = " 🌊";
                                 }
                             }
                         }
@@ -169,6 +182,10 @@ namespace TPGestionDeColonie
                                 {
                                     grille[i, j] = " 🟨";
                                 }
+                                else if (obj.GetType() == typeof(Eau))
+                                {
+                                    grille[i, j] = " 🌊";
+                                }
                             }
                         }
                         foreach (Colon c in ListePJ)
@@ -181,6 +198,7 @@ namespace TPGestionDeColonie
                     }
                 }
             }
+            AfficherMonde();
         }
 
         public void AfficherMonde()
@@ -213,6 +231,13 @@ namespace TPGestionDeColonie
                     else if (grille[i, j] == " 🟨")
                     {
                         Console.BackgroundColor = ConsoleColor.Yellow;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write(grille[i, j]);
+                        Console.ResetColor();
+                    }
+                    else if (grille[i, j] == " 🌊")
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkBlue;
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.Write(grille[i, j]);
                         Console.ResetColor();
