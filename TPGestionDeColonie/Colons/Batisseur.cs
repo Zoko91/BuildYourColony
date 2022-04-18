@@ -21,7 +21,7 @@ namespace TPGestionDeColonie
 
         public void ViderEntrepot(int bois, int pierre)
         {
-            Entrepot ent = Planete.ListeBlocs.OfType<Entrepot>().FirstOrDefault();
+            Entrepot ent = Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault();
             if (ent.StockRessources[0] >= bois && ent.StockRessources[1] >= pierre)
             {
                 Backpack[0] += bois;
@@ -41,12 +41,12 @@ namespace TPGestionDeColonie
         {
             int besoinPierre = 0;
             int besoinBois = 0;
-            Entrepot ent = Planete.ListeBlocs.OfType<Entrepot>().FirstOrDefault();
+            Entrepot ent = Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault();
             if (numBat == 1)
             {
                 if (Backpack[0] < 20 || Backpack[1] < 30)
                 {
-                    if (Planete.ListeBlocs.OfType<Entrepot>().Any())
+                    if (Planete.ListeBatiments.OfType<Entrepot>().Any())
                     {
                         if (Backpack[0] < 20)
                         {
@@ -64,7 +64,7 @@ namespace TPGestionDeColonie
                         AcquerirCible();
                           */
 
-                        if (Planete.ListeBlocs.OfType<Entrepot>().FirstOrDefault().GetPositionObjet().Contains(getPosition()))
+                        if (Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet().Contains(getPosition()))
                         {
                             ViderEntrepot(besoinBois, besoinPierre);
                             PerdreCible();
@@ -77,7 +77,7 @@ namespace TPGestionDeColonie
             {
                 if (Backpack[0] < 30 || Backpack[1] < 10)
                 {
-                    if (Planete.ListeBlocs.OfType<Entrepot>().Any())
+                    if (Planete.ListeBatiments.OfType<Entrepot>().Any())
                     {
                         if (Backpack[0] < 30)
                         {
@@ -88,7 +88,7 @@ namespace TPGestionDeColonie
                             besoinPierre = 10 - Backpack[1];
                         }
 
-                        if (Planete.ListeBlocs.OfType<Entrepot>().FirstOrDefault().GetPositionObjet().Contains(getPosition()))
+                        if (Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet().Contains(getPosition()))
                         {
                             ViderEntrepot(besoinBois, besoinPierre);
                             PerdreCible();
@@ -101,13 +101,13 @@ namespace TPGestionDeColonie
             {
                 if (Backpack[0] < 30)
                 {
-                    if (Planete.ListeBlocs.OfType<Entrepot>().Any())
+                    if (Planete.ListeBatiments.OfType<Entrepot>().Any())
                     {
                         if (Backpack[0] < 30)
                         {
                             besoinBois = 30 - Backpack[0];
                         }
-                        if (Planete.ListeBlocs.OfType<Entrepot>().FirstOrDefault().GetPositionObjet().Contains(getPosition()))
+                        if (Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet().Contains(getPosition()))
                         {
                             ViderEntrepot(besoinBois, besoinPierre);
                             PerdreCible();
@@ -119,7 +119,7 @@ namespace TPGestionDeColonie
             {
                 if (Backpack[0] < 5 || Backpack[1] < 15)
                 {
-                    if (Planete.ListeBlocs.OfType<Entrepot>().Any())
+                    if (Planete.ListeBatiments.OfType<Entrepot>().Any())
                     {
                         if (Backpack[0] < 5)
                         {
@@ -130,7 +130,7 @@ namespace TPGestionDeColonie
                             besoinPierre = 15 - Backpack[1];
                         }
 
-                        if (Planete.ListeBlocs.OfType<Entrepot>().FirstOrDefault().GetPositionObjet().Contains(getPosition()))
+                        if (Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet().Contains(getPosition()))
                         {
                             ViderEntrepot(besoinBois, besoinPierre);
                             PerdreCible();
@@ -142,13 +142,13 @@ namespace TPGestionDeColonie
             {
                 if (Backpack[0] < 40)
                 {
-                    if (Planete.ListeBlocs.OfType<Entrepot>().Any())
+                    if (Planete.ListeBatiments.OfType<Entrepot>().Any())
                     {
                         if (Backpack[0] < 40)
                         {
                             besoinBois = 40 - Backpack[0];
                         }
-                        if (Planete.ListeBlocs.OfType<Entrepot>().FirstOrDefault().GetPositionObjet().Contains(getPosition()))
+                        if (Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet().Contains(getPosition()))
                         {
                             ViderEntrepot(besoinBois, besoinPierre);
                             PerdreCible();
@@ -168,8 +168,9 @@ namespace TPGestionDeColonie
             // ----------------------------------------- //
             // Etape de construction
             // ----------------------------------------- // 
-            ConstructionBatiment(numBat);
             PerdreCible(); // Mission accomplie, plus de cible
+            ConstructionBatiment(numBat);
+            
 
         }
 
@@ -210,7 +211,9 @@ namespace TPGestionDeColonie
                     {
                         Console.WriteLine("Le batisseur ne dispose pas d'assez de ressources pour cela !");
                         Console.WriteLine("Le batisseur de dirige vers l'entrepot");
-                        //DefinirCible(Planete.ListeBatiments.OfType<Entrepot>().First())
+                        DefinirCible(Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet()[1].Item1,
+                            Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet()[1].Item2);
+                        AcquerirCible();
                     }
                 }
                 else
@@ -259,6 +262,10 @@ namespace TPGestionDeColonie
                     else
                     {
                         Console.WriteLine("Le batisseur ne dispose pas d'assez de ressources pour cela !");
+                        Console.WriteLine("Le batisseur de dirige vers l'entrepot");
+                        DefinirCible(Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet()[1].Item1,
+                            Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet()[1].Item2);
+                        AcquerirCible();
                     }
                 }
                 else
@@ -290,6 +297,10 @@ namespace TPGestionDeColonie
                 else
                 {
                     Console.WriteLine("Le batisseur ne dispose pas d'assez de ressources pour cela !");
+                    Console.WriteLine("Le batisseur de dirige vers l'entrepot");
+                    DefinirCible(Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet()[1].Item1,
+                        Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet()[1].Item2);
+                    AcquerirCible();
                 }
 
             }
@@ -315,6 +326,10 @@ namespace TPGestionDeColonie
                 AjouterBatiment(puits);}
                 else{
                     Console.WriteLine("Le batisseur ne dispose pas d'assez de ressources pour cela !");
+                    Console.WriteLine("Le batisseur de dirige vers l'entrepot");
+                    DefinirCible(Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet()[1].Item1,
+                        Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet()[1].Item2);
+                    AcquerirCible();
                 }
 
             }
@@ -353,7 +368,10 @@ namespace TPGestionDeColonie
                     }
                     else{
                         Console.WriteLine("Le batisseur ne dispose pas d'assez de ressources pour cela !");
-
+                        Console.WriteLine("Le batisseur de dirige vers l'entrepot");
+                        DefinirCible(Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet()[1].Item1,
+                            Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet()[1].Item2);
+                        AcquerirCible();
                     }
 
                 }
