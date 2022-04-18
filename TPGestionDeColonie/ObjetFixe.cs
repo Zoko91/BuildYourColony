@@ -49,8 +49,8 @@ namespace TPGestionDeColonie
             Sante -= 100;
             if (Sante <= 0)
             {
-                Console.WriteLine(x + " "+ y);
-                Console.WriteLine("L'élément "+ GetType().Name + " est cassé");
+                //Console.WriteLine(x + " "+ y);
+                //Console.WriteLine("L'élément "+ GetType().Name + " est cassé");
                 Planete.grille[x,  y] = " x ";
                 foreach(ObjetFixe obj in Planete.ListeBlocs){
                     if(obj.GetPositionObjet().Contains(position)){

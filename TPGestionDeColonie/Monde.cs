@@ -286,9 +286,6 @@ namespace TPGestionDeColonie
                         foreach(Batiment obj in ListeBatiments){
                             if (obj.GetPositionObjet().Contains(coords))
                             {
-                                Console.WriteLine(" ========================== ");
-                                Console.WriteLine(coords.Item1 + " "+ coords.Item2);
-                                Console.WriteLine(" ========================== ");
                                 
                                 if (obj.GetType() == typeof(Auberge)){
                                     grille[i, j] = "AUB";
@@ -393,7 +390,7 @@ namespace TPGestionDeColonie
                     }
                     else if (grille[i, j] == "AUB" || grille[i, j] == "ENT" || grille[i, j] == "FRM" || grille[i, j] == "MSN" || grille[i, j] == "PUI")
                     {
-                        Console.BackgroundColor = ConsoleColor.Red;
+                        Console.BackgroundColor = ConsoleColor.DarkMagenta;
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(grille[i, j]);
                         Console.ResetColor();
@@ -412,6 +409,8 @@ namespace TPGestionDeColonie
             {
                 Console.Write("___");
             }
+            Console.WriteLine();
+
         }
 
 

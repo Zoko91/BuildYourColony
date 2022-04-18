@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TPGestionDeColonie.ObjetsFixes;
+using TPGestionDeColonie.ObjetsFixes.Batiments;
 using TPGestionDeColonie.Colons;
 
 
@@ -30,105 +31,73 @@ namespace TPGestionDeColonie
         static void Main(string[] args)
         {
 
-            /*
-            Console.WriteLine("==========================");
-            Console.WriteLine();
-            Console.WriteLine("==========================");
-            Console.SetCursorPosition(0, 1);
-            */
             Console.WindowHeight = 50;
             Console.WindowWidth = 200;
 
             Monde planete = new Monde();
 
             List<Colon> listeColons = CreerColonsDepart(planete);
-            
+
             planete.GenererMonde();
             planete.AfficherMonde();
             Console.WriteLine();
-            Console.WriteLine("===================================");    
-            /*foreach(ObjetFixe obj in planete.ListeBlocs){
-                    Tuple<int, int> position = obj.GetPositionObjet().FirstOrDefault();
-                    Console.WriteLine(planete.ListeBlocs.Find(z => z.GetPositionObjet().First() == position));
-                }
-            Console.WriteLine("==================================="); */   
-            //planete.AfficherFenetre(7,7);
+            Console.WriteLine("===================================");
 
-            Console.WriteLine();
-            Console.WriteLine();
-            /*
-            Console.WriteLine(planete.ListePJ[6].ToString());
-            planete.ListePJ[6].Construire();
-            Console.WriteLine("======== Affichage listeBatiments ========");
-            foreach(Batiment bat in planete.ListeBatiments){
-                Console.WriteLine(bat.GetType().Name);
-            }
             Console.ReadLine();
-            */
-            /*
-                        Tuple<int,int> testTuple = new Tuple<int, int>(1,2);
-                        List<Tuple<int,int>> testList = new List<Tuple<int, int>>();
-                        testList.Add(testTuple);
-                        Arbre arb = new Arbre(testList, planete);
-                        Console.WriteLine(arb.GetPositionObjet().FirstOrDefault().Item1);
-                        Console.WriteLine(arb.GetPositionObjet().FirstOrDefault().Item2);
-
-                        Console.WriteLine(listeColons[1].CalculerDistancePlusProche(arb));
-            */
-            // ======= ZONE TEST FONCTIONS ======== //
+            Console.WriteLine();
+            Console.WriteLine();
 
 
-
-
-
-            /*
-            int x = int.Parse(Console.ReadLine());
-            int y = int.Parse(Console.ReadLine());
-
-
-            listeColons[0].SeDeplacerVersItem(x,y);
-            */
-            // listeColons[1].Deplacer(0,25);
-            // listeColons[2].Deplacer(3, 27);
-            /*
-            foreach (Colon col in listeColons)
+            while (planete.GameOver() == false)
             {
-                Console.WriteLine(col.ToString());
-                Console.WriteLine(col.getPosition());
-                Console.WriteLine();
-            }
-            */
-
-            // ==================================== //
-
-            /*
-            int targetX = listeColons[1].RechercherPlusProcheItem().Item1;
-            int targetY = listeColons[1].RechercherPlusProcheItem().Item2;
-            listeColons[1].SeDeplacerVersItem(targetX,targetY);
-            targetX = listeColons[3].RechercherPlusProcheItem().Item1;
-            targetY = listeColons[3].RechercherPlusProcheItem().Item2;
-            listeColons[3].SeDeplacerVersItem(targetX, targetY);
-
-            planete.MettreAJourMonde();*/
-
-            while(planete.GameOver()==false){
                 Console.WriteLine();
                 JouerUnTour(listeColons, planete);
                 string test = Console.ReadLine();
-                if (test == "manuel"){
-                    Console.WriteLine("======================================");
-                    Console.WriteLine("Liste des actions possibles :\n1 - Construire\n");
-                    int numAction = int.Parse(Console.ReadLine());
-                    while(numAction > 6 || numAction <1){
-                        Console.WriteLine("Veuillez indiquez un numéro d'action correct :");
-                        numAction = int.Parse(Console.ReadLine());
-                    }
-                    if (numAction == 1){
-                        
+                if (test == "manuel")
+                {
+                    ProposerActions(planete);
+                }
 
+            }
+        }
+
+        public static void ProposerActions(Monde planete)
+        {
+            Console.WriteLine("======================================");
+            Console.WriteLine("Liste des actions possibles :\n1 - Construire\nSTOP pour arrêter");
+            int numAction = int.Parse(Console.ReadLine());
+            while (numAction > 6 || numAction < 1)
+            {
+                Console.WriteLine("Veuillez indiquez un numéro d'action correct :");
+                numAction = int.Parse(Console.ReadLine());
+            }
+            if (numAction == 1)
+            {
+                foreach (Colon colon in planete.ListePJ)
+                {
+                    if (colon.GetType() == typeof(Batisseur))
+                    {
+                        Batisseur bat = (Batisseur)colon;
+                        if (bat.EstOccupe)
+                        {
+                            Console.WriteLine($"Le batisseur {bat.Nom} est occupé");
+                            ProposerActions(planete);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ou souhaitez vous déplacer le Batisseur pour construire votre batiment?");
+                            Console.Write("Coordonnée ligne: ");
+                            int posX = int.Parse(Console.ReadLine());
+                            Console.Write("Coordonnée colonne: ");
+                            int posY = int.Parse(Console.ReadLine());
+
+                            bat.DefinirCible(posX, posY);
+                            bat.AcquerirCible(); // le batisseur acquiert une cible
+                        }
+                        break;
                     }
                 }
-                
+
             }
         }
 
@@ -136,41 +105,41 @@ namespace TPGestionDeColonie
 
         public static List<Colon> CreerColonsDepart(Monde planete)
         {
-            int milieuGrilleHauteur = (int)Math.Floor((double)planete.Hauteur/2);
-            int milieuGrilleLargeur = (int)Math.Floor((double)planete.Largeur/2);
+            int milieuGrilleHauteur = (int)Math.Floor((double)planete.Hauteur / 2);
+            int milieuGrilleLargeur = (int)Math.Floor((double)planete.Largeur / 2);
             List<Colon> listeDepart = new List<Colon>();
 
-            Paysan p = new Paysan("p", milieuGrilleHauteur, milieuGrilleLargeur-1, 100, 100, 100, 100, planete);
+            Paysan p = new Paysan("p", milieuGrilleHauteur, milieuGrilleLargeur - 1, 100, 100, 100, 100, planete);
             Bucheron b1 = new Bucheron("p", milieuGrilleHauteur, milieuGrilleLargeur, 100, 100, 100, 100, planete);
-            Batisseur ba = new Batisseur("p", milieuGrilleHauteur, milieuGrilleLargeur+1, 100, 100, 100, 100, planete);
+            Batisseur ba = new Batisseur("p", milieuGrilleHauteur, milieuGrilleLargeur + 1, 100, 100, 100, 100, planete);
             Batisseur ba2 = new Batisseur("p", 2, 2, 100, 100, 100, 100, planete);
 
-            Mineur m = new Mineur("Mineur", milieuGrilleHauteur+1, milieuGrilleLargeur-1, 100, 100, 100, 100, planete);
-            Tavernier t = new Tavernier("p", milieuGrilleHauteur+1, milieuGrilleHauteur, 100, 100, 100, 100, planete);
-            Bucheron b2 = new Bucheron("p", milieuGrilleHauteur+1, milieuGrilleLargeur+1, 100, 100, 100, 100, planete);
+            Mineur m = new Mineur("Mineur", milieuGrilleHauteur + 1, milieuGrilleLargeur - 1, 100, 100, 100, 100, planete);
+            Tavernier t = new Tavernier("p", milieuGrilleHauteur + 1, milieuGrilleHauteur, 100, 100, 100, 100, planete);
+            Bucheron b2 = new Bucheron("p", milieuGrilleHauteur + 1, milieuGrilleLargeur + 1, 100, 100, 100, 100, planete);
 
-            listeDepart.Add(p); 
-            listeDepart.Add(b1); 
-            listeDepart.Add(ba); 
-            listeDepart.Add(m); 
-            listeDepart.Add(t); 
-            listeDepart.Add(b2); 
+            listeDepart.Add(p);
+            listeDepart.Add(b1);
+            listeDepart.Add(ba);
+            listeDepart.Add(m);
+            listeDepart.Add(t);
+            listeDepart.Add(b2);
 
-            
-            
+
+
             for (int i = 0; i < listeDepart.Count; i++)
             {
                 string demande = $"Indiquez le nom du colon {listeDepart[i].GetType().Name} : ";
-                string space = new string(' ', demande.Length-2);
+                string space = new string(' ', demande.Length - 2);
                 //Console.Write(space);
                 Console.SetCursorPosition(Console.WindowWidth / 3, Console.WindowHeight / 3);
-                
-                Console.WriteLine("╔" + new string('═',demande.Length*2) + "╗");
+
+                Console.WriteLine("╔" + new string('═', demande.Length * 2) + "╗");
                 Console.Write(new string(' ', Console.WindowWidth / 3));
-                Console.WriteLine('║' + demande + new string(' ',demande.Length) + "║");
+                Console.WriteLine('║' + demande + new string(' ', demande.Length) + "║");
                 Console.Write(new string(' ', Console.WindowWidth / 3));
                 Console.WriteLine("╚" + new string('═', demande.Length * 2) + "╝");
-                Console.SetCursorPosition(Console.WindowWidth / 3 + demande.Length +1, Console.WindowHeight / 3 + 1);
+                Console.SetCursorPosition(Console.WindowWidth / 3 + demande.Length + 1, Console.WindowHeight / 3 + 1);
 
 
                 string nom = Console.ReadLine();
@@ -186,61 +155,111 @@ namespace TPGestionDeColonie
 
         public static void JouerUnTour(List<Colon> listeColons, Monde planete)
         {
-            foreach(Colon col in listeColons)
+            //Console.Clear();
+            foreach (Colon col in listeColons)
             {
-                if (col.GetType() == typeof(Bucheron) || col.GetType() == typeof(Mineur) ) // si le colon n'a pas déjà un batiment ciblé
+                //if (col.GetType() == typeof(Bucheron) || col.GetType() == typeof(Mineur)) // si le colon n'a pas déjà un batiment ciblé
+                //{
+                if (col.ATIlCible() == false) // Si pas de cible définie
                 {
-                    if (col.ATIlCible() == false)
-                    {
+                    if (col.GetType() == typeof(Bucheron) || col.GetType() == typeof(Mineur))
+                    { // Bucherons et mineurs doivent trouver l'objet le plus proche
                         Tuple<int, int> coords = col.RechercherPlusProcheItem();
-                        
+
                         int targetX = coords.Item1;
                         int targetY = coords.Item2;
 
                         col.DefinirCible(targetX, targetY);
                         col.AcquerirCible(); // le colon a une cible
-                        
-                        foreach(ObjetFixe obj in planete.ListeBlocs)
+
+                        foreach (ObjetFixe obj in planete.ListeBlocs)
                         { // définir l'objet le plus proche comme ciblé    
-                            if (obj.GetPositionObjet().Contains(coords)){
+                            if (obj.GetPositionObjet().Contains(coords))
+                            {
                                 obj.DevenirCible();
                             }
                         }
                         col.SeDeplacerVersItem(targetX, targetY);
-                  
                     }
-
-                    else if (!col.getPosition().Equals(col.PlusProcheDistanceVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2))) // si le colon a déjà une cible et n'est pas sur la case adjacente
+                }
+                else if (col.GetType() == typeof(Batisseur))
+                {
+                    if (!col.getPosition().Equals(col.RecupererCoordonneesCible()))
                     {
-                        Console.WriteLine("position trouvée");
-                        col.SeDeplacerVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
+                        col.SeDeplacer(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
                     }
-                    else if(col.getPosition().Equals(col.PlusProcheDistanceVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2)))
+                    else
                     {
-                        if (col.GetType() == typeof(Bucheron))
+                        Batisseur bat = (Batisseur)col;
+                        int numBat = ChoixBatiment();
+                        if (planete.ListeBatiments.OfType<Entrepot>().Any()) // s'il existe un entrepôt
                         {
-                            col.Couper(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
+                            if (planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet().Contains(bat.getPosition()))
+                            {
+                                bat.RemplirLeStock(numBat);
+                            }
+                            else
+                            {
+                                bat.Construire(numBat);
+                            }
                         }
-                        else if (col.GetType() == typeof(Mineur))
+                        else
                         {
-                            col.Miner(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
+                            while (numBat != 1) // Première construction : Il ne peut construire qu'un entrepot car ce batiment est essentiel
+                            {
+                                Console.WriteLine("/!\\ Il faut construire un entrepôt pour bien débuter");
+                                numBat = ChoixBatiment();
+                            }
+                            bat.Construire(numBat);
                         }
                     }
                 }
-                //Console.WriteLine(col.ToString());    
-                //Console.WriteLine(planete.ListeBlocs.ToString());
-            }
-           
 
+                else if (!col.getPosition().Equals(col.PlusProcheDistanceVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2))) // si le colon a déjà une cible et n'est pas sur la case adjacente
+                {
+                    col.SeDeplacerVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
+                }
+                else if (col.getPosition().Equals(col.PlusProcheDistanceVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2)))
+                {
+                    if (col.GetType() == typeof(Bucheron))
+                    {
+                        col.Couper(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
+                    }
+                    else if (col.GetType() == typeof(Mineur))
+                    {
+                        col.Miner(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
+                    }
+                }
+                //  }
+
+            }
             planete.MettreAJourMonde();
+
+
+        }
+        public static int ChoixBatiment()
+        {
+            Console.WriteLine("Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"
+                    + "- 2 : Taverne (Bois : 30, Roche : 10\n- 3 : Maison (Bois : 30, Roche : 0)\n"
+                     + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)");
+            int numBat = int.Parse(Console.ReadLine());
+            while (numBat > 6 || numBat < 0)
+            {
+                Console.WriteLine("Veuillez indiquer un numéro valide\n// ==================================== //");
+                Console.WriteLine("Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"
+                + "- 2 : Taverne (Bois : 30, Roche : 10\n- 3 : Maison (Bois : 30, Roche : 0)\n"
+                + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)");
+                numBat = int.Parse(Console.ReadLine());
+            }
+            return numBat;
         }
 
         // public void NouvelArrivant() { } // quand nouveau colon arrive de façon random
 
-        
-    
 
 
-        
-    } 
+
+
+
+    }
 }

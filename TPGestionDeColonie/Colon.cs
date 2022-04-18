@@ -165,7 +165,7 @@ namespace TPGestionDeColonie
 
         public virtual void Recolter(int x, int y) { } //pour Paysan
 
-        public virtual void Construire() { } // pour Batisseur
+        public virtual void Construire(int numBat) {} // pour Batisseur
 
 
         public void Deplacer(int x, int y)
@@ -354,17 +354,14 @@ namespace TPGestionDeColonie
 
             if (haut[2] == distanceMin)
             {
-
                 return new Tuple<int, int>(haut[0], haut[1]);
             }
             else if (bas[2] == distanceMin)
             {
-
                 return new Tuple<int, int>(bas[0], bas[1]);
             }
             else if (gauche[2] == distanceMin)
             {
-
                 return new Tuple<int, int>(gauche[0], gauche[1]);
             }
             else if (droite[2] == distanceMin)
@@ -377,6 +374,12 @@ namespace TPGestionDeColonie
         public void SeDeplacerVersItem(int x, int y)
         {
             Tuple<int,int> coupleCoord = PlusProcheDistanceVersItem(x,y);
+            SeDeplacer1Iteration(coupleCoord.Item1,coupleCoord.Item2);
+        }
+
+        public void SeDeplacer(int x, int y)
+        {
+            Tuple<int,int> coupleCoord = new Tuple<int,int>(x,y);
             SeDeplacer1Iteration(coupleCoord.Item1,coupleCoord.Item2);
         }
 
@@ -510,8 +513,6 @@ namespace TPGestionDeColonie
             }
             Deplacer(coordonnees.Item1, coordonnees.Item2);
         }
-
-
 
         public bool EtreRempli()
         {
