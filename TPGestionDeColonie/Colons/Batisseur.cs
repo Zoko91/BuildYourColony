@@ -10,11 +10,12 @@ namespace TPGestionDeColonie
 {
     class Batisseur : Colon
     {
-        // Créer la liste des capacités de base
-        // List<string> capacites
+        protected bool EstOccupe { get; set; }
+        
         public Batisseur(string nom, int positionX, int positionY, int endurance, int sante, int faim, int soif, Monde planete) : base(nom, positionX, positionY, endurance, sante, faim, soif, planete)
         {
             Backpack = new int[] { 300, 300, 100 };
+            EstOccupe = false;
 
         }
 

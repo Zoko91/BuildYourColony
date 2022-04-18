@@ -120,10 +120,11 @@ namespace TPGestionDeColonie
                     Console.WriteLine("Liste des actions possibles :\n1 - Construire\n");
                     int numAction = int.Parse(Console.ReadLine());
                     while(numAction > 6 || numAction <1){
-                        Console.WriteLine("Veuillez affichez un numéro d'action correct :");
+                        Console.WriteLine("Veuillez indiquez un numéro d'action correct :");
                         numAction = int.Parse(Console.ReadLine());
                     }
                     if (numAction == 1){
+                        
 
                     }
                 }
