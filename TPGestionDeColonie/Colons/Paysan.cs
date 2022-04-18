@@ -12,7 +12,9 @@ namespace TPGestionDeColonie
         // Créer la liste des capacités de base
         // List<string> capacites
         public Paysan(string nom, int positionX, int positionY, int endurance, int sante, int faim, int soif, Monde planete) : base(nom, positionX, positionY, endurance, sante, faim, soif, planete)
-        {}
+        {
+            Backpack = new int[] { 0, 10}; // ble / eau
+        }
 
 
         public override void Recolter(int x, int y)

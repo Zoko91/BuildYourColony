@@ -101,8 +101,6 @@ namespace TPGestionDeColonie
             }
         }
 
-
-
         public static List<Colon> CreerColonsDepart(Monde planete)
         {
             int milieuGrilleHauteur = (int)Math.Floor((double)planete.Hauteur / 2);
@@ -125,8 +123,6 @@ namespace TPGestionDeColonie
             listeDepart.Add(t);
             listeDepart.Add(b2);
 
-
-
             for (int i = 0; i < listeDepart.Count; i++)
             {
                 string demande = $"Indiquez le nom du colon {listeDepart[i].GetType().Name} : ";
@@ -141,13 +137,10 @@ namespace TPGestionDeColonie
                 Console.WriteLine("╚" + new string('═', demande.Length * 2) + "╝");
                 Console.SetCursorPosition(Console.WindowWidth / 3 + demande.Length + 1, Console.WindowHeight / 3 + 1);
 
-
                 string nom = Console.ReadLine();
                 Console.Clear();
                 listeDepart[i].Nom = nom;
                 planete.AjouterColon(listeDepart[i]);
-                // A supprimer après
-
             }
             planete.AjouterColon(ba2);
             return listeDepart;
@@ -158,9 +151,19 @@ namespace TPGestionDeColonie
             //Console.Clear();
             foreach (Colon col in listeColons)
             {
-                //if (col.GetType() == typeof(Bucheron) || col.GetType() == typeof(Mineur)) // si le colon n'a pas déjà un batiment ciblé
-                //{
-                if (col.ATIlCible() == false) // Si pas de cible définie
+                Console.WriteLine(col.Endurance);
+                if (col.EtreRempli())
+                {
+                    Console.WriteLine(string.Join("/",col.Backpack));
+                    col.BougerSiRempli();
+                    // test enlever ciblage de l'objet en cours de destruction
+                    foreach(ObjetFixe obj in planete.ListeBlocs)
+                    {
+                        obj.NePlusEtreCible();
+                    }
+                }
+
+                else if (col.ATIlCible() == false) // Si pas de cible définie
                 {
                     if (col.GetType() == typeof(Bucheron) || col.GetType() == typeof(Mineur))
                     { // Bucherons et mineurs doivent trouver l'objet le plus proche
@@ -214,7 +217,6 @@ namespace TPGestionDeColonie
                         }
                     }
                 }
-
                 else if (!col.getPosition().Equals(col.PlusProcheDistanceVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2))) // si le colon a déjà une cible et n'est pas sur la case adjacente
                 {
                     col.SeDeplacerVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
@@ -230,13 +232,10 @@ namespace TPGestionDeColonie
                         col.Miner(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
                     }
                 }
-                //  }
-
             }
             planete.MettreAJourMonde();
-
-
         }
+
         public static int ChoixBatiment()
         {
             Console.WriteLine("Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"

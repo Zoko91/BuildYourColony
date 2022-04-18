@@ -55,14 +55,7 @@ namespace TPGestionDeColonie
                         if (Backpack[1] < 30)
                         {
                             besoinPierre = 30 - Backpack[1];
-                        }/*
-                        action en cours : se déplacer vers entrepot
-                        if (pas action + sur la case entepot alors)
-                        vider entrepot
-                        pas d'action
-                        SeDeplacer(RecupererCoordonneesCible().Item1,RecupererCoordonneesCible().Item1);
-                        AcquerirCible();
-                          */
+                        }
 
                         if (Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet().Contains(getPosition()))
                         {
@@ -161,17 +154,13 @@ namespace TPGestionDeColonie
 
         public override void Construire(int numBat)
         {
-
             // Detecte quel batiment la personne veut construire (utilisé dnas remplir les stocks, refaire une fonction)
             // 1 Entrepot 2 Auberge 3 Maison 4 Puits 5 Ferme
-
             // ----------------------------------------- //
             // Etape de construction
-            // ----------------------------------------- // 
+            // ----------------------------------------- //
             PerdreCible(); // Mission accomplie, plus de cible
             ConstructionBatiment(numBat);
-            
-
         }
 
         public void ConstructionBatiment(int numBat)

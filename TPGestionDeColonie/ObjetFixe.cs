@@ -46,7 +46,7 @@ namespace TPGestionDeColonie
 
         public void DestructionEnCours(int x, int y, Colon col) {
             Tuple<int, int> position = new Tuple<int, int>(x, y);
-            Sante -= 100;
+            Sante -= 25;
             if (Sante <= 0)
             {
                 //Console.WriteLine(x + " "+ y);

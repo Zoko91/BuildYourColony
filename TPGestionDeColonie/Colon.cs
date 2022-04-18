@@ -104,6 +104,7 @@ namespace TPGestionDeColonie
         {
             return positionColon;
         }
+
         public void EtreFatigue()
         {
             if (Endurance < 20)
@@ -514,17 +515,64 @@ namespace TPGestionDeColonie
             Deplacer(coordonnees.Item1, coordonnees.Item2);
         }
 
-        public bool EtreRempli()
+        public virtual void SeVider(Entrepot ent)
         {
-            ///// ATTENTION, A DIVISER EN SOUS FONCTIONS
-            // vérifie si rempli, et se déplace s'il peut aller déposer dans l'entrepot
-            Entrepot ent = Planete.ListeBlocs.OfType<Entrepot>().FirstOrDefault();
-
             if (GetType() == typeof(Bucheron))
             {
-                if (Backpack[0] == 100)
+                Backpack[0] -= 100;
+                ent.StockRessources[0]+=100;
+
+            }
+            else if (GetType() == typeof(Mineur))
+            {
+                Backpack[1] -= 100;
+                ent.StockRessources[1]+=100;
+            }
+            else if (GetType() == typeof(Paysan))
+            {
+                if (Backpack[0] >= 100)
                 {
-                    if (Planete.ListeBlocs.OfType<Entrepot>().Any())
+                    // vide son ble, et remplit l'entrepot
+                    Backpack[0] -= 100;
+                    ent.StockRessources[2] += 100;
+                } 
+            }
+            else{
+                if (Backpack[0] >= 100){
+                    Backpack[0]-=100;
+                    ent.StockRessources[0]+=100;
+                }
+                if(Backpack[1] >= 100){
+                    Backpack[1] -= 100;
+                    ent.StockRessources[1] += 100;
+
+                }
+            }
+            PerdreCible();
+        }
+
+        public void BougerSiRempli(){
+            if (Planete.ListeBatiments.OfType<Entrepot>().Any()) // s'il existe un entrepôt
+            {
+                Entrepot ent = Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault();
+                //Tuple<int, int> coordEntrepot = Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet()[1]; // milieu de l'entrepôt
+                DefinirCible(ent.GetPositionObjet()[1].Item1, ent.GetPositionObjet()[1].Item2);
+                SeDeplacer(TargetX, TargetY);
+                AcquerirCible();
+
+                if (ent.GetPositionObjet().Contains(getPosition()))
+                {
+                    SeVider(ent);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Au moins un colon a son sac plein, il serait temps de construire un entrepôt.");
+            }
+        }
+
+        /*
+                if (Planete.ListeBlocs.OfType<Entrepot>().Any())
                     {
                         // Se déplace vers l'entrepot et y stocke les ressources puis recommence
                         Deplacer(ent.GetPositionObjet().FirstOrDefault().Item1,
@@ -536,53 +584,45 @@ namespace TPGestionDeColonie
                         //Reste sur place, ne fait rien
                         return true;
                     }
+         */
+          
+         
+        public bool EtreRempli() // Renvoie true si Backpack du personnage est plein
+        {
+            if (GetType() == typeof(Bucheron))
+            {
+                if (Backpack[0] >= 100)
+                {
+                    return true;
                 }
 
                 return false;
             }
             else if (GetType() == typeof(Mineur))
             {
-                if (Backpack[1] == 100)
+                if (Backpack[1] >= 100)
                 {
-                    if (Planete.ListeBlocs.OfType<Entrepot>().Any())
-                    {
-
-                        // Se déplace vers l'entrepot et y stocke les ressources puis recommence
-                        Deplacer(ent.GetPositionObjet().FirstOrDefault().Item1,
-                            ent.GetPositionObjet().FirstOrDefault().Item2);
-                        return true;
-                    }
-                    else
-                    {
-                        //Reste sur place, ne fait rien
-                        return true;
-                    }
+                    return true;
                 }
-
                 return false;
             }
             else if (GetType() == typeof(Paysan))
             {
-                if (Backpack[1] == 100)
+                if (Backpack[0] >= 100)
                 {
-                    if (Planete.ListeBlocs.OfType<Entrepot>().Any())
-                    {
-
-                        // Se déplace vers l'entrepot et y stocke les ressources puis recommence
-                        Deplacer(ent.GetPositionObjet().FirstOrDefault().Item1,
-                            ent.GetPositionObjet().FirstOrDefault().Item2);
-                        return true;
-                    }
-                    else
-                    {
                         //Reste sur place, ne fait rien
                         return true;
-                    }
-
+                } 
+                return false;
+            }
+            else{
+                if (Backpack[0] >= 100 || Backpack[1] >= 100 || Backpack[2] >= 100){
+                    return true;
                 }
                 return false;
             }
-            return false;
         }
+
+        
     }
 }
