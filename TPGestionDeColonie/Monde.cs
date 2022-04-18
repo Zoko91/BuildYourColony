@@ -322,10 +322,40 @@ namespace TPGestionDeColonie
 
         public void AfficherMonde()
         {
+            Console.Write("   ");
             for (int i = 0; i < grille.GetLength(0); i++)
             {
+                if (i<10)
+                {
+                    Console.Write($" {i} ");
+                }
+                else if(i>=10)
+                {
+                    Console.Write($" {i}");
+                }
+                
+            }
+            Console.Write(" ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("XXX ");
+            Console.ResetColor();
+            Console.Write("   ");
+            for (int i = 0; i < grille.GetLength(0); i++)
+            {
+                Console.Write("___");
+            }
+            Console.Write(" ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("XXX ");
+            Console.ResetColor();
+            for (int i = 0; i < grille.GetLength(0); i++)
+            {
+                Console.Write(" | ");
                 for (int j = 0; j < grille.GetLength(1); j++)
                 {
+                    
                     if (grille[i, j] == " A ")
                     {
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
@@ -373,7 +403,14 @@ namespace TPGestionDeColonie
                         Console.Write(grille[i, j]);
                     }
                 }
+                Console.Write($" | {i}");
                 Console.WriteLine();
+            }
+            Console.Write("   ");
+
+            for (int i = 0; i < grille.GetLength(0); i++)
+            {
+                Console.Write("___");
             }
         }
 
@@ -462,12 +499,14 @@ namespace TPGestionDeColonie
             ListePJ.Add(c);
         }
 
-        public void GameOver(){
+        public bool GameOver(){
             /// Fonction Game Over
             if (ListePJ.Count == 0){
                 Console.Clear();
                 Console.WriteLine("Game Over");
+                return true;
             }
+            return false;
         }
 
         public void SupprimerColon(){

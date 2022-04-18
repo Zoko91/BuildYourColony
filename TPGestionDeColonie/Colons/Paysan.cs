@@ -22,7 +22,7 @@ namespace TPGestionDeColonie
             {
 
                 Backpack[2] += 10;
-                Planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(positionBle)).DestructionEnCours(x, y);
+                Planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(positionBle)).DestructionEnCours(x, y, this);
 
             }
         }
@@ -33,7 +33,6 @@ namespace TPGestionDeColonie
             {
                 Tuple<int, int> positionPaysan = getPosition();
                 List<Tuple<int, int>> listePositionPaysan = new List<Tuple<int, int>>();
-
 
                 listePositionPaysan.Add(positionPaysan);
                 Ble nouveauBle = new Ble(listePositionPaysan, Planete);

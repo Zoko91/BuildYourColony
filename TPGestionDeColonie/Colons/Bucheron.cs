@@ -20,7 +20,7 @@ namespace TPGestionDeColonie
             if (Planete.grille[x, y] == " A ")
             {
                 Backpack[2] += 10;
-                Planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(positionArbre)).DestructionEnCours(x, y);
+                Planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(positionArbre)).DestructionEnCours(x, y, this);
             }
         }
     }

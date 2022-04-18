@@ -36,6 +36,8 @@ namespace TPGestionDeColonie
             Console.WriteLine("==========================");
             Console.SetCursorPosition(0, 1);
             */
+            Console.WindowHeight = 50;
+            Console.WindowWidth = 200;
 
             Monde planete = new Monde();
 
@@ -44,10 +46,17 @@ namespace TPGestionDeColonie
             planete.GenererMonde();
             planete.AfficherMonde();
             Console.WriteLine();
+            Console.WriteLine("===================================");    
+            /*foreach(ObjetFixe obj in planete.ListeBlocs){
+                    Tuple<int, int> position = obj.GetPositionObjet().FirstOrDefault();
+                    Console.WriteLine(planete.ListeBlocs.Find(z => z.GetPositionObjet().First() == position));
+                }
+            Console.WriteLine("==================================="); */   
             //planete.AfficherFenetre(7,7);
 
             Console.WriteLine();
             Console.WriteLine();
+            /*
             Console.WriteLine(planete.ListePJ[6].ToString());
             planete.ListePJ[6].Construire();
             Console.WriteLine("======== Affichage listeBatiments ========");
@@ -55,7 +64,7 @@ namespace TPGestionDeColonie
                 Console.WriteLine(bat.GetType().Name);
             }
             Console.ReadLine();
-
+            */
             /*
                         Tuple<int,int> testTuple = new Tuple<int, int>(1,2);
                         List<Tuple<int,int>> testList = new List<Tuple<int, int>>();
@@ -101,27 +110,25 @@ namespace TPGestionDeColonie
             listeColons[3].SeDeplacerVersItem(targetX, targetY);
 
             planete.MettreAJourMonde();*/
-            Console.ReadLine();
-            JouerUnTour(listeColons, planete);
-            Console.ReadLine();
-            JouerUnTour(listeColons, planete);
-            Console.ReadLine();
-            JouerUnTour(listeColons, planete);
-            Console.ReadLine();
-            JouerUnTour(listeColons, planete);
-            Console.ReadLine();
-            JouerUnTour(listeColons, planete);
-            Console.ReadLine();
-            JouerUnTour(listeColons, planete);
-            Console.ReadLine();
-            JouerUnTour(listeColons, planete);
-            Console.ReadLine();
-            JouerUnTour(listeColons, planete);
-            Console.ReadLine();
-            JouerUnTour(listeColons, planete);
-            Console.ReadLine();
-            JouerUnTour(listeColons, planete);
-            Console.ReadLine();
+
+            while(planete.GameOver()==false){
+                Console.WriteLine();
+                JouerUnTour(listeColons, planete);
+                string test = Console.ReadLine();
+                if (test == "manuel"){
+                    Console.WriteLine("======================================");
+                    Console.WriteLine("Liste des actions possibles :\n1 - Construire\n");
+                    int numAction = int.Parse(Console.ReadLine());
+                    while(numAction > 6 || numAction <1){
+                        Console.WriteLine("Veuillez affichez un numéro d'action correct :");
+                        numAction = int.Parse(Console.ReadLine());
+                    }
+                    if (numAction == 1){
+
+                    }
+                }
+                
+            }
         }
 
 
@@ -184,16 +191,43 @@ namespace TPGestionDeColonie
                 {
                     if (col.ATIlCible() == false)
                     {
-                        int targetX = col.RechercherPlusProcheItem().Item1;
-                        int targetY = col.RechercherPlusProcheItem().Item2;
+                        Tuple<int, int> coords = col.RechercherPlusProcheItem();
+                        
+                        int targetX = coords.Item1;
+                        int targetY = coords.Item2;
+
+                        col.DefinirCible(targetX, targetY);
+                        col.AcquerirCible(); // le colon a une cible
+                        
+                        foreach(ObjetFixe obj in planete.ListeBlocs)
+                        { // définir l'objet le plus proche comme ciblé    
+                            if (obj.GetPositionObjet().Contains(coords)){
+                                obj.DevenirCible();
+                            }
+                        }
                         col.SeDeplacerVersItem(targetX, targetY);
+                  
                     }
-                    else if (col.ATIlCible()) // si le colon a déjà une cible
+
+                    else if (!col.getPosition().Equals(col.PlusProcheDistanceVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2))) // si le colon a déjà une cible et n'est pas sur la case adjacente
                     {
-                        col.SeDeplacerVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item1);
+                        Console.WriteLine("position trouvée");
+                        col.SeDeplacerVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
+                    }
+                    else if(col.getPosition().Equals(col.PlusProcheDistanceVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2)))
+                    {
+                        if (col.GetType() == typeof(Bucheron))
+                        {
+                            col.Couper(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
+                        }
+                        else if (col.GetType() == typeof(Mineur))
+                        {
+                            col.Miner(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
+                        }
                     }
                 }
-                Console.WriteLine(col.ToString());
+                //Console.WriteLine(col.ToString());    
+                //Console.WriteLine(planete.ListeBlocs.ToString());
             }
            
 

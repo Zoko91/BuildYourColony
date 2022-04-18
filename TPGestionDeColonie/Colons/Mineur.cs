@@ -25,7 +25,7 @@ namespace TPGestionDeColonie
                 //Planete.ListeBlocs
                 Backpack[1] += 10;
                 //Console.WriteLine(Planete.ListeBlocs[0].GetPositionObjet().First());
-                Planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(positionRocher)).DestructionEnCours(x,y);
+                Planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(positionRocher)).DestructionEnCours(x,y, this);
 
              }
          }
