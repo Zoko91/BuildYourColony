@@ -16,13 +16,27 @@ namespace TPGestionDeColonie
         protected int Sante { get; set; }
         protected Monde Planete { get; }
 
+        protected virtual bool EstCible { get; set; }
         public ObjetFixe (List<Tuple<int, int>> position, Monde planete)
         {
             this.positionObjet = position;
             Sante = 100;
             Planete = planete;
+            EstCible=false;
         }
 
+        public bool EtreCible()
+        {
+            return EstCible;
+        }
+        public void DevenirCible()
+        {
+            EstCible = true;
+        }
+        public void NePlusEtreCible()
+        {
+            EstCible = false;
+        }
 
         public List<Tuple<int, int>> GetPositionObjet() //position d'un seul objet
         {
@@ -46,7 +60,7 @@ namespace TPGestionDeColonie
 
         public override string ToString()
         {
-            return $"{positionObjet.FirstOrDefault().Item1} et {positionObjet.FirstOrDefault().Item2} + nature: {this.GetType().Name}";
+            return $"{positionObjet.FirstOrDefault().Item1} et {positionObjet.FirstOrDefault().Item2} + nature: {this.GetType().Name} + Ciblé ? {EtreCible()}";
         }
 
     }

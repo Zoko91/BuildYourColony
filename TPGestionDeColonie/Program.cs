@@ -14,6 +14,9 @@ namespace TPGestionDeColonie
 
     class Program
     {
+
+
+
         /*
          * Exemple de comment faire fonctionner le menu => renvoie un entier lors de l'appui d'Entrée, -1 si Echap
         int selectedClass = ConsoleHelper.MultipleChoice(true, "Warrior", "Bard", "Mage", "Archer",
@@ -22,19 +25,18 @@ namespace TPGestionDeColonie
             Console.WriteLine(selectedClass);
         */
 
-        
-        
+
+
         static void Main(string[] args)
         {
-            Console.WindowHeight = 50;
-            Console.WindowWidth = 200;
+
             /*
             Console.WriteLine("==========================");
             Console.WriteLine();
             Console.WriteLine("==========================");
             Console.SetCursorPosition(0, 1);
             */
-            
+
             Monde planete = new Monde();
 
             List<Colon> listeColons = CreerColonsDepart(planete);
@@ -46,18 +48,39 @@ namespace TPGestionDeColonie
 
             Console.WriteLine();
             Console.WriteLine();
+            Console.WriteLine(planete.ListePJ[6].ToString());
+            planete.ListePJ[6].Construire();
+            Console.WriteLine("======== Affichage listeBatiments ========");
+            foreach(Batiment bat in planete.ListeBatiments){
+                Console.WriteLine(bat.GetType().Name);
+            }
+            Console.ReadLine();
 
-/*
-            Tuple<int,int> testTuple = new Tuple<int, int>(1,2);
-            List<Tuple<int,int>> testList = new List<Tuple<int, int>>();
-            testList.Add(testTuple);
-            Arbre arb = new Arbre(testList, planete);
-            Console.WriteLine(arb.GetPositionObjet().FirstOrDefault().Item1);
-            Console.WriteLine(arb.GetPositionObjet().FirstOrDefault().Item2);
+            /*
+                        Tuple<int,int> testTuple = new Tuple<int, int>(1,2);
+                        List<Tuple<int,int>> testList = new List<Tuple<int, int>>();
+                        testList.Add(testTuple);
+                        Arbre arb = new Arbre(testList, planete);
+                        Console.WriteLine(arb.GetPositionObjet().FirstOrDefault().Item1);
+                        Console.WriteLine(arb.GetPositionObjet().FirstOrDefault().Item2);
 
-            Console.WriteLine(listeColons[1].CalculerDistancePlusProche(arb));
-*/
+                        Console.WriteLine(listeColons[1].CalculerDistancePlusProche(arb));
+            */
             // ======= ZONE TEST FONCTIONS ======== //
+
+
+
+
+
+            /*
+            int x = int.Parse(Console.ReadLine());
+            int y = int.Parse(Console.ReadLine());
+
+
+            listeColons[0].SeDeplacerVersItem(x,y);
+            */
+            // listeColons[1].Deplacer(0,25);
+            // listeColons[2].Deplacer(3, 27);
             /*
             foreach (Colon col in listeColons)
             {
@@ -67,29 +90,37 @@ namespace TPGestionDeColonie
             }
             */
 
-
-            
-            int x = int.Parse(Console.ReadLine());
-            int y = int.Parse(Console.ReadLine());
-
-
-            listeColons[0].SeDeplacerVersItem(x,y);
-            // listeColons[1].Deplacer(0,25);
-            // listeColons[2].Deplacer(3, 27);
-
-            planete.MettreAJourMonde();
-
             // ==================================== //
 
-
+            /*
             int targetX = listeColons[1].RechercherPlusProcheItem().Item1;
             int targetY = listeColons[1].RechercherPlusProcheItem().Item2;
             listeColons[1].SeDeplacerVersItem(targetX,targetY);
+            targetX = listeColons[3].RechercherPlusProcheItem().Item1;
+            targetY = listeColons[3].RechercherPlusProcheItem().Item2;
+            listeColons[3].SeDeplacerVersItem(targetX, targetY);
 
-            planete.MettreAJourMonde();
-            
-
-
+            planete.MettreAJourMonde();*/
+            Console.ReadLine();
+            JouerUnTour(listeColons, planete);
+            Console.ReadLine();
+            JouerUnTour(listeColons, planete);
+            Console.ReadLine();
+            JouerUnTour(listeColons, planete);
+            Console.ReadLine();
+            JouerUnTour(listeColons, planete);
+            Console.ReadLine();
+            JouerUnTour(listeColons, planete);
+            Console.ReadLine();
+            JouerUnTour(listeColons, planete);
+            Console.ReadLine();
+            JouerUnTour(listeColons, planete);
+            Console.ReadLine();
+            JouerUnTour(listeColons, planete);
+            Console.ReadLine();
+            JouerUnTour(listeColons, planete);
+            Console.ReadLine();
+            JouerUnTour(listeColons, planete);
             Console.ReadLine();
         }
 
@@ -104,6 +135,8 @@ namespace TPGestionDeColonie
             Paysan p = new Paysan("p", milieuGrilleHauteur, milieuGrilleLargeur-1, 100, 100, 100, 100, planete);
             Bucheron b1 = new Bucheron("p", milieuGrilleHauteur, milieuGrilleLargeur, 100, 100, 100, 100, planete);
             Batisseur ba = new Batisseur("p", milieuGrilleHauteur, milieuGrilleLargeur+1, 100, 100, 100, 100, planete);
+            Batisseur ba2 = new Batisseur("p", 2, 2, 100, 100, 100, 100, planete);
+
             Mineur m = new Mineur("Mineur", milieuGrilleHauteur+1, milieuGrilleLargeur-1, 100, 100, 100, 100, planete);
             Tavernier t = new Tavernier("p", milieuGrilleHauteur+1, milieuGrilleHauteur, 100, 100, 100, 100, planete);
             Bucheron b2 = new Bucheron("p", milieuGrilleHauteur+1, milieuGrilleLargeur+1, 100, 100, 100, 100, planete);
@@ -114,6 +147,8 @@ namespace TPGestionDeColonie
             listeDepart.Add(m); 
             listeDepart.Add(t); 
             listeDepart.Add(b2); 
+
+            
             
             for (int i = 0; i < listeDepart.Count; i++)
             {
@@ -134,11 +169,36 @@ namespace TPGestionDeColonie
                 Console.Clear();
                 listeDepart[i].Nom = nom;
                 planete.AjouterColon(listeDepart[i]);
+                // A supprimer après
+
             }
+            planete.AjouterColon(ba2);
             return listeDepart;
         }
 
+        public static void JouerUnTour(List<Colon> listeColons, Monde planete)
+        {
+            foreach(Colon col in listeColons)
+            {
+                if (col.GetType() == typeof(Bucheron) || col.GetType() == typeof(Mineur) ) // si le colon n'a pas déjà un batiment ciblé
+                {
+                    if (col.ATIlCible() == false)
+                    {
+                        int targetX = col.RechercherPlusProcheItem().Item1;
+                        int targetY = col.RechercherPlusProcheItem().Item2;
+                        col.SeDeplacerVersItem(targetX, targetY);
+                    }
+                    else if (col.ATIlCible()) // si le colon a déjà une cible
+                    {
+                        col.SeDeplacerVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item1);
+                    }
+                }
+                Console.WriteLine(col.ToString());
+            }
+           
 
+            planete.MettreAJourMonde();
+        }
 
         // public void NouvelArrivant() { } // quand nouveau colon arrive de façon random
 

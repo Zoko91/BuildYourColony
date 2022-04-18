@@ -14,9 +14,10 @@ namespace TPGestionDeColonie
     {
         // Variables
         private Tuple<int, int> positionColon;
-        protected static int id  =  0;
+        protected static int id = 0;
         protected int idColon;
-        public string Nom  {
+        public string Nom
+        {
             get;
             set;
         }
@@ -42,6 +43,10 @@ namespace TPGestionDeColonie
             get;
             set;
         }
+
+        protected int TargetX { get; set; }
+        protected int TargetY { get; set; }
+        protected bool AvoirCible { get; set; }
         // protected List<string> capacites;
 
         //getter ID;
@@ -55,12 +60,12 @@ namespace TPGestionDeColonie
 
         // -------------------------------------------
 
-        public Colon (string nom, int positionX, int positionY, int endurance, int sante, int faim, int soif, Monde planete) //, List<string> capacites
+        public Colon(string nom, int positionX, int positionY, int endurance, int sante, int faim, int soif, Monde planete) //, List<string> capacites
         {
-            id = id+1;
+            id = id + 1;
             idColon = id;
             this.positionX = positionX;
-            this.positionY= positionY;
+            this.positionY = positionY;
             Endurance = endurance;
             Sante = sante;
             Faim = faim;
@@ -68,20 +73,45 @@ namespace TPGestionDeColonie
             Nom = nom;
             positionColon = new Tuple<int, int>(positionX, positionY);
             Planete = planete;
-            Backpack = new int[]{ 0, 0, 10}; //Bois//Pierre//Eau
+            Backpack = new int[] { 0, 0, 10 }; //Bois//Pierre//Eau
+            AvoirCible = false;
         }
+
+        public void AcquerirCible()
+        {
+            AvoirCible = true;
+        }
+        public void PerdreCible()
+        {
+            AvoirCible = false;
+        }
+        public bool ATIlCible() { return AvoirCible; }
+        public void DefinirCible(int positionX, int positionY)
+        {
+            TargetX = positionX;
+            TargetY = positionY;
+        }
+        public Tuple<int,int> RecupererCoordonneesCible()
+        {
+            Tuple<int, int> coords = new Tuple<int, int>(TargetX, TargetY);
+            return coords;
+        }
+
+
+
+
         public Tuple<int, int> getPosition()
         {
             return positionColon;
         }
         public void EtreFatigue()
         {
-            if (Endurance<20)
+            if (Endurance < 20)
             {
                 Console.WriteLine($"{Nom} est raplapla.");
             }
         }
-       
+
         public void AvoirSoif()
         {
             if (Soif < 20)
@@ -89,7 +119,7 @@ namespace TPGestionDeColonie
                 Console.WriteLine("Glouglou");
             }
         }
-        
+
         public void SanteFaible()
         {
             if (Sante < 20)
@@ -106,15 +136,15 @@ namespace TPGestionDeColonie
         public void VerififierEtat()
         //Vérifie l'état physique du Colon
         {
-            int pdvPerdus=0;
-            if (0<Endurance && Endurance<= 10){pdvPerdus += 1;}
-            else if(Endurance ==0){pdvPerdus +=2;}
-            
-            if (0<Soif && Soif<= 10){pdvPerdus += 1;}
-            else if(Soif ==0){pdvPerdus +=2;}
+            int pdvPerdus = 0;
+            if (0 < Endurance && Endurance <= 10) { pdvPerdus += 1; }
+            else if (Endurance == 0) { pdvPerdus += 2; }
 
-            if (0<Faim && Faim<= 10){pdvPerdus += 1;}
-            else if(Faim ==0){pdvPerdus +=2;}       
+            if (0 < Soif && Soif <= 10) { pdvPerdus += 1; }
+            else if (Soif == 0) { pdvPerdus += 2; }
+
+            if (0 < Faim && Faim <= 10) { pdvPerdus += 1; }
+            else if (Faim == 0) { pdvPerdus += 2; }
 
             Sante -= pdvPerdus;
 
@@ -123,11 +153,11 @@ namespace TPGestionDeColonie
 
         public override string ToString()
         {
-            return $"Colon n°{idColon} : {GetType().Name} {Nom}, santé = {Sante}/100 PV, endurance = {Endurance}/100, faim = {Faim}/100, soif = {Soif}/100";
+            return $"Colon n°{idColon} : {GetType().Name} {Nom}, santé = {Sante}/100 PV, endurance = {Endurance}/100, faim = {Faim}/100, soif = {Soif}/100 \nA-t-il une cible ? ${ATIlCible()}";
         }
 
-        
-        public virtual void Miner(int x, int y){ Console.Write("test"); } //pour Mineur
+
+        public virtual void Miner(int x, int y) { Console.Write("test"); } //pour Mineur
 
         public virtual void Couper(int x, int y) { } //pour Bûcheron
 
@@ -135,13 +165,15 @@ namespace TPGestionDeColonie
 
         public virtual void Recolter(int x, int y) { } //pour Paysan
 
+        public virtual void Construire(){} // pour Batisseur
+
 
         public void Deplacer(int x, int y)
         {
             Endurance -= Math.Abs(positionX - x) + Math.Abs(positionY - y);
             while (positionX != x && positionY != y)
             {
-                if(positionX > x && positionY > y)
+                if (positionX > x && positionY > y)
                 {
                     positionX -= 1;
                     positionY -= 1;
@@ -162,7 +194,7 @@ namespace TPGestionDeColonie
                     positionY += 1;
                 }
             }
-            if(positionX == x)
+            if (positionX == x)
             {
                 if (positionY > y)
                 {
@@ -171,7 +203,7 @@ namespace TPGestionDeColonie
                         positionY -= 1;
                     }
                 }
-                else if(positionY<y)
+                else if (positionY < y)
                 {
                     while (positionY != y)
                     {
@@ -197,7 +229,7 @@ namespace TPGestionDeColonie
                 }
             }
 
-            positionColon = new Tuple<int, int>(positionX,  positionY);
+            positionColon = new Tuple<int, int>(positionX, positionY);
 
         }
         public void SeDeplacer1Iteration(int x, int y)
@@ -207,7 +239,7 @@ namespace TPGestionDeColonie
             {
                 if (positionX > x && positionY > y) // vers haut gauche
                 {
-                    if (Planete.VerifCoordonnees(new Tuple<int,int>(positionX-1, positionY-1))) // case en diagonale disponible, peut se déplacer
+                    if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX - 1, positionY - 1))) // case en diagonale disponible, peut se déplacer
                     {
                         positionX -= 1;
                         positionY -= 1;
@@ -216,7 +248,7 @@ namespace TPGestionDeColonie
                     {
                         positionX -= 1;
                     }
-                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX , positionY-1))) //case de gauche disponible
+                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX, positionY - 1))) //case de gauche disponible
                     {
                         positionY -= 1;
                     }
@@ -306,17 +338,19 @@ namespace TPGestionDeColonie
                 }
             }
             positionColon = new Tuple<int, int>(positionX, positionY);
-
         }
+
         public void SeDeplacerVersItem(int x, int y)
         {
             //cases autour de la cible : { x , y , distance au colon }
-            int[] haut =  {  x  -  1,  y, Math.Abs(positionX-(x-1))+Math.Abs(positionY-y)  };
-            int[] bas =  {  x  +  1,  y, Math.Abs(positionX - (x +1)) + Math.Abs(positionY - y) };
-            int[] gauche =  { x, y-1, Math.Abs(positionX - x) + Math.Abs(positionY - (y-1)) };
-            int[] droite =  { x, y+1, Math.Abs(positionX - x) + Math.Abs(positionY - (y + 1)) };
+            // calcul de quelle case adjacente (haut bas gauche droite) à l'objet visé est la plus proche du colon
+            int[] haut = { x - 1, y, Math.Abs(positionX - (x - 1)) + Math.Abs(positionY - y) };
+            int[] bas = { x + 1, y, Math.Abs(positionX - (x + 1)) + Math.Abs(positionY - y) };
+            int[] gauche = { x, y - 1, Math.Abs(positionX - x) + Math.Abs(positionY - (y - 1)) };
+            int[] droite = { x, y + 1, Math.Abs(positionX - x) + Math.Abs(positionY - (y + 1)) };
 
-            int distanceMin = Math.Min(Math.Min(Math.Min(haut[2],  bas[2]),  gauche[2]),  droite[2]);  
+            int distanceMin = Math.Min(Math.Min(Math.Min(haut[2], bas[2]), gauche[2]), droite[2]);
+            
             if(haut[2] == distanceMin)
             {
                 Deplacer(haut[0], haut[1]);
@@ -333,6 +367,26 @@ namespace TPGestionDeColonie
             {
                 Deplacer(droite[0], droite[1]);
             }
+            
+            /*
+            if (haut[2] == distanceMin)
+            {
+                SeDeplacer1Iteration(haut[0], haut[1]);
+            }
+            else if (bas[2] == distanceMin)
+            {
+                SeDeplacer1Iteration(bas[0], bas[1]);
+            }
+            else if (gauche[2] == distanceMin)
+            {
+                SeDeplacer1Iteration(gauche[0], gauche[1]);
+            }
+            else if (droite[2] == distanceMin)
+            {
+                SeDeplacer1Iteration(droite[0], droite[1]);
+            }
+            */
+
         }
 
 
@@ -340,97 +394,138 @@ namespace TPGestionDeColonie
         {
             int objX = obj.GetPositionObjet().FirstOrDefault().Item1;
             int objY = obj.GetPositionObjet().FirstOrDefault().Item2;
-                        
-            return Math.Abs(objY-positionY)+Math.Abs(objX-positionX);
+
+            return Math.Abs(objY - positionY) + Math.Abs(objX - positionX);
         }
 
-        public Tuple<int,int> RechercherPlusProcheItem()
+        public Tuple<int, int> RechercherPlusProcheItem()
         {
             string typeDuColon = this.GetType().ToString();
-            Console.WriteLine(typeDuColon);
-            
-            int indiceDeDistance = Planete.Hauteur*Planete.Largeur; //indice très grand
-            Tuple<int, int> coordonnees= new Tuple<int,int>(positionX,positionY); // Attention au chasseur ça le renvoie en 0,0
-            
+
+            int indiceDeDistance = Planete.Hauteur * Planete.Largeur; //indice très grand
+            Tuple<int, int> coordonnees = new Tuple<int, int>(positionX, positionY); // Attention au chasseur ça le renvoie en 0,0
+            int i = 0;
+            int indice = 0;
             switch (typeDuColon)
             {
-                case "TPGestionDeColonie.Bucheron" :
-                        foreach(ObjetFixe arb in Planete.ListeBlocs){
-                            if(arb.GetType().Name == "Arbre"){
-                                if (Math.Min(indiceDeDistance,CalculerDistancePlusProche(arb))==CalculerDistancePlusProche(arb))
-                                {
-                                    indiceDeDistance = CalculerDistancePlusProche(arb);
-           
-                                    coordonnees = new Tuple<int, int>(arb.GetPositionObjet().FirstOrDefault().Item1, arb.GetPositionObjet().FirstOrDefault().Item2);
-                                }
-                            }
-                        }
-                        break;
-                        
-                case "TPGestionDeColonie.Mineur" :
-                        foreach (ObjetFixe roc in Planete.ListeBlocs){
-                            if(roc.GetType().Name == "Rocher"){
-                                if (Math.Min(indiceDeDistance,CalculerDistancePlusProche(roc))==CalculerDistancePlusProche(roc))
-                                {
-                                    indiceDeDistance = CalculerDistancePlusProche(roc);
-                                    coordonnees = new Tuple<int, int>( roc.GetPositionObjet().FirstOrDefault().Item1, roc.GetPositionObjet().FirstOrDefault().Item2);
-                                }
-                            }
-                        }
-                        break;
-                 case "TPGestionDeColonie.Paysan" :
-                         foreach (ObjetFixe ble in Planete.ListeBlocs){
-                            if(ble.GetType().Name == "Ble"){
-                                if (Math.Min(indiceDeDistance,CalculerDistancePlusProche(ble))==CalculerDistancePlusProche(ble))
-                                {
-                                    indiceDeDistance = CalculerDistancePlusProche(ble);
-                                    coordonnees = new Tuple<int, int>( ble.GetPositionObjet().FirstOrDefault().Item1, ble.GetPositionObjet().FirstOrDefault().Item2);
-                                }
-                             }
-                         }
-                         break;        
-                 case "TPGestionDeColonie.Batisseur" :
-                         foreach (ObjetFixe ent in Planete.ListeBlocs){
-                            if(ent.GetType().Name == "Entrepot"){
-                                if (Math.Min(indiceDeDistance,CalculerDistancePlusProche(ent))==CalculerDistancePlusProche(ent))
-                                {
-                                    indiceDeDistance = CalculerDistancePlusProche(ent);
-                                    coordonnees = new Tuple<int, int>( ent.GetPositionObjet().FirstOrDefault().Item1, ent.GetPositionObjet().FirstOrDefault().Item2);
-                                }
-                             }
-                         }
-                         break; 
-                case "TPGestionDeColonie.Tavernier" :
-                    foreach (ObjetFixe puits in Planete.ListeBlocs){
-                        if(puits.GetType().Name == "Puits"){
-                            if (Math.Min(indiceDeDistance,CalculerDistancePlusProche(puits))==CalculerDistancePlusProche(puits))
+                case "TPGestionDeColonie.Bucheron":
+                    foreach (ObjetFixe arb in Planete.ListeBlocs)
+                    {
+                        //Console.WriteLine(arb.ToString());
+                        if (arb.GetType().Name == "Arbre" && arb.EtreCible() == false)
+                        {
+                            if (Math.Min(indiceDeDistance, CalculerDistancePlusProche(arb)) == CalculerDistancePlusProche(arb))
                             {
-                                indiceDeDistance = CalculerDistancePlusProche(puits);
-                                coordonnees = new Tuple<int, int>( puits.GetPositionObjet().FirstOrDefault().Item1, puits.GetPositionObjet().FirstOrDefault().Item2);
+                                indiceDeDistance = CalculerDistancePlusProche(arb);
+                                coordonnees = new Tuple<int, int>(arb.GetPositionObjet().FirstOrDefault().Item1, arb.GetPositionObjet().FirstOrDefault().Item2);
+                                indice = i;
+                                DefinirCible(arb.GetPositionObjet().FirstOrDefault().Item1, arb.GetPositionObjet().FirstOrDefault().Item2);
+                            }
+                        }
+                        i++;
+                    }
+                    // définir l'objet le plus proche comme ciblé
+                    
+                    Planete.ListeBlocs[indice].DevenirCible();
+                    Console.WriteLine();
+                    Console.WriteLine(Planete.ListeBlocs[indice].ToString());
+                    Console.WriteLine(coordonnees.Item1 + "  /  " + coordonnees.Item2);
+                    AcquerirCible(); // le colon a une cible
+                    
+                    break;
+
+                case "TPGestionDeColonie.Mineur":
+                    foreach (ObjetFixe roc in Planete.ListeBlocs)
+                    {
+                        if (roc.GetType().Name == "Rocher" && roc.EtreCible() == false)
+                        {
+                            
+                            if (Math.Min(indiceDeDistance, CalculerDistancePlusProche(roc)) == CalculerDistancePlusProche(roc))
+                            {
+                                indiceDeDistance = CalculerDistancePlusProche(roc);
+                                coordonnees = new Tuple<int, int>(roc.GetPositionObjet().FirstOrDefault().Item1, roc.GetPositionObjet().FirstOrDefault().Item2);
+                                indice = i;
+                                DefinirCible(roc.GetPositionObjet().FirstOrDefault().Item1, roc.GetPositionObjet().FirstOrDefault().Item2);
+                            }
+                        }
+                        i++;
+                    }
+                    // définir l'objet le plus proche comme ciblé
+                    Planete.ListeBlocs[indice].DevenirCible();
+                    Console.WriteLine();
+                    Console.WriteLine(Planete.ListeBlocs[indice].ToString());
+                    AcquerirCible();
+                    
+                    break;
+                case "TPGestionDeColonie.Paysan":
+                    foreach (ObjetFixe ble in Planete.ListeBlocs)
+                    {
+                        if (ble.GetType().Name == "Ble" && ble.EtreCible() == false)
+                        {
+                            
+                            if (Math.Min(indiceDeDistance, CalculerDistancePlusProche(ble)) == CalculerDistancePlusProche(ble))
+                            {
+                                indiceDeDistance = CalculerDistancePlusProche(ble);
+                                coordonnees = new Tuple<int, int>(ble.GetPositionObjet().FirstOrDefault().Item1, ble.GetPositionObjet().FirstOrDefault().Item2);
+                                indice = i;
+                            }
+                            
+                        }
+                        i++;
+                    }
+                    // définir l'objet le plus proche comme ciblé
+                    Planete.ListeBlocs[indice].DevenirCible();
+                    AcquerirCible();
+                    DefinirCible(coordonnees.Item1, coordonnees.Item2);
+                    break;
+                case "TPGestionDeColonie.Batisseur":
+                    foreach (ObjetFixe ent in Planete.ListeBlocs)
+                    {
+                        if (ent.GetType().Name == "Entrepot")
+                        {
+                            if (Math.Min(indiceDeDistance, CalculerDistancePlusProche(ent)) == CalculerDistancePlusProche(ent))
+                            {
+                                indiceDeDistance = CalculerDistancePlusProche(ent);
+                                coordonnees = new Tuple<int, int>(ent.GetPositionObjet().FirstOrDefault().Item1, ent.GetPositionObjet().FirstOrDefault().Item2);
                             }
                         }
                     }
-                    break;  
-            }                 
+                    break;
+                case "TPGestionDeColonie.Tavernier":
+                    foreach (ObjetFixe puits in Planete.ListeBlocs)
+                    {
+                        if (puits.GetType().Name == "Puits")
+                        {
+                            if (Math.Min(indiceDeDistance, CalculerDistancePlusProche(puits)) == CalculerDistancePlusProche(puits))
+                            {
+                                indiceDeDistance = CalculerDistancePlusProche(puits);
+                                coordonnees = new Tuple<int, int>(puits.GetPositionObjet().FirstOrDefault().Item1, puits.GetPositionObjet().FirstOrDefault().Item2);
+                            }
+                        }
+                    }
+                    break;
+            }
             return coordonnees;
 
         }
 
         public void AllerVersBatiment(string nomBatiment)
         {
-            int indiceDeDistance = Planete.Hauteur*Planete.Largeur; //indice très grand
-            Tuple<int, int> coordonnees= new Tuple<int,int>(positionX,positionY);
+            int indiceDeDistance = Planete.Hauteur * Planete.Largeur; //indice très grand
+            Tuple<int, int> coordonnees = new Tuple<int, int>(positionX, positionY);
             if (nomBatiment == "Auberge")
             {
                 foreach (ObjetFixe aub in Planete.ListeBlocs)
                 {
-                    if(aub.GetType().Name == "Auberge"){
+                    if (aub.GetType().Name == "Auberge")
+                    {
 
-                        if (Math.Min(indiceDeDistance,CalculerDistancePlusProche(aub))==CalculerDistancePlusProche(aub))
+                        if (Math.Min(indiceDeDistance, CalculerDistancePlusProche(aub)) == CalculerDistancePlusProche(aub))
                         {
                             indiceDeDistance = CalculerDistancePlusProche(aub);
-                            coordonnees = new Tuple<int, int>( aub.GetPositionObjet().FirstOrDefault().Item1, aub.GetPositionObjet().FirstOrDefault().Item2);
-                        }}
+                            coordonnees = new Tuple<int, int>(aub.GetPositionObjet().FirstOrDefault().Item1, aub.GetPositionObjet().FirstOrDefault().Item2);
+                        }
+                    }
                 }
             }
 
@@ -438,21 +533,23 @@ namespace TPGestionDeColonie
             {
                 foreach (ObjetFixe ent in Planete.ListeBlocs)
                 {
-                    if(ent.GetType().Name == "Entrepot"){
+                    if (ent.GetType().Name == "Entrepot")
+                    {
 
-                        if (Math.Min(indiceDeDistance,CalculerDistancePlusProche(ent))==CalculerDistancePlusProche(ent))
+                        if (Math.Min(indiceDeDistance, CalculerDistancePlusProche(ent)) == CalculerDistancePlusProche(ent))
                         {
                             indiceDeDistance = CalculerDistancePlusProche(ent);
-                            coordonnees = new Tuple<int, int>( ent.GetPositionObjet().FirstOrDefault().Item1, ent.GetPositionObjet().FirstOrDefault().Item2);
-                        }}
+                            coordonnees = new Tuple<int, int>(ent.GetPositionObjet().FirstOrDefault().Item1, ent.GetPositionObjet().FirstOrDefault().Item2);
+                        }
+                    }
                 }
             }
-            Deplacer(coordonnees.Item1,coordonnees.Item2);
+            Deplacer(coordonnees.Item1, coordonnees.Item2);
         }
-        
-        
 
-        public bool EtreRempli() 
+
+
+        public bool EtreRempli()
         {
             ///// ATTENTION, A DIVISER EN SOUS FONCTIONS
             // vérifie si rempli, et se déplace s'il peut aller déposer dans l'entrepot
@@ -522,12 +619,5 @@ namespace TPGestionDeColonie
             }
             return false;
         }
-        
-        public void ColonConstruire()
-        {
-            // Demande à l'utilisateur quel batiment il veut construire et ensuite appelle la méthode Construire() du bâtiment correspondant
-
-
-        }
-    }    
+    }
 }

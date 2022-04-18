@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TPGestionDeColonie.ObjetsFixes;
+using TPGestionDeColonie.ObjetsFixes.Batiments;
 
 namespace TPGestionDeColonie
 {
@@ -19,16 +20,18 @@ namespace TPGestionDeColonie
 
         public List<Colon> ListePJ { get; }
         public List<ObjetFixe> ListeBlocs { get ;  }
+        public List<Batiment> ListeBatiments { get ;  }
         // -----------------------------
 
         public Monde() {
             ListePJ = new List<Colon>();
             ListeBlocs = new List<ObjetFixe>();
+            ListeBatiments = new List<Batiment>();
             Hauteur = grille.GetLength(0);
             Largeur = grille.GetLength(1);
         }
 
-        public bool VerifCoordonnees(Tuple<int, int> coordonnees) // Check Si y'a déjà un block OU un co
+        public bool VerifCoordonnees(Tuple<int, int> coordonnees) // Check Si y'a déjà un block
         {
             List<Tuple<int, int>> listeCoordonneesColons = new List<Tuple<int, int>>();
 
@@ -50,8 +53,21 @@ namespace TPGestionDeColonie
             }
             return true; //case disponible
         }
-
+        public bool VerifCoordonneesBatiment(Tuple<int, int> coordonnees) // Check Si y'a déjà un block
+        {
+            foreach (Batiment bat in ListeBatiments)
+            {
+                List<Tuple<int, int>> listeCoordonnees = bat.GetPositionObjet();
+                if (listeCoordonnees.Contains(coordonnees))
+                {
+                    return false; //case non disponible, occupée par objet fixe
+                }
+            }
+            return true; //case disponible
+        }
         
+    
+
         public bool VerifListeCoordonnees(List<Tuple<int, int>> coordonnees) // Pour la construction des batiments ou des plans d'eau
         {
             for (int i = 0; i < coordonnees.Count; i++)
@@ -238,11 +254,11 @@ namespace TPGestionDeColonie
                 for (int j = 0; j < grille.GetLength(1); j++)
                 {
                     Tuple<int, int> coords = new Tuple<int, int>(i, j);
-                    if (VerifCoordonnees(coords)) // si la case est dispo
+                    if (VerifCoordonnees(coords) && VerifCoordonneesBatiment(coords)) // si la case est vide
                     {
                         grille[i, j] = " x ";
                     }
-                    else  //si la case n'est pas dispo
+                    else  //si la case n'est pas vide
                     {
                         foreach (ObjetFixe obj in ListeBlocs)
                         {
@@ -264,6 +280,30 @@ namespace TPGestionDeColonie
                                 else if (obj.GetType() == typeof(Eau))
                                 {
                                     grille[i, j] = " E ";
+                                }
+                            }
+                        }
+                        foreach(Batiment obj in ListeBatiments){
+                            if (obj.GetPositionObjet().Contains(coords))
+                            {
+                                Console.WriteLine(" ========================== ");
+                                Console.WriteLine(coords.Item1 + " "+ coords.Item2);
+                                Console.WriteLine(" ========================== ");
+                                
+                                if (obj.GetType() == typeof(Auberge)){
+                                    grille[i, j] = "AUB";
+                                }
+                                else if (obj.GetType() == typeof(Entrepot)){
+                                    grille[i, j] = "ENT";
+                                }
+                                else if (obj.GetType() == typeof(Ferme)){
+                                    grille[i, j] = "FRM";
+                                }
+                                else if (obj.GetType() == typeof(Maison)){
+                                    grille[i, j] = "MSN";
+                                }
+                                else if (obj.GetType() == typeof(Puits)){
+                                    grille[i, j] = "PUI";
                                 }
                             }
                         }
@@ -318,6 +358,13 @@ namespace TPGestionDeColonie
                     {
                         Console.BackgroundColor = ConsoleColor.DarkBlue;
                         Console.ForegroundColor = ConsoleColor.DarkBlue;
+                        Console.Write(grille[i, j]);
+                        Console.ResetColor();
+                    }
+                    else if (grille[i, j] == "AUB" || grille[i, j] == "ENT" || grille[i, j] == "FRM" || grille[i, j] == "MSN" || grille[i, j] == "PUI")
+                    {
+                        Console.BackgroundColor = ConsoleColor.Red;
+                        Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(grille[i, j]);
                         Console.ResetColor();
                     }

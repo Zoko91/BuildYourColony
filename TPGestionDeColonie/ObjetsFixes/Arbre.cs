@@ -8,7 +8,11 @@ namespace TPGestionDeColonie.ObjetsFixes
 {
     class Arbre:ObjetFixe
     {
-        public Arbre(List<Tuple<int, int>> positionObjet, Monde planete) : base(positionObjet, planete) { }
+        protected override bool EstCible {get;set;}
+        
+        public Arbre(List<Tuple<int, int>> positionObjet, Monde planete) : base(positionObjet, planete) {
+            EstCible = false;
+        }
 
     }
 }

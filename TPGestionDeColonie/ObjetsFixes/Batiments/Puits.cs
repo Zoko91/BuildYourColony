@@ -11,12 +11,6 @@ namespace TPGestionDeColonie.ObjetsFixes.Batiments
         public Puits(List<Tuple<int, int>> positionObjet, int coutBois, int coutPierre,Monde planete) : base(positionObjet, coutBois, coutPierre,planete) { }
 
 
-
-        public override void Construire(int positionX, int positionY)
-        {//Créer une méthode Construire dans Colons qui appelle cette méthode une fois avoir instancié le batiment
-            Planete.grille[positionX, positionY] = " P ";
-        }
-
         //Puit
 
     }

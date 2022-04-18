@@ -20,7 +20,5 @@ namespace TPGestionDeColonie.ObjetsFixes
         }
 
 
-        public virtual void Construire(int x, int y){}
-
     }
 }

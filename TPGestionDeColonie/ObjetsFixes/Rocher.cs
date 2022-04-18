@@ -8,7 +8,11 @@ namespace TPGestionDeColonie.ObjetsFixes
 {
     class Rocher:ObjetFixe
     {
-        public Rocher(List<Tuple<int, int>> positionObjet,Monde planete) : base(positionObjet,planete) { }
+        protected override bool EstCible {get;set;}
+       
+        public Rocher(List<Tuple<int, int>> positionObjet,Monde planete) : base(positionObjet,planete) {
+            EstCible = false;
+        }
 
 
 
