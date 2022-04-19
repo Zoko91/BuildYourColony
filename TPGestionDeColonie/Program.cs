@@ -32,13 +32,13 @@ namespace TPGestionDeColonie
                 {
                     Environment.Exit(0);
                 }
-            } while (optionChoisie != 0 );
+            } while (optionChoisie != 0);
 
             //Console.WindowHeight = 50;
             //Console.WindowWidth = 200;
 
-            Console.WindowHeight = Console.LargestWindowHeight;
-            Console.WindowWidth= Console.LargestWindowWidth;
+            Console.WindowHeight = Console.LargestWindowHeight - 5;
+            Console.WindowWidth = Console.LargestWindowWidth - 25;
 
             Monde planete = new Monde();
 
@@ -137,6 +137,14 @@ namespace TPGestionDeColonie
                         Console.WriteLine(bat.ToString());
                     }
                 }
+                foreach (Colon col in planete.ListePJ)
+                {
+                    if (col.GetType() == typeof(Batisseur))
+                    {
+                        Batisseur bati = (Batisseur)col;
+                        bati.ToString2();
+                    }
+                }
                 Console.WriteLine();
                 Console.WriteLine(" /\\ ___________________________________________________ /\\ ");
                 Console.WriteLine();
@@ -145,11 +153,44 @@ namespace TPGestionDeColonie
             }
             if (numAction == 4) // Planter (paysan)
             {
+                // Ajouter dans la fonction jouer un tour que si le paysan est sur la case de sa cible et bien il plante un blé
+
+                foreach (Colon colon in planete.ListePJ)
+                {
+                    if (colon.GetType() == typeof(Paysan))
+                    {
+                        Paysan pay = (Paysan)colon;
+                        Console.WriteLine("Ou souhaitez vous déplacer le Paysan pour qu'il plante du blé ?");
+                        Console.Write("Coordonnée ligne: ");
+                        int posX = int.Parse(Console.ReadLine());
+                        Console.Write("Coordonnée colonne: ");
+                        int posY = int.Parse(Console.ReadLine());
+                        pay.DefinirCible(posX, posY);
+                        pay.AcquerirCible(); // le paysan acquiert une cible
+                    }
+                    break;
+                }
+
 
             }
             if (numAction == 5) // Récolter (paysan)
             {
-
+                // Mettre un if il est sur du blé alors le récolter dans les actions 
+                foreach (Colon colon in planete.ListePJ)
+                {
+                    if (colon.GetType() == typeof(Paysan))
+                    {
+                        Paysan pay = (Paysan)colon;
+                        Console.WriteLine("Ou souhaitez vous déplacer le Paysan pour qu'il récolte le blé ?");
+                        Console.Write("Coordonnée ligne: ");
+                        int posX = int.Parse(Console.ReadLine());
+                        Console.Write("Coordonnée colonne: ");
+                        int posY = int.Parse(Console.ReadLine());
+                        pay.DefinirCible(posX, posY);
+                        pay.AcquerirCible(); // le paysan acquiert une cible
+                    }
+                    break;
+                }
             }
         }
 
@@ -203,18 +244,31 @@ namespace TPGestionDeColonie
             //Console.Clear();
             foreach (Colon col in listeColons)
             {
-                Console.WriteLine(col.Endurance);
+
                 if (col.EtreRempli())
                 {
-                    Console.WriteLine(string.Join("/", col.Backpack));
                     col.BougerSiRempli();
                     // test enlever ciblage de l'objet en cours de destruction
+
+                    // A MODIFIER : PRECISER LE CIBLAGE DE L'OBJET DEVANT PERDRE CIBLAGE
                     foreach (ObjetFixe obj in planete.ListeBlocs)
                     {
                         obj.NePlusEtreCible();
                     }
                 }
+                else if (col.EtreFatigue())
+                {
+                    Console.WriteLine("FATIGUÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉ");
+                    Console.WriteLine();
 
+                    if (planete.ListeBatiments.OfType<Maison>().Any())
+                    {
+                        Maison maisonCible = planete.ListeBatiments.OfType<Maison>().First();
+                        col.DefinirCible(maisonCible.GetPositionObjet().First().Item1, maisonCible.GetPositionObjet().First().Item2);
+                        col.AcquerirCible();
+                        col.SeDeplacer(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
+                    }
+                }
                 else if (col.ATIlCible() == false) // Si pas de cible définie
                 {
                     if (col.GetType() == typeof(Bucheron) || col.GetType() == typeof(Mineur))
@@ -227,13 +281,16 @@ namespace TPGestionDeColonie
                         col.DefinirCible(targetX, targetY);
                         col.AcquerirCible(); // le colon a une cible
 
+                        planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(new Tuple<int, int>(targetX, targetY))).DevenirCible();
+                        Console.WriteLine($" objet ciblé : {planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(new Tuple<int, int>(targetX, targetY)))}");
+                        /*
                         foreach (ObjetFixe obj in planete.ListeBlocs)
                         { // définir l'objet le plus proche comme ciblé    
                             if (obj.GetPositionObjet().Contains(coords))
                             {
                                 obj.DevenirCible();
                             }
-                        }
+                        }*/
                         col.SeDeplacerVersItem(targetX, targetY);
                     }
                 }
@@ -247,7 +304,11 @@ namespace TPGestionDeColonie
                     {
                         Batisseur bat = (Batisseur)col;
                         int numBat = ChoixBatiment();
-                        if (planete.ListeBatiments.OfType<Entrepot>().Any()) // s'il existe un entrepôt
+                        if (numBat == 0)
+                        {
+
+                        }
+                        else if (planete.ListeBatiments.OfType<Entrepot>().Any()) // s'il existe un entrepôt
                         {
                             if (planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet().Contains(bat.getPosition()))
                             {
@@ -269,6 +330,38 @@ namespace TPGestionDeColonie
                         }
                     }
                 }
+                else if (col.GetType() == typeof(Paysan))
+                {
+                    if (!col.getPosition().Equals(col.RecupererCoordonneesCible()))
+                    {
+                        col.SeDeplacer(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
+                    }
+                    else
+                    {
+                        Paysan pay = (Paysan)col;
+                        bool surBle = false;
+                        foreach (ObjetFixe obj in planete.ListeBlocs)
+                        {
+                            if (obj.GetPositionObjet().Contains(pay.getPosition()))
+                            {
+                                if (obj.GetType() == typeof(Ble))
+                                {
+                                    for (int i = 0; i < 2; i++)
+                                    {
+                                        pay.Recolter();
+                                    }
+
+                                    
+                                    surBle = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if(surBle == false){
+                            pay.Planter();
+                        }
+                    }
+                }
                 else if (!col.getPosition().Equals(col.PlusProcheDistanceVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2))) // si le colon a déjà une cible et n'est pas sur la case adjacente
                 {
                     col.SeDeplacerVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
@@ -284,6 +377,8 @@ namespace TPGestionDeColonie
                         col.Miner(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
                     }
                 }
+
+                col.VerififierEtat();
             }
             planete.MettreAJourMonde();
         }
@@ -292,21 +387,22 @@ namespace TPGestionDeColonie
         {
             Console.WriteLine("Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"
                     + "- 2 : Taverne (Bois : 30, Roche : 10\n- 3 : Maison (Bois : 30, Roche : 0)\n"
-                     + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)");
+                     + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)\n- 0 : Quitter");
             int numBat = int.Parse(Console.ReadLine());
             while (numBat > 6 || numBat < 0)
             {
                 Console.WriteLine("Veuillez indiquer un numéro valide\n// ==================================== //");
                 Console.WriteLine("Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"
                 + "- 2 : Taverne (Bois : 30, Roche : 10\n- 3 : Maison (Bois : 30, Roche : 0)\n"
-                + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)");
+                + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)\n- 0 : Quitter");
                 numBat = int.Parse(Console.ReadLine());
             }
             return numBat;
         }
 
 
-        public static int MenuDepart(){
+        public static int MenuDepart()
+        {
             /*
              
                      ██████╗ ██████╗ ██╗      ██████╗ ███╗   ██╗██╗███████╗
@@ -317,7 +413,7 @@ namespace TPGestionDeColonie
                      ╚═════╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝╚══════╝
 
              */
-            Console.SetCursorPosition(Console.WindowWidth/4, 2);
+            Console.SetCursorPosition(Console.WindowWidth / 4, 2);
             Console.WriteLine(" ██████╗ ██████╗ ██╗      ██████╗ ███╗   ██╗██╗███████╗");
             Console.SetCursorPosition(Console.WindowWidth / 4, 3);
             Console.WriteLine("██╔════╝██╔═══██╗██║     ██╔═══██╗████╗  ██║██║██╔════╝");

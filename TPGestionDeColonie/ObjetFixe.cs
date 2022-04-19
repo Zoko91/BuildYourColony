@@ -43,7 +43,6 @@ namespace TPGestionDeColonie
             return positionObjet;
         }
 
-
         public void DestructionEnCours(int x, int y, Colon col) {
             Tuple<int, int> position = new Tuple<int, int>(x, y);
             Sante -= 25;
@@ -52,14 +51,23 @@ namespace TPGestionDeColonie
                 //Console.WriteLine(x + " "+ y);
                 //Console.WriteLine("L'élément "+ GetType().Name + " est cassé");
                 Planete.grille[x,  y] = " x ";
+                /*
                 foreach(ObjetFixe obj in Planete.ListeBlocs){
                     if(obj.GetPositionObjet().Contains(position)){
                         Planete.ListeBlocs.Remove(obj);
                         col.PerdreCible();
                         break;
                     }
+                }*/
+                foreach(Colon colon in Planete.ListePJ)
+                {
+                    if (Planete.ListePJ.Find(z => z.RecupererCoordonneesCible().Equals(new Tuple<int, int>(x, y))) == colon)
+                    {
+                        col.PerdreCible();
+                    }
                 }
-                
+                Planete.ListeBlocs.Remove(Planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(new Tuple<int, int>(x, y))));
+                col.PerdreCible();
                 //return true; Lors de l'action de destruction on peut lui dire tant que = true;
             }
             //return false;

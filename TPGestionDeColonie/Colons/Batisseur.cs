@@ -389,6 +389,8 @@ namespace TPGestionDeColonie
         }
 
         public void AjouterBatiment(Batiment b) { Planete.ListeBatiments.Add(b); } // Ajoute un batiment à la liste des batiments contenue dans le Monde
+        
+        public string ToString2(){ return $"\tLe batisseur {Nom} possède {Backpack[0]} Bois et {Backpack[1]} pierres\n\t________________________";}
 
     }
 

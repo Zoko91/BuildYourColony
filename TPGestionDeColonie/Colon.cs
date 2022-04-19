@@ -12,58 +12,37 @@ namespace TPGestionDeColonie
 {
     abstract class Colon
     {
+        // -----------------------------------------------------------------------
+        // Le colon un pnj nécessitant un métier pour exister (classe abstraite )
+        // Il peut effectuer toute sorte d'actions si il dispose des compétences nécessaires
+        // -----------------------------------------------------------------------
+
         // Variables
         private Tuple<int, int> positionColon;
         protected static int id = 0;
         protected int idColon;
-        public string Nom
-        {
-            get;
-            set;
-        }
+        public string Nom { get; set; }
         public int positionX;
         public int positionY;
-        public int Endurance
-        {
-            get;
-            set;
-        }
-        public int Sante
-        {
-            get;
-            set;
-        }
-        public int Faim
-        {
-            get;
-            set;
-        }
-        public int Soif
-        {
-            get;
-            set;
-        }
+        public int Endurance { get; set; }
+        public int Sante { get; set; }
+        public int Faim { get; set; }
+        public int Soif { get; set; }
 
         protected int TargetX { get; set; }
         protected int TargetY { get; set; }
         protected bool AvoirCible { get; set; }
-        // protected List<string> capacites;
 
-        //getter ID;
-        public int getId()
-        {
-            return idColon;
-        }
+        public int getId(){return idColon; }
         public int[] Backpack { get; set; }
-
         public Monde Planete { get; }
 
         // -------------------------------------------
 
-        public Colon(string nom, int positionX, int positionY, int endurance, int sante, int faim, int soif, Monde planete) //, List<string> capacites
+        public Colon(string nom, int positionX, int positionY, int endurance, int sante, int faim, int soif, Monde planete) // List<string> capacites
         {
             id = id + 1;
-            idColon = id;
+            idColon = id; // Défini un id unique à la création du colon
             this.positionX = positionX;
             this.positionY = positionY;
             Endurance = endurance;
@@ -77,6 +56,8 @@ namespace TPGestionDeColonie
             AvoirCible = false;
         }
 
+        // -- \\ Méthodes et fonctions permettant de définir une position comme étant la cible du colon
+        // -------------------------------------------
         public void AcquerirCible()
         {
             AvoirCible = true;
@@ -91,86 +72,72 @@ namespace TPGestionDeColonie
             TargetX = positionX;
             TargetY = positionY;
         }
+
+        // -- \\ Méthodes et fonctions de récupérations de positions
+        // -------------------------------------------
         public Tuple<int, int> RecupererCoordonneesCible()
         {
             Tuple<int, int> coords = new Tuple<int, int>(TargetX, TargetY);
             return coords;
         }
-
-
-
-
         public Tuple<int, int> getPosition()
         {
             return positionColon;
         }
 
-        public void EtreFatigue()
-        {
-            if (Endurance < 20)
-            {
-                Console.WriteLine($"{Nom} est raplapla.");
-            }
-        }
-
-        public void AvoirSoif()
-        {
-            if (Soif < 20)
-            {
-                Console.WriteLine("Glouglou");
-            }
-        }
-
-        public void SanteFaible()
-        {
-            if (Sante < 20)
-            {
-                Console.WriteLine("Aïe aïe aïe, je ne suis pas en bon état.");
-            }
-        }
-
+        // -- \\ Méthodes et fonctions donnant des informations sur l'état du colon
+        // -------------------------------------------
         public void PrendreDegats(int degats)
+            // Gestion des dégâts subis lors de combats
         {
             Sante -= degats;
         }
-
-        public void VerififierEtat()
-        //Vérifie l'état physique du Colon
+        public bool EtreFatigue() // renvoie true si fatigué, false sinon
         {
+            if (Endurance <=20)
+            {
+                return true;
+            }
+            return false;
+        }
+        public void VerififierEtat()    
+        {
+            //Vérifie l'état physique du Colon
             int pdvPerdus = 0;
-            if (0 < Endurance && Endurance <= 10) { pdvPerdus += 1; }
-            else if (Endurance == 0) { pdvPerdus += 2; }
+            if (0 < Endurance && Endurance <= 20) { pdvPerdus += 1; }
+            else if (Endurance <= 0) { pdvPerdus += 2; }
 
-            if (0 < Soif && Soif <= 10) { pdvPerdus += 1; }
-            else if (Soif == 0) { pdvPerdus += 2; }
+            if (0 < Soif && Soif <= 20) { pdvPerdus += 1; }
+            else if (Soif <= 0) { pdvPerdus += 2; }
 
-            if (0 < Faim && Faim <= 10) { pdvPerdus += 1; }
-            else if (Faim == 0) { pdvPerdus += 2; }
+            if (0 < Faim && Faim <= 20) { pdvPerdus += 1; }
+            else if (Faim <= 0) { pdvPerdus += 2; }
 
             Sante -= pdvPerdus;
-
-            Console.WriteLine($"{Nom} a perdu {pdvPerdus} points de vie. Santé restante : {Sante} / 100.");
         }
 
         public override string ToString()
         {
-            return $"Colon n°{idColon} : {GetType().Name} {Nom}, santé = {Sante}/100 PV, endurance = {Endurance}/100, faim = {Faim}/100, soif = {Soif}/100"; // \nA-t-il une cible ? ${ATIlCible()}
+            return $"Colon n°{idColon} : {GetType().Name} {Nom}, santé = {Sante}/100 PV, endurance = {Endurance}/100, faim = {Faim}/100, soif = {Soif}/100\nA-t-il une cible ? ${ATIlCible()}"; // \nA-t-il une cible ? ${ATIlCible()}
         }
 
-
-        public virtual void Miner(int x, int y) { Console.Write("test"); } //pour Mineur
+        // -- \\ Activités abtraites des colons
+        // -------------------------------------------
+        public virtual void Miner(int x, int y) {  } //pour Mineur
 
         public virtual void Couper(int x, int y) { } //pour Bûcheron
 
         public virtual void Planter() { } //pour Paysan
 
-        public virtual void Recolter(int x, int y) { } //pour Paysan
+        public virtual void Recolter() { } //pour Paysan
 
         public virtual void Construire(int numBat) {} // pour Batisseur
 
-
+        // -- \\ Déplacement des colons
+        // -------------------------------------------
         public void Deplacer(int x, int y)
         {
+            // Méthode indiquant quel 
             Endurance -= Math.Abs(positionX - x) + Math.Abs(positionY - y);
             while (positionX != x && positionY != y)
             {
