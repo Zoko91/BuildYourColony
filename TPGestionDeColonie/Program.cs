@@ -16,24 +16,29 @@ namespace TPGestionDeColonie
     class Program
     {
 
-
-
-        /*
-         * Exemple de comment faire fonctionner le menu => renvoie un entier lors de l'appui d'Entrée, -1 si Echap
-        int selectedClass = ConsoleHelper.MultipleChoice(true, "Warrior", "Bard", "Mage", "Archer",
-"Thief", "Assassin", "Cleric", "Paladin", "etc.");
-        Console.WriteLine();
-            Console.WriteLine(selectedClass);
-        */
-
-
-
         static void Main(string[] args)
         {
-            MenuDepart();
+            int optionChoisie = 10;
+            do
+            {
+                optionChoisie = MenuDepart();
+                //Console.WriteLine(optionChoisie);
+                if (optionChoisie == 1)
+                {
+                    Console.WriteLine("Commande à connaître");
+                    Console.ReadLine();
+                }
+                else if (optionChoisie == 2)
+                {
+                    Environment.Exit(0);
+                }
+            } while (optionChoisie != 0 );
 
             //Console.WindowHeight = 50;
             //Console.WindowWidth = 200;
+
+            Console.WindowHeight = Console.LargestWindowHeight;
+            Console.WindowWidth= Console.LargestWindowWidth;
 
             Monde planete = new Monde();
 
@@ -301,7 +306,7 @@ namespace TPGestionDeColonie
         }
 
 
-        public static void MenuDepart(){
+        public static int MenuDepart(){
             /*
              
                      ██████╗ ██████╗ ██╗      ██████╗ ███╗   ██╗██╗███████╗
@@ -313,7 +318,7 @@ namespace TPGestionDeColonie
 
              */
             Console.SetCursorPosition(Console.WindowWidth/4, 2);
-            Console.WriteLine(" ██████╗ ██████╗ ██╗      ██████╗ ███╗   ██╗██╗███████╗")
+            Console.WriteLine(" ██████╗ ██████╗ ██╗      ██████╗ ███╗   ██╗██╗███████╗");
             Console.SetCursorPosition(Console.WindowWidth / 4, 3);
             Console.WriteLine("██╔════╝██╔═══██╗██║     ██╔═══██╗████╗  ██║██║██╔════╝");
             Console.SetCursorPosition(Console.WindowWidth / 4, 4);
@@ -325,8 +330,9 @@ namespace TPGestionDeColonie
             Console.SetCursorPosition(Console.WindowWidth / 4, 7);
             Console.WriteLine(" ╚═════╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝╚══════╝");
 
-            Console.WriteLine(ControleurMenu.Menu());
+            int selectionOption = ControleurMenu.Menu("Principal");
             Console.Clear();
+            return selectionOption;
             //Console.ReadLine();
         }
 
