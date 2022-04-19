@@ -64,9 +64,10 @@ namespace TPGestionDeColonie
         public static void ProposerActions(Monde planete)
         {
             Console.WriteLine("======================================");
-            Console.WriteLine("Liste des actions possibles :\n1 - Construire\nSTOP pour arrêter");
+            Console.WriteLine("Liste des actions possibles :\n1 - Construire\n2 - Afficher l'état des colons\n3 - Afficher le stock de ressources des batiments\n4 - Planter (paysan)\n5 - Récolter (paysan)\n0 - STOP");
+            Console.WriteLine("======================================");
             int numAction = int.Parse(Console.ReadLine());
-            while (numAction > 6 || numAction < 1)
+            while (numAction > 6 || numAction < 0)
             {
                 Console.WriteLine("Veuillez indiquez un numéro d'action correct :");
                 numAction = int.Parse(Console.ReadLine());
@@ -97,6 +98,51 @@ namespace TPGestionDeColonie
                         break;
                     }
                 }
+
+            }
+            if(numAction == 2) // Afficher l'état des colons
+            {
+                Console.WriteLine();
+                Console.WriteLine(" /\\ ================= État des colons ================= /\\ ");
+                Console.WriteLine();
+                foreach(Colon col in planete.ListePJ)
+                {
+                    Console.WriteLine(col.ToString());
+                }
+                Console.WriteLine();
+                Console.WriteLine(" /\\ ___________________________________________________ /\\ ");
+                Console.WriteLine();
+                Console.ReadLine();
+                ProposerActions(planete);
+            }
+            if (numAction == 3) // Afficher le stock de ressources des batiments
+            {
+                Console.WriteLine();
+                Console.WriteLine(" /\\ ======== Stock de ressources des bâtiments ======== /\\ ");
+                Console.WriteLine("\t________________________");
+                foreach (Batiment bat in planete.ListeBatiments)
+                {
+                    if(bat.GetType() == typeof(Entrepot))
+                    {
+                        Console.WriteLine(bat.ToString());
+                    }
+                    if(bat.GetType() == typeof(Auberge))
+                    {
+                        Console.WriteLine(bat.ToString());
+                    }
+                }
+                Console.WriteLine();
+                Console.WriteLine(" /\\ ___________________________________________________ /\\ ");
+                Console.WriteLine();
+                Console.ReadLine();
+                ProposerActions(planete);
+            }
+            if (numAction == 4) // Planter (paysan)
+            {
+
+            }
+            if (numAction == 5) // Récolter (paysan)
+            {
 
             }
         }

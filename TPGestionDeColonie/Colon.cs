@@ -154,7 +154,7 @@ namespace TPGestionDeColonie
 
         public override string ToString()
         {
-            return $"Colon n°{idColon} : {GetType().Name} {Nom}, santé = {Sante}/100 PV, endurance = {Endurance}/100, faim = {Faim}/100, soif = {Soif}/100 \nA-t-il une cible ? ${ATIlCible()}";
+            return $"Colon n°{idColon} : {GetType().Name} {Nom}, santé = {Sante}/100 PV, endurance = {Endurance}/100, faim = {Faim}/100, soif = {Soif}/100"; // \nA-t-il une cible ? ${ATIlCible()}
         }
 
 
