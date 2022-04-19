@@ -18,7 +18,12 @@ namespace TPGestionDeColonie.ObjetsFixes.Batiments
         public Auberge(List<Tuple<int, int>> positionObjet, int coutBois, int coutPierre, Monde planete) : base(
             positionObjet, coutBois, coutPierre, planete)
         {
-            StockRessources = new int[] {0, 0, 0}; // Eau, blé, viande
+            StockRessources = new int[] {0, 0}; // Eau, viande
+        }
+
+        public override string ToString()
+        {
+            return $"\t{GetType().Name} :\n\tStock d'eau: {StockRessources[0]}\n\tStock de viande: {StockRessources[1]}\n\t________________________";
         }
 
         //Auberge fait perdre de la fatigue
