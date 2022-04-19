@@ -8,12 +8,11 @@ namespace TPGestionDeColonie.ObjetsFixes.Batiments
 {
     class Auberge:Batiment
     {
-        public bool PresenceTavernier
-        {
-            get;
-            set;
-        }
-        public int[] StockRessources{get;set;}
+        // -----------------------------------------------------------------
+        // Batiment ou les Colons se désaltèrent et peuvent également manger
+        // -----------------------------------------------------------------
+        public bool PresenceTavernier { get; set; }
+        public int[] StockRessources{ get ; set; }
 
         public Auberge(List<Tuple<int, int>> positionObjet, int coutBois, int coutPierre, Monde planete) : base(
             positionObjet, coutBois, coutPierre, planete)

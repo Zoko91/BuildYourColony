@@ -8,6 +8,10 @@ namespace TPGestionDeColonie.ObjetsFixes
 {
     abstract class Batiment:ObjetFixe
     {
+        
+        // -----------------------------------------------------------------
+        // Classe abstraite définissant chaque batiment par leur position et leur cout en ressources
+        // -----------------------------------------------------------------
 
         protected int coutBois;
         protected int coutPierre;
