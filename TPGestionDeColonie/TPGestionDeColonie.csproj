@@ -49,7 +49,7 @@
     <Compile Include="Colon.cs" />
     <Compile Include="Colons\Mineur.cs" />
     <Compile Include="Colons\Tavernier.cs" />
-    <Compile Include="ControlHelper.cs" />
+    <Compile Include="ControleurMenu.cs" />
     <Compile Include="Mob.cs" />
     <Compile Include="Mobs\Loup.cs" />
     <Compile Include="Mobs\Vache.cs" />

@@ -30,9 +30,10 @@ namespace TPGestionDeColonie
 
         static void Main(string[] args)
         {
+            MenuDepart();
 
-            Console.WindowHeight = 50;
-            Console.WindowWidth = 200;
+            //Console.WindowHeight = 50;
+            //Console.WindowWidth = 200;
 
             Monde planete = new Monde();
 
@@ -100,12 +101,12 @@ namespace TPGestionDeColonie
                 }
 
             }
-            if(numAction == 2) // Afficher l'état des colons
+            if (numAction == 2) // Afficher l'état des colons
             {
                 Console.WriteLine();
                 Console.WriteLine(" /\\ ================= État des colons ================= /\\ ");
                 Console.WriteLine();
-                foreach(Colon col in planete.ListePJ)
+                foreach (Colon col in planete.ListePJ)
                 {
                     Console.WriteLine(col.ToString());
                 }
@@ -122,11 +123,11 @@ namespace TPGestionDeColonie
                 Console.WriteLine("\t________________________");
                 foreach (Batiment bat in planete.ListeBatiments)
                 {
-                    if(bat.GetType() == typeof(Entrepot))
+                    if (bat.GetType() == typeof(Entrepot))
                     {
                         Console.WriteLine(bat.ToString());
                     }
-                    if(bat.GetType() == typeof(Auberge))
+                    if (bat.GetType() == typeof(Auberge))
                     {
                         Console.WriteLine(bat.ToString());
                     }
@@ -200,10 +201,10 @@ namespace TPGestionDeColonie
                 Console.WriteLine(col.Endurance);
                 if (col.EtreRempli())
                 {
-                    Console.WriteLine(string.Join("/",col.Backpack));
+                    Console.WriteLine(string.Join("/", col.Backpack));
                     col.BougerSiRempli();
                     // test enlever ciblage de l'objet en cours de destruction
-                    foreach(ObjetFixe obj in planete.ListeBlocs)
+                    foreach (ObjetFixe obj in planete.ListeBlocs)
                     {
                         obj.NePlusEtreCible();
                     }
@@ -299,11 +300,38 @@ namespace TPGestionDeColonie
             return numBat;
         }
 
+
+        public static void MenuDepart(){
+            /*
+             
+                     ██████╗ ██████╗ ██╗      ██████╗ ███╗   ██╗██╗███████╗
+                    ██╔════╝██╔═══██╗██║     ██╔═══██╗████╗  ██║██║██╔════╝
+                    ██║     ██║   ██║██║     ██║   ██║██╔██╗ ██║██║█████╗  
+                    ██║     ██║   ██║██║     ██║   ██║██║╚██╗██║██║██╔══╝  
+                    ╚██████╗╚██████╔╝███████╗╚██████╔╝██║ ╚████║██║███████╗
+                     ╚═════╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝╚══════╝
+
+             */
+            Console.SetCursorPosition(Console.WindowWidth/4, 2);
+            Console.WriteLine(" ██████╗ ██████╗ ██╗      ██████╗ ███╗   ██╗██╗███████╗")
+            Console.SetCursorPosition(Console.WindowWidth / 4, 3);
+            Console.WriteLine("██╔════╝██╔═══██╗██║     ██╔═══██╗████╗  ██║██║██╔════╝");
+            Console.SetCursorPosition(Console.WindowWidth / 4, 4);
+            Console.WriteLine("██║     ██║   ██║██║     ██║   ██║██╔██╗ ██║██║█████╗  ");
+            Console.SetCursorPosition(Console.WindowWidth / 4, 5);
+            Console.WriteLine("██║     ██║   ██║██║     ██║   ██║██║╚██╗██║██║██╔══╝  ");
+            Console.SetCursorPosition(Console.WindowWidth / 4, 6);
+            Console.WriteLine("╚██████╗╚██████╔╝███████╗╚██████╔╝██║ ╚████║██║███████╗");
+            Console.SetCursorPosition(Console.WindowWidth / 4, 7);
+            Console.WriteLine(" ╚═════╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝╚══════╝");
+
+            Console.WriteLine(ControleurMenu.Menu());
+            Console.Clear();
+            //Console.ReadLine();
+        }
+
+
         // public void NouvelArrivant() { } // quand nouveau colon arrive de façon random
-
-
-
-
 
 
     }
