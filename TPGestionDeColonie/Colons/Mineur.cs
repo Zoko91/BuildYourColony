@@ -11,8 +11,10 @@ namespace TPGestionDeColonie
 {
      class Mineur:Colon
     {
-        // Créer la liste des capacités de base
-        // List<string> capacites
+        // -----------------------------------------------------------------
+        // Le Mineur peut miner les rochers présents sur la map
+        // -----------------------------------------------------------------
+        
         public Mineur(string nom, int positionX, int positionY, int endurance, int sante, int faim, int soif, Monde planete) : base(nom, positionX, positionY, endurance, sante, faim, soif, planete)
         {
         }
@@ -22,10 +24,8 @@ namespace TPGestionDeColonie
              Tuple<int, int> positionRocher = new Tuple<int, int>(x, y);
              if(Planete.grille[x,y] == " R ")
              {
-                //Planete.ListeBlocs
-                Backpack[1] += 10;
-                //Console.WriteLine(Planete.ListeBlocs[0].GetPositionObjet().First());
-                Planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(positionRocher)).DestructionEnCours(x,y, this);
+                 Backpack[1] += 10;
+                 Planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(positionRocher)).DestructionEnCours(x,y, this);
 
              }
          }
