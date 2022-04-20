@@ -17,11 +17,23 @@ namespace TPGestionDeColonie
 
         static void Main(string[] args)
         {
-            
-        // ---------------------------
-        // Menu d'affichage du départ
-        // ---------------------------
-            
+
+            Console.Title = "The Game You Wish You Had Known Before || BEASSE Joseph - GONCALVES Tristan";
+            Console.SetWindowPosition(0, 0);
+
+            // -------------------------------------
+            // Définition de la taille de la console
+            // -------------------------------------
+
+            Console.WindowHeight = Console.LargestWindowHeight -5;
+            Console.WindowWidth = Console.LargestWindowWidth -25;
+
+
+
+            // ---------------------------
+            // Menu d'affichage du départ
+            // ---------------------------
+
             int optionChoisie = 10;
             do
             {
@@ -36,16 +48,13 @@ namespace TPGestionDeColonie
                 }
             } while (optionChoisie != 0);
 
-        // -------------------------------------
-        // Définition de la taille de la console
-        // -------------------------------------
 
-            //Console.WindowHeight = Console.LargestWindowHeight - 5;
-            //Console.WindowWidth = Console.LargestWindowWidth - 25;
 
-        // -------------------
-        // Génération du monde 
-        // -------------------
+            
+
+            // -------------------
+            // Génération du monde 
+            // -------------------
 
             Monde planete = new Monde();
 
@@ -54,12 +63,10 @@ namespace TPGestionDeColonie
             planete.GenererMonde();
             planete.AfficherMonde();
 
-        // ---------------------------------------------------------------------
-        // Gestion des tours de jeu et des propositions d'actions pour le joueur
-        // ---------------------------------------------------------------------
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
+            // ---------------------------------------------------------------------
+            // Gestion des tours de jeu et des propositions d'actions pour le joueur
+            // ---------------------------------------------------------------------
+            
             Console.ReadLine();
 
 
@@ -297,26 +304,28 @@ namespace TPGestionDeColonie
             // JE ME SUIS ARRETE LA DANS LES COMMENTAIRES PROGRAM.CS
 
 
-            //Console.Clear();
+            Console.Clear();
             foreach (Colon col in listeColons)
             {
 
                 if (col.EtreRempli())
                 {
-                    col.BougerSiRempli();
-                    // test enlever ciblage de l'objet en cours de destruction
-
-                    // A MODIFIER : PRECISER LE CIBLAGE DE L'OBJET DEVANT PERDRE CIBLAGE
-                    foreach (ObjetFixe obj in planete.ListeBlocs)
+                    foreach(ObjetFixe obj in planete.ListeBlocs)
                     {
-                        obj.NePlusEtreCible();
+                         if(obj.GetPositionObjet().Contains(col.RecupererCoordonneesCible())){
+                            obj.NePlusEtreCible();
+                        }
                     }
+                    col.BougerSiRempli();
                 }
+   
                 else if (col.EtreFatigue())
                 {
+                    planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(col.RecupererCoordonneesCible())).NePlusEtreCible();
                     if (planete.ListeBatiments.OfType<Maison>().Any())
                     {
                         Maison maisonCible = planete.ListeBatiments.OfType<Maison>().First();
+
                         col.DefinirCible(maisonCible.GetPositionObjet().First().Item1, maisonCible.GetPositionObjet().First().Item2);
                         col.AcquerirCible();
                         col.SeDeplacer(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
@@ -327,39 +336,22 @@ namespace TPGestionDeColonie
                 {
                     if (col.GetType() == typeof(Bucheron) || col.GetType() == typeof(Mineur))
                     { // Bûcherons et mineurs doivent trouver l'objet le plus proche
+                        
                         Tuple<int, int> coords = col.RechercherPlusProcheItem();
 
                         int targetX = coords.Item1;
                         int targetY = coords.Item2;
 
-                        // Déclare l'objet désigné comme étant ciblé
-                        if (planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(new Tuple<int, int>(targetX, targetY))).EtreCible()==false)
-                        {
-                            planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(new Tuple<int, int>(targetX, targetY))).DevenirCible();
-                            col.DefinirCible(targetX, targetY);
-                            col.AcquerirCible(); // le colon a une cible
-                        }
-                        else
-                        {
-                            while (planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(new Tuple<int, int>(targetX, targetY))).EtreCible())
-                            {
-                                coords = col.RechercherPlusProcheItem();
-                                targetX = coords.Item1;
-                                targetY = coords.Item2;
-                            }
-                            planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(new Tuple<int, int>(targetX, targetY))).DevenirCible();
-                            col.DefinirCible(targetX, targetY);
-                            col.AcquerirCible(); // le colon a une cible
-                        }
-                        Console.WriteLine($" objet ciblé : {planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(new Tuple<int, int>(targetX, targetY)))}");
-                        /*
+                        col.DefinirCible(targetX, targetY);
+                        col.AcquerirCible(); // le colon a une cible
                         foreach (ObjetFixe obj in planete.ListeBlocs)
                         { // définir l'objet le plus proche comme ciblé    
                             if (obj.GetPositionObjet().Contains(coords))
                             {
                                 obj.DevenirCible();
                             }
-                        }*/
+                        }
+
                         col.SeDeplacerVersItem(targetX, targetY);
                     }
                 }

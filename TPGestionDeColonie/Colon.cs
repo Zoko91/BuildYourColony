@@ -373,18 +373,7 @@ namespace TPGestionDeColonie
 
             switch (typeDuColon)
             {
-                case "TPGestionDeColonie.Bucheron":
-                   /* List<Tuple<int, int>> listeCoords = new List<Tuple<int, int>>();
-                    List<int> listeDistances = new List<int>();
-                    Arbre[] arrayArbre = Planete.ListeBlocs.OfType<Arbre>().ToArray();
-                    foreach (Arbre arb in arrayArbre) {
-                        listeCoords.Add(new Tuple<int, int>(arb.GetPositionObjet().First().Item1, arb.GetPositionObjet().First().Item2));
-                        //foreach (Tuple<int, int> tupleCoords in listeCoords)
-                       // {
-                            listeDistances.Add(CalculerDistancePlusProche(arb));
-                       // }
-                    }*/
-                    
+                case "TPGestionDeColonie.Bucheron":                
                     foreach (ObjetFixe arb in Planete.ListeBlocs)
                     {
                         if (arb.GetType() == typeof(Arbre) && arb.EtreCible() == false)
