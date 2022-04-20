@@ -25,8 +25,8 @@ namespace TPGestionDeColonie
             // Définition de la taille de la console
             // -------------------------------------
 
-            Console.WindowHeight = Console.LargestWindowHeight -5;
-            Console.WindowWidth = Console.LargestWindowWidth -25;
+            Console.WindowHeight = Console.LargestWindowHeight - 5;
+            Console.WindowWidth = Console.LargestWindowWidth - 25;
 
 
 
@@ -50,7 +50,7 @@ namespace TPGestionDeColonie
 
 
 
-            
+
 
             // -------------------
             // Génération du monde 
@@ -66,7 +66,7 @@ namespace TPGestionDeColonie
             // ---------------------------------------------------------------------
             // Gestion des tours de jeu et des propositions d'actions pour le joueur
             // ---------------------------------------------------------------------
-            
+
             Console.ReadLine();
 
 
@@ -87,17 +87,17 @@ namespace TPGestionDeColonie
         public static void ProposerActions(Monde planete)
         {
 
-        // ---------------------------------------------------------------------------------------------------
-        // Proposer une liste d'actions possibles que le joueur peut demander chaque tour en écrivant "manuel"
-        // ---------------------------------------------------------------------------------------------------
+            // ---------------------------------------------------------------------------------------------------
+            // Proposer une liste d'actions possibles que le joueur peut demander chaque tour en écrivant "manuel"
+            // ---------------------------------------------------------------------------------------------------
 
             Console.WriteLine("======================================");
             Console.WriteLine("Liste des actions possibles :\n1 - Construire\n2 - Afficher l'état des colons\n3 - Afficher le stock de ressources des batiments\n4 - Planter (paysan)\n5 - Récolter (paysan)\n0 - STOP");
             Console.WriteLine("======================================");
 
-        // ----------------------------------------------------------------------------------
-        // Sélection de l'action et définition du comportement du jeu en fonction de l'action
-        // ----------------------------------------------------------------------------------
+            // ----------------------------------------------------------------------------------
+            // Sélection de l'action et définition du comportement du jeu en fonction de l'action
+            // ----------------------------------------------------------------------------------
 
             int numAction = int.Parse(Console.ReadLine());
 
@@ -136,12 +136,12 @@ namespace TPGestionDeColonie
                 }
 
             }
-            if (numAction == 2) 
+            if (numAction == 2)
             {
 
-            // -------------------------
-            // Affiche l'état des colons
-            // -------------------------
+                // -------------------------
+                // Affiche l'état des colons
+                // -------------------------
 
                 Console.WriteLine();
                 Console.WriteLine(" /\\ ================= État des colons ================= /\\ ");
@@ -156,12 +156,12 @@ namespace TPGestionDeColonie
                 Console.ReadLine();
                 ProposerActions(planete);
             }
-            if (numAction == 3) 
+            if (numAction == 3)
             {
 
-            // ---------------------------------------------
-            // Afficher le stock de ressources des batiments
-            // ---------------------------------------------
+                // ---------------------------------------------
+                // Afficher le stock de ressources des batiments
+                // ---------------------------------------------
 
                 Console.WriteLine();
                 Console.WriteLine(" /\\ ======== Stock de ressources des bâtiments ======== /\\ ");
@@ -191,12 +191,12 @@ namespace TPGestionDeColonie
                 Console.ReadLine();
                 ProposerActions(planete);
             }
-            if (numAction == 4) 
+            if (numAction == 4)
             {
 
-            // -----------------------------------------------------------------------
-            // Déplace le paysan sur la case ciblée, une fois sur place, plante un blé
-            // -----------------------------------------------------------------------
+                // -----------------------------------------------------------------------
+                // Déplace le paysan sur la case ciblée, une fois sur place, plante un blé
+                // -----------------------------------------------------------------------
 
                 foreach (Colon colon in planete.ListePJ)
                 {
@@ -219,9 +219,9 @@ namespace TPGestionDeColonie
             if (numAction == 5) // 
             {
 
-            // ---------------------------------------------------------------------------------------------------------
-            // Déplace le paysan sur la case ciblée, une fois sur place, récolte le blé en 2 tours si la case est un blé
-            // ---------------------------------------------------------------------------------------------------------
+                // ---------------------------------------------------------------------------------------------------------
+                // Déplace le paysan sur la case ciblée, une fois sur place, récolte le blé en 2 tours si la case est un blé
+                // ---------------------------------------------------------------------------------------------------------
 
                 foreach (Colon colon in planete.ListePJ)
                 {
@@ -244,9 +244,9 @@ namespace TPGestionDeColonie
         public static List<Colon> CreerColonsDepart(Monde planete)
         {
 
-        // --------------------------------------------------------------------------------------------------------------
-        // Fonction créant la liste des colons au départ du jeu, les plaçant au milieu de la carte et renvoyant une liste
-        // --------------------------------------------------------------------------------------------------------------
+            // --------------------------------------------------------------------------------------------------------------
+            // Fonction créant la liste des colons au départ du jeu, les plaçant au milieu de la carte et renvoyant une liste
+            // --------------------------------------------------------------------------------------------------------------
 
             int milieuGrilleHauteur = (int)Math.Floor((double)planete.Hauteur / 2);
             int milieuGrilleLargeur = (int)Math.Floor((double)planete.Largeur / 2);
@@ -269,10 +269,10 @@ namespace TPGestionDeColonie
             for (int i = 0; i < listeDepart.Count; i++)
             {
 
-        // -----------------------------------------------
-        // On demande à l'utilisateur de nommer les colons
-        // -----------------------------------------------
-        
+                // -----------------------------------------------
+                // On demande à l'utilisateur de nommer les colons
+                // -----------------------------------------------
+
                 string demande = $"Indiquez le nom du colon {listeDepart[i].GetType().Name} : ";
                 string space = new string(' ', demande.Length - 2);
                 //Console.Write(space);
@@ -295,14 +295,10 @@ namespace TPGestionDeColonie
 
         public static void JouerUnTour(List<Colon> listeColons, Monde planete)
         {
-            
-        // ----------------------------------------------------------------------------------------------------------
-        // Fonction principale du jeu définissant les actions automatiques et manuelles des colons chaque tour de jeu
-        // ----------------------------------------------------------------------------------------------------------
-            
 
-            // JE ME SUIS ARRETE LA DANS LES COMMENTAIRES PROGRAM.CS
-
+            // ----------------------------------------------------------------------------------------------------------
+            // Fonction principale du jeu définissant les actions automatiques et manuelles des colons chaque tour de jeu
+            // ----------------------------------------------------------------------------------------------------------
 
             Console.Clear();
             foreach (Colon col in listeColons)
@@ -310,18 +306,23 @@ namespace TPGestionDeColonie
 
                 if (col.EtreRempli())
                 {
-                    foreach(ObjetFixe obj in planete.ListeBlocs)
+                    foreach (ObjetFixe obj in planete.ListeBlocs)
                     {
-                         if(obj.GetPositionObjet().Contains(col.RecupererCoordonneesCible())){
+                        if (obj.GetPositionObjet().Contains(col.RecupererCoordonneesCible()))
+                        {
                             obj.NePlusEtreCible();
                         }
                     }
                     col.BougerSiRempli();
                 }
-   
+
                 else if (col.EtreFatigue())
                 {
-                    planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(col.RecupererCoordonneesCible())).NePlusEtreCible();
+                    if (col.ATIlCible())
+                    {
+                        planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(col.RecupererCoordonneesCible())).NePlusEtreCible();
+                    }
+                    
                     if (planete.ListeBatiments.OfType<Maison>().Any())
                     {
                         Maison maisonCible = planete.ListeBatiments.OfType<Maison>().First();
@@ -336,7 +337,7 @@ namespace TPGestionDeColonie
                 {
                     if (col.GetType() == typeof(Bucheron) || col.GetType() == typeof(Mineur))
                     { // Bûcherons et mineurs doivent trouver l'objet le plus proche
-                        
+
                         Tuple<int, int> coords = col.RechercherPlusProcheItem();
 
                         int targetX = coords.Item1;
@@ -351,8 +352,23 @@ namespace TPGestionDeColonie
                                 obj.DevenirCible();
                             }
                         }
-
                         col.SeDeplacerVersItem(targetX, targetY);
+                    }
+                    else if (col.GetType() == typeof(Tavernier))
+                    {
+                        if (planete.ListeBatiments.OfType<Auberge>().Any())
+                        {
+                            Tavernier tav = (Tavernier)col;
+                            Auberge aub = planete.ListeBatiments.OfType<Auberge>().FirstOrDefault();
+                            if(!aub.GetPositionObjet().Contains(tav.getPosition())){
+                                tav.AcquerirCible();
+                                tav.DefinirCible(aub.GetPositionObjet().FirstOrDefault().Item1, aub.GetPositionObjet().FirstOrDefault().Item2);
+                            }
+                            else
+                            {
+                                tav.AllerRemplirRessource();
+                            }
+                        }
                     }
                 }
                 else if (col.GetType() == typeof(Batisseur))
@@ -367,7 +383,7 @@ namespace TPGestionDeColonie
                         int numBat = ChoixBatiment();
                         if (numBat == 0)
                         {
-
+                            bat.PerdreCible();
                         }
                         else if (planete.ListeBatiments.OfType<Entrepot>().Any()) // s'il existe un entrepôt
                         {
@@ -411,24 +427,77 @@ namespace TPGestionDeColonie
                                     {
                                         pay.Recolter();
                                     }
-
-                                    
                                     surBle = true;
                                     break;
                                 }
                             }
                         }
-                        if(surBle == false){
+                        if (surBle == false)
+                        {
                             pay.Planter();
                         }
                     }
                 }
+                else if (col.GetType() == typeof(Tavernier))
+                {
+                    Tavernier tavernier = (Tavernier)col;
+                    if (planete.ListeBatiments.OfType<Auberge>().Any())
+                    {
+                        planete.ListeBatiments.OfType<Auberge>().FirstOrDefault().PresenceTavernier=false;
+                    }
+
+                    if (!col.getPosition().Equals(col.RecupererCoordonneesCible()))
+                    {
+                        Tuple<int, int> coordCible = col.RecupererCoordonneesCible();
+                        Auberge aub = planete.ListeBatiments.OfType<Auberge>().FirstOrDefault();
+                        if (aub.GetPositionObjet().Contains(coordCible))
+                        {
+                            col.SeDeplacer(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
+                        }
+                        else{
+                            col.SeDeplacerVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
+                        }
+                    }
+                    else
+                    {
+                        foreach (Batiment bat in planete.ListeBatiments)
+                        {
+                            if (bat.GetType() == typeof(Puits))
+                            {
+                                if (tavernier.Backpack[3] < 100)
+                                {
+                                    tavernier.RemplirLeSeau();
+                                }
+                                else
+                                {
+                                    if (planete.ListeBatiments.OfType<Auberge>().Any())
+                                    {
+                                        tavernier.DefinirCible(planete.ListeBatiments.OfType<Auberge>().FirstOrDefault().GetPositionObjet().FirstOrDefault().Item1,
+                                            planete.ListeBatiments.OfType<Auberge>().FirstOrDefault().GetPositionObjet().FirstOrDefault().Item2);
+                                    }
+                                }
+                            }
+                            else if (bat.GetType() == typeof(Auberge))
+                            {
+                                tavernier.PerdreCible();
+                                Auberge aub = (Auberge)bat;
+                                aub.PresenceTavernier = true;
+                                if (tavernier.Backpack[3] > 0)
+                                {
+                                    aub.StockRessources[0] += tavernier.Backpack[3];
+                                    tavernier.Backpack[3] = 0;
+                                }
+                            }
+                        }
+                    }
+                }
+
                 else if (!col.getPosition().Equals(col.PlusProcheDistanceVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2))) // si le colon a déjà une cible et n'est pas sur la case adjacente
                 {
                     col.SeDeplacerVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
                 }
                 else if (col.getPosition().Equals(col.PlusProcheDistanceVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2)))
-                {
+                { // colon arrivé à la case adjacente, va pouvoir se mettre à couper/miner
                     if (col.GetType() == typeof(Bucheron))
                     {
                         col.Couper(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
@@ -439,16 +508,16 @@ namespace TPGestionDeColonie
                     }
                 }
 
-                col.VerififierEtat();
+                col.VerififierEtat(); // Vérifie l'état vital du colon
             }
             // Chercher ferme pour production
 
             if (planete.ListeBatiments.OfType<Ferme>().Any())
             {
-
-                    int nbFermes = planete.ListeBatiments.OfType<Ferme>().Count();
-                    Ferme[] arrayFerme = planete.ListeBatiments.OfType<Ferme>().ToArray();
-                    for (int i = 0; i < nbFermes; i++){arrayFerme[i].ProductionBle();}                
+                int nbFermes = planete.ListeBatiments.OfType<Ferme>().Count();
+                Ferme[] arrayFerme = planete.ListeBatiments.OfType<Ferme>().ToArray();
+                // va faire appel à la méthode de production dans toutes les fermes de la map
+                for (int i = 0; i < nbFermes; i++) { arrayFerme[i].ProductionBle(); }
             }
 
             planete.MettreAJourMonde();
@@ -459,7 +528,7 @@ namespace TPGestionDeColonie
             // ----------------------------------------------------------------
             // Récupère le numéro du batiment que le joueur souhaite construire
             // ----------------------------------------------------------------
-            
+
             Console.WriteLine("Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"
                     + "- 2 : Taverne (Bois : 30, Roche : 10\n- 3 : Maison (Bois : 30, Roche : 0)\n"
                      + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)\n- 0 : Quitter");
@@ -481,18 +550,15 @@ namespace TPGestionDeColonie
             // ----------------------------
             // Définition du menu de départ
             // ----------------------------
-            
-            
             /*
-             
                      ██████╗ ██████╗ ██╗      ██████╗ ███╗   ██╗██╗███████╗
                     ██╔════╝██╔═══██╗██║     ██╔═══██╗████╗  ██║██║██╔════╝
                     ██║     ██║   ██║██║     ██║   ██║██╔██╗ ██║██║█████╗  
                     ██║     ██║   ██║██║     ██║   ██║██║╚██╗██║██║██╔══╝  
                     ╚██████╗╚██████╔╝███████╗╚██████╔╝██║ ╚████║██║███████╗
                      ╚═════╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝╚══════╝
-
              */
+
             Console.SetCursorPosition(Console.WindowWidth / 4, 2);
             Console.WriteLine(" ██████╗ ██████╗ ██╗      ██████╗ ███╗   ██╗██╗███████╗");
             Console.SetCursorPosition(Console.WindowWidth / 4, 3);
@@ -516,32 +582,32 @@ namespace TPGestionDeColonie
             // ----------------------------
             // Définition du tutoriel
             // ----------------------------
-            
-                    Console.WriteLine();
-                    Console.WriteLine("\t████████ ██    ██ ████████  ██████  ██████  ██ ███████ ██");
-                    Console.WriteLine("\t   ██    ██    ██    ██    ██    ██ ██   ██ ██ ██      ██");
-                    Console.WriteLine("\t   ██    ██    ██    ██    ██    ██ ██████  ██ █████   ██");
-                    Console.WriteLine("\t   ██    ██    ██    ██    ██    ██ ██   ██ ██ ██      ██");
-                    Console.WriteLine("\t   ██     ██████     ██     ██████  ██   ██ ██ ███████ ███████");
-                    Console.WriteLine();
-                    Console.WriteLine();
-                    Console.WriteLine("\tBienvenue sur 'The Game You Wish You Had Known Before'\n\tNotre nouveau jeu de colonie en avant première !!!");
-                    Console.WriteLine("\t__________________________________________________________________\n");
-                    Console.WriteLine("\tComment prendre part au développement interractif du jeu en tour par tour?");
-                    Console.WriteLine("\tChaque tour, vous avez la possibilité de réaliser une liste d'actions définies en écrivant 'manuel'");
-                    Console.WriteLine("\tOu bien vous pouvez tout simplement laissez les colons opérer, mais attention, vous devrez prendre soin de la colonie !");
-                    Console.WriteLine("\tIls ne pourront vivre sans vous, il vous faudra nécessairement interragir avec eux ! Pour débuter, je vous conseille de construire un entrepot");
-                    Console.WriteLine("\tIl faudra très souvent s'enquérir des conditions de colons pour ne pas les perdre, car une fois mort, le colon ne reviendra pas !");
-                    Console.WriteLine("\t__________________________________________________________________\n");
-                    Console.WriteLine("\tInformations supplémentaires:\n");
-                    Console.WriteLine("\tIl faut 4 tours à un bucheron ou un mineur pour casser un arbre ou respectivement un rocher");
-                    Console.WriteLine("\tTandis qu'il ne faut que 2 tours au paysan pour récolter du blé");
-                    Console.WriteLine("\tSeul le tavernier peut interragir avec le puits. Ce dernier peut servir des bevrages uniquement si il se situe dans l'auberge !");
-                    Console.WriteLine("\tLa ferme produira du blé uniquement si le paysan est présent dedans");
-                    Console.WriteLine("\t__________________________________________________________________\n\tAppuyez sur ENTR pour continuer...");
-                    Console.WriteLine();
-                    Console.ReadLine();
-                    Console.Clear();
+
+            Console.WriteLine();
+            Console.WriteLine("\t████████ ██    ██ ████████  ██████  ██████  ██ ███████ ██");
+            Console.WriteLine("\t   ██    ██    ██    ██    ██    ██ ██   ██ ██ ██      ██");
+            Console.WriteLine("\t   ██    ██    ██    ██    ██    ██ ██████  ██ █████   ██");
+            Console.WriteLine("\t   ██    ██    ██    ██    ██    ██ ██   ██ ██ ██      ██");
+            Console.WriteLine("\t   ██     ██████     ██     ██████  ██   ██ ██ ███████ ███████");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("\tBienvenue sur 'The Game You Wish You Had Known Before'\n\tNotre nouveau jeu de colonie en avant première !!!");
+            Console.WriteLine("\t__________________________________________________________________\n");
+            Console.WriteLine("\tComment prendre part au développement interractif du jeu en tour par tour?");
+            Console.WriteLine("\tChaque tour, vous avez la possibilité de réaliser une liste d'actions définies en écrivant 'manuel'");
+            Console.WriteLine("\tOu bien vous pouvez tout simplement laissez les colons opérer, mais attention, vous devrez prendre soin de la colonie !");
+            Console.WriteLine("\tIls ne pourront vivre sans vous, il vous faudra nécessairement interragir avec eux ! Pour débuter, je vous conseille de construire un entrepot");
+            Console.WriteLine("\tIl faudra très souvent s'enquérir des conditions de colons pour ne pas les perdre, car une fois mort, le colon ne reviendra pas !");
+            Console.WriteLine("\t__________________________________________________________________\n");
+            Console.WriteLine("\tInformations supplémentaires:\n");
+            Console.WriteLine("\tIl faut 4 tours à un bucheron ou un mineur pour casser un arbre ou respectivement un rocher");
+            Console.WriteLine("\tTandis qu'il ne faut que 2 tours au paysan pour récolter du blé");
+            Console.WriteLine("\tSeul le tavernier peut interragir avec le puits. Ce dernier peut servir des bevrages uniquement si il se situe dans l'auberge !");
+            Console.WriteLine("\tLa ferme produira du blé uniquement si le paysan est présent dedans");
+            Console.WriteLine("\t__________________________________________________________________\n\tAppuyez sur ENTR pour continuer...");
+            Console.WriteLine();
+            Console.ReadLine();
+            Console.Clear();
         }
 
     }

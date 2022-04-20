@@ -33,7 +33,7 @@ namespace TPGestionDeColonie
         protected int TargetY { get; set; }
         protected bool AvoirCible { get; set; }
 
-        public int getId(){return idColon; }
+        public int getId() { return idColon; }
         public int[] Backpack { get; set; }
         public Monde Planete { get; }
 
@@ -88,19 +88,19 @@ namespace TPGestionDeColonie
         // -- \\ Méthodes et fonctions donnant des informations sur l'état du colon
         // -------------------------------------------
         public void PrendreDegats(int degats)
-            // Gestion des dégâts subis lors de combats
+        // Gestion des dégâts subis lors de combats
         {
             Sante -= degats;
         }
         public bool EtreFatigue() // renvoie true si fatigué, false sinon
         {
-            if (Endurance <=20)
+            if (Endurance <= 20)
             {
                 return true;
             }
             return false;
         }
-        public void VerififierEtat()    
+        public void VerififierEtat()
         {
             //Vérifie l'état physique du Colon
             int pdvPerdus = 0;
@@ -123,7 +123,7 @@ namespace TPGestionDeColonie
 
         // -- \\ Activités abtraites des colons
         // -------------------------------------------
-        public virtual void Miner(int x, int y) {  } //pour Mineur
+        public virtual void Miner(int x, int y) { } //pour Mineur
 
         public virtual void Couper(int x, int y) { } //pour Bûcheron
 
@@ -131,7 +131,7 @@ namespace TPGestionDeColonie
 
         public virtual void Recolter() { } //pour Paysan
 
-        public virtual void Construire(int numBat) {} // pour Batisseur
+        public virtual void Construire(int numBat) { } // pour Batisseur
 
         // -- \\ Déplacement des colons
         // -------------------------------------------
@@ -343,15 +343,15 @@ namespace TPGestionDeColonie
         public void SeDeplacerVersItem(int x, int y)
         {
             // Déplace le colon a coté d'un Item (le plus proche dans sa catégorie) pour le récolter
-            Tuple<int,int> coupleCoord = PlusProcheDistanceVersItem(x,y);
-            SeDeplacer1Iteration(coupleCoord.Item1,coupleCoord.Item2);
+            Tuple<int, int> coupleCoord = PlusProcheDistanceVersItem(x, y);
+            SeDeplacer1Iteration(coupleCoord.Item1, coupleCoord.Item2);
         }
 
         public void SeDeplacer(int x, int y)
         {
             // Fonction de déplacement vers la case ciblée
-            Tuple<int,int> coupleCoord = new Tuple<int,int>(x,y);
-            SeDeplacer1Iteration(coupleCoord.Item1,coupleCoord.Item2);
+            Tuple<int, int> coupleCoord = new Tuple<int, int>(x, y);
+            SeDeplacer1Iteration(coupleCoord.Item1, coupleCoord.Item2);
         }
 
 
@@ -373,7 +373,7 @@ namespace TPGestionDeColonie
 
             switch (typeDuColon)
             {
-                case "TPGestionDeColonie.Bucheron":                
+                case "TPGestionDeColonie.Bucheron":
                     foreach (ObjetFixe arb in Planete.ListeBlocs)
                     {
                         if (arb.GetType() == typeof(Arbre) && arb.EtreCible() == false)
@@ -392,7 +392,6 @@ namespace TPGestionDeColonie
                     {
                         if (roc.GetType().Name == "Rocher" && roc.EtreCible() == false)
                         {
-
                             if (Math.Min(indiceDeDistance, CalculerDistancePlusProche(roc)) == CalculerDistancePlusProche(roc))
                             {
                                 indiceDeDistance = CalculerDistancePlusProche(roc);
@@ -446,10 +445,22 @@ namespace TPGestionDeColonie
             return coordonnees;
 
         }
-        
+
         // -- \\ Fonctions et méthodes définissant un comportement si le colon possède trop de ressources dans son inventaire
         // -------------------------------------------
-        
+        public virtual void RemplirAuberge(Auberge aub)
+        {
+            if (GetType() == typeof(Paysan))
+            {
+                if (Backpack[0] >= 100)
+                {
+                    // vide son ble, et remplit l'auberge
+                    Backpack[0] -= 100;
+                    aub.StockRessources[1] += 100;
+                }
+            }
+            PerdreCible();
+        }
         public virtual void SeVider(Entrepot ent)
         {
             // Selon le métier du colon, dépose les ressources dans l'Entrepot
@@ -457,29 +468,24 @@ namespace TPGestionDeColonie
             if (GetType() == typeof(Bucheron))
             {
                 Backpack[0] -= 100;
-                ent.StockRessources[0]+=100;
+                ent.StockRessources[0] += 100;
 
             }
             else if (GetType() == typeof(Mineur))
             {
                 Backpack[1] -= 100;
-                ent.StockRessources[1]+=100;
+                ent.StockRessources[1] += 100;
             }
-            else if (GetType() == typeof(Paysan))
+
+            else
             {
                 if (Backpack[0] >= 100)
                 {
-                    // vide son ble, et remplit l'entrepot
                     Backpack[0] -= 100;
-                    ent.StockRessources[2] += 100;
-                } 
-            }
-            else{
-                if (Backpack[0] >= 100){
-                    Backpack[0]-=100;
-                    ent.StockRessources[0]+=100;
+                    ent.StockRessources[0] += 100;
                 }
-                if(Backpack[1] >= 100){
+                if (Backpack[1] >= 100)
+                {
                     Backpack[1] -= 100;
                     ent.StockRessources[1] += 100;
 
@@ -488,31 +494,55 @@ namespace TPGestionDeColonie
             PerdreCible();
         }
 
-        public void BougerSiRempli(){
+        public void BougerSiRempli()
+        {
 
-            // Fonctions permettant de se déplacer vers l'entrepot si le colon est plein et d'y déposer les ressources en trop
-
-            if (Planete.ListeBatiments.OfType<Entrepot>().Any()) // s'il existe un entrepôt
+            // Fonctions permettant de se déplacer vers l'entrepôt si le colon est plein et d'y déposer les ressources en trop
+            if (GetType() == typeof(Paysan))
             {
-                Entrepot ent = Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault();
-                //Tuple<int, int> coordEntrepot = Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet()[1]; // milieu de l'entrepôt
-                DefinirCible(ent.GetPositionObjet()[1].Item1, ent.GetPositionObjet()[1].Item2);
-                SeDeplacer(TargetX, TargetY);
-                AcquerirCible();
-
-                if (ent.GetPositionObjet().Contains(getPosition()))
+                if (Planete.ListeBatiments.OfType<Auberge>().Any()) // s'il existe une Auberge
                 {
-                    SeVider(ent);
+                    Auberge aub = Planete.ListeBatiments.OfType<Auberge>().FirstOrDefault();
+                    DefinirCible(aub.GetPositionObjet()[1].Item1, aub.GetPositionObjet()[1].Item2);
+                    
+                    SeDeplacer(TargetX, TargetY);
+                    AcquerirCible();
+
+                    if (aub.GetPositionObjet().Contains(getPosition()))
+                    {
+                        RemplirAuberge(aub);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Au moins un paysan a son sac plein, il serait temps de construire une Auberge pour qu'il vide son stock.");
                 }
             }
             else
             {
-                Console.WriteLine("Au moins un colon a son sac plein, il serait temps de construire un entrepôt.");
+                if (Planete.ListeBatiments.OfType<Entrepot>().Any()) // s'il existe un entrepôt
+                {
+                    Entrepot ent = Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault();
+                    //Tuple<int, int> coordEntrepot = Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet()[1]; // milieu de l'entrepôt
+                    DefinirCible(ent.GetPositionObjet()[1].Item1, ent.GetPositionObjet()[1].Item2);
+                    SeDeplacer(TargetX, TargetY);
+                    AcquerirCible();
+
+                    if (ent.GetPositionObjet().Contains(getPosition()))
+                    {
+                        SeVider(ent);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Au moins un colon a son sac plein, il serait temps de construire un entrepôt.");
+                }
             }
+
         }
-          
-         
-        public bool EtreRempli() 
+
+
+        public bool EtreRempli()
         {
             // Fonction binaire renvoyant l'état de remplissage d'un colon 
 
@@ -537,19 +567,21 @@ namespace TPGestionDeColonie
             {
                 if (Backpack[0] >= 100)
                 {
-                        //Reste sur place, ne fait rien
-                        return true;
-                } 
+                    //Reste sur place, ne fait rien
+                    return true;
+                }
                 return false;
             }
-            else{
-                if (Backpack[0] >= 100 || Backpack[1] >= 100 || Backpack[2] >= 100){
+            else
+            {
+                if (Backpack[0] >= 100 || Backpack[1] >= 100 || Backpack[2] >= 100)
+                {
                     return true;
                 }
                 return false;
             }
         }
 
-        
+
     }
 }

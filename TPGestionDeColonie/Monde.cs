@@ -469,8 +469,7 @@ namespace TPGestionDeColonie
             {
                 Console.Write("___");
             }
-            Console.SetCursorPosition(114, 10);
-            
+            Console.WriteLine();            
         }
 
         public void AfficherFenetre(int x,int y)
