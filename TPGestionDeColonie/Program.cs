@@ -37,8 +37,8 @@ namespace TPGestionDeColonie
             //Console.WindowHeight = 50;
             //Console.WindowWidth = 200;
 
-            Console.WindowHeight = Console.LargestWindowHeight - 5;
-            Console.WindowWidth = Console.LargestWindowWidth - 25;
+            //Console.WindowHeight = Console.LargestWindowHeight - 5;
+            //Console.WindowWidth = Console.LargestWindowWidth - 25;
 
             Monde planete = new Monde();
 

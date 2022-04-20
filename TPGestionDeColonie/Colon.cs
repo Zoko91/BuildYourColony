@@ -137,7 +137,7 @@ namespace TPGestionDeColonie
         // -------------------------------------------
         public void Deplacer(int x, int y)
         {
-            // Méthode indiquant quel 
+            // Fonction de test déplaçant un colon vers la case voulue en un seul tour 
             Endurance -= Math.Abs(positionX - x) + Math.Abs(positionY - y);
             while (positionX != x && positionY != y)
             {
@@ -202,6 +202,7 @@ namespace TPGestionDeColonie
         }
         public void SeDeplacer1Iteration(int x, int y)
         {
+            // Méthode indiquant quelle case le colon doit aller pour se rapprocher de sa cible
             Endurance -= 1;
             if (positionX != x && positionY != y)
             {
@@ -311,8 +312,8 @@ namespace TPGestionDeColonie
 
         public Tuple<int, int> PlusProcheDistanceVersItem(int x, int y)
         {
-            //cases autour de la cible : { x , y , distance au colon }
-            // calcul de quelle case adjacente (haut bas gauche droite) à l'objet visé est la plus proche du colon
+            // Fonction indiquant vers quelle case (la plus proche) se déplacer autour de l'item (haut bas gauche droite) 
+            // cases autour de la cible : { x , y , distance au colon 
             int[] haut = { x - 1, y, Math.Abs(positionX - (x - 1)) + Math.Abs(positionY - y) };
             int[] bas = { x + 1, y, Math.Abs(positionX - (x + 1)) + Math.Abs(positionY - y) };
             int[] gauche = { x, y - 1, Math.Abs(positionX - x) + Math.Abs(positionY - (y - 1)) };
@@ -341,12 +342,14 @@ namespace TPGestionDeColonie
 
         public void SeDeplacerVersItem(int x, int y)
         {
+            // Déplace le colon a coté d'un Item (le plus proche dans sa catégorie) pour le récolter
             Tuple<int,int> coupleCoord = PlusProcheDistanceVersItem(x,y);
             SeDeplacer1Iteration(coupleCoord.Item1,coupleCoord.Item2);
         }
 
         public void SeDeplacer(int x, int y)
         {
+            // Fonction de déplacement vers la case ciblée
             Tuple<int,int> coupleCoord = new Tuple<int,int>(x,y);
             SeDeplacer1Iteration(coupleCoord.Item1,coupleCoord.Item2);
         }
@@ -354,6 +357,7 @@ namespace TPGestionDeColonie
 
         public int CalculerDistancePlusProche(ObjetFixe obj)
         {
+            // Calcul du nombre de case séparant un item d'un colon, pour pouvoir les comparer ensuite
             int objX = obj.GetPositionObjet().FirstOrDefault().Item1;
             int objY = obj.GetPositionObjet().FirstOrDefault().Item2;
 
@@ -362,6 +366,7 @@ namespace TPGestionDeColonie
 
         public Tuple<int, int> RechercherPlusProcheItem()
         {
+            // Fonction retournant les coordonnées de l'item le plus proche en fonction du métier du colon
             string typeDuColon = GetType().ToString();
             int indiceDeDistance = Planete.Hauteur * Planete.Largeur; //indice très grand
             Tuple<int, int> coordonnees = new Tuple<int, int>(positionX, positionY); // Attention au chasseur ça le renvoie en 0,0
@@ -443,47 +448,13 @@ namespace TPGestionDeColonie
             return coordonnees;
 
         }
-
-        public void AllerVersBatiment(string nomBatiment)
-        {
-            int indiceDeDistance = Planete.Hauteur * Planete.Largeur; //indice très grand
-            Tuple<int, int> coordonnees = new Tuple<int, int>(positionX, positionY);
-            if (nomBatiment == "Auberge")
-            {
-                foreach (ObjetFixe aub in Planete.ListeBlocs)
-                {
-                    if (aub.GetType().Name == "Auberge")
-                    {
-
-                        if (Math.Min(indiceDeDistance, CalculerDistancePlusProche(aub)) == CalculerDistancePlusProche(aub))
-                        {
-                            indiceDeDistance = CalculerDistancePlusProche(aub);
-                            coordonnees = new Tuple<int, int>(aub.GetPositionObjet().FirstOrDefault().Item1, aub.GetPositionObjet().FirstOrDefault().Item2);
-                        }
-                    }
-                }
-            }
-
-            if (nomBatiment == "Entrepot")
-            {
-                foreach (ObjetFixe ent in Planete.ListeBlocs)
-                {
-                    if (ent.GetType().Name == "Entrepot")
-                    {
-
-                        if (Math.Min(indiceDeDistance, CalculerDistancePlusProche(ent)) == CalculerDistancePlusProche(ent))
-                        {
-                            indiceDeDistance = CalculerDistancePlusProche(ent);
-                            coordonnees = new Tuple<int, int>(ent.GetPositionObjet().FirstOrDefault().Item1, ent.GetPositionObjet().FirstOrDefault().Item2);
-                        }
-                    }
-                }
-            }
-            Deplacer(coordonnees.Item1, coordonnees.Item2);
-        }
-
+        
+        // -- \\ Fonctions et méthodes définissant un comportement si le colon possède trop de ressources dans son inventaire
+        // -------------------------------------------
+        
         public virtual void SeVider(Entrepot ent)
         {
+            // 
             if (GetType() == typeof(Bucheron))
             {
                 Backpack[0] -= 100;
