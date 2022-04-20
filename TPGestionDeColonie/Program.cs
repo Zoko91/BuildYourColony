@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using TPGestionDeColonie.ObjetsFixes;
@@ -27,8 +28,7 @@ namespace TPGestionDeColonie
                 optionChoisie = MenuDepart();
                 if (optionChoisie == 1)
                 {
-                    Console.WriteLine("Commande à connaître");
-                    Console.ReadLine();
+                    AfficherTutoriel();
                 }
                 else if (optionChoisie == 2)
                 {
@@ -40,8 +40,8 @@ namespace TPGestionDeColonie
         // Définition de la taille de la console
         // -------------------------------------
 
-            Console.WindowHeight = Console.LargestWindowHeight - 5;
-            Console.WindowWidth = Console.LargestWindowWidth - 25;
+            //Console.WindowHeight = Console.LargestWindowHeight - 5;
+            //Console.WindowWidth = Console.LargestWindowWidth - 25;
 
         // -------------------
         // Génération du monde 
@@ -57,13 +57,11 @@ namespace TPGestionDeColonie
         // ---------------------------------------------------------------------
         // Gestion des tours de jeu et des propositions d'actions pour le joueur
         // ---------------------------------------------------------------------
-
             Console.WriteLine();
-            Console.WriteLine("===================================");
-
+            Console.WriteLine();
+            Console.WriteLine();
             Console.ReadLine();
-            Console.WriteLine();
-            Console.WriteLine();
+
 
 
             while (planete.GameOver() == false)
@@ -322,6 +320,7 @@ namespace TPGestionDeColonie
                         col.DefinirCible(maisonCible.GetPositionObjet().First().Item1, maisonCible.GetPositionObjet().First().Item2);
                         col.AcquerirCible();
                         col.SeDeplacer(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
+                        maisonCible.SeReposer();
                     }
                 }
                 else if (col.ATIlCible() == false) // Si pas de cible définie
@@ -465,6 +464,10 @@ namespace TPGestionDeColonie
 
         public static int ChoixBatiment()
         {
+            // ----------------------------------------------------------------
+            // Récupère le numéro du batiment que le joueur souhaite construire
+            // ----------------------------------------------------------------
+            
             Console.WriteLine("Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"
                     + "- 2 : Taverne (Bois : 30, Roche : 10\n- 3 : Maison (Bois : 30, Roche : 0)\n"
                      + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)\n- 0 : Quitter");
@@ -483,6 +486,11 @@ namespace TPGestionDeColonie
 
         public static int MenuDepart()
         {
+            // ----------------------------
+            // Définition du menu de départ
+            // ----------------------------
+            
+            
             /*
              
                      ██████╗ ██████╗ ██╗      ██████╗ ███╗   ██╗██╗███████╗
@@ -509,12 +517,40 @@ namespace TPGestionDeColonie
             int selectionOption = ControleurMenu.Menu("Principal");
             Console.Clear();
             return selectionOption;
-            //Console.ReadLine();
         }
 
-
-        // public void NouvelArrivant() { } // quand nouveau colon arrive de façon random
-
+        public static void AfficherTutoriel()
+        {
+            // ----------------------------
+            // Définition du tutoriel
+            // ----------------------------
+            
+                    Console.WriteLine();
+                    Console.WriteLine("\t████████ ██    ██ ████████  ██████  ██████  ██ ███████ ██");
+                    Console.WriteLine("\t   ██    ██    ██    ██    ██    ██ ██   ██ ██ ██      ██");
+                    Console.WriteLine("\t   ██    ██    ██    ██    ██    ██ ██████  ██ █████   ██");
+                    Console.WriteLine("\t   ██    ██    ██    ██    ██    ██ ██   ██ ██ ██      ██");
+                    Console.WriteLine("\t   ██     ██████     ██     ██████  ██   ██ ██ ███████ ███████");
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine("\tBienvenue sur 'The Game You Wish You Had Known Before'\n\tNotre nouveau jeu de colonie en avant première !!!");
+                    Console.WriteLine("\t__________________________________________________________________\n");
+                    Console.WriteLine("\tComment prendre part au développement interractif du jeu en tour par tour?");
+                    Console.WriteLine("\tChaque tour, vous avez la possibilité de réaliser une liste d'actions définies en écrivant 'manuel'");
+                    Console.WriteLine("\tOu bien vous pouvez tout simplement laissez les colons opérer, mais attention, vous devrez prendre soin de la colonie !");
+                    Console.WriteLine("\tIls ne pourront vivre sans vous, il vous faudra nécessairement interragir avec eux ! Pour débuter, je vous conseille de construire un entrepot");
+                    Console.WriteLine("\tIl faudra très souvent s'enquérir des conditions de colons pour ne pas les perdre, car une fois mort, le colon ne reviendra pas !");
+                    Console.WriteLine("\t__________________________________________________________________\n");
+                    Console.WriteLine("\tInformations supplémentaires:\n");
+                    Console.WriteLine("\tIl faut 4 tours à un bucheron ou un mineur pour casser un arbre ou respectivement un rocher");
+                    Console.WriteLine("\tTandis qu'il ne faut que 2 tours au paysan pour récolter du blé");
+                    Console.WriteLine("\tSeul le tavernier peut interragir avec le puits. Ce dernier peut servir des bevrages uniquement si il se situe dans l'auberge !");
+                    Console.WriteLine("\tLa ferme produira du blé uniquement si le paysan est présent dedans");
+                    Console.WriteLine("\t__________________________________________________________________\n\tAppuyez sur ENTR pour continuer...");
+                    Console.WriteLine();
+                    Console.ReadLine();
+                    Console.Clear();
+        }
 
     }
 }

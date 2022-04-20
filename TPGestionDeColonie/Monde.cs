@@ -65,6 +65,24 @@ namespace TPGestionDeColonie
             }
             return true; //case disponible
         }
+        
+        public bool NePasMarcherSurUnItem(Tuple<int, int> coordonnees) 
+        {
+            // Fonction indiquant si un bloc item (Pierre ou bois) est présent sur la case ciblée
+            
+            foreach (ObjetFixe obj in ListeBlocs)
+            {
+                if (obj.GetType() != typeof(Eau))
+                {
+                    List<Tuple<int, int>> listeCoordonnees = obj.GetPositionObjet();
+                    if (listeCoordonnees.Contains(coordonnees))
+                    {
+                        return false; //case non disponible, occupée par objet fixe
+                    }
+                }
+            }
+            return true; //case disponible
+        }
 
         public bool VerifCoordonneesBatiment(Tuple<int, int> coordonnees) 
         {

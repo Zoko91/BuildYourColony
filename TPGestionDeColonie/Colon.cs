@@ -208,64 +208,64 @@ namespace TPGestionDeColonie
             {
                 if (positionX > x && positionY > y) // vers haut gauche
                 {
-                    if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX - 1, positionY - 1))) // case en diagonale disponible, peut se déplacer
+                    if (Planete.NePasMarcherSurUnItem(new Tuple<int, int>(positionX - 1, positionY - 1))) // case en diagonale disponible, peut se déplacer
                     {
                         positionX -= 1;
                         positionY -= 1;
                     }
-                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX - 1, positionY))) //case du dessus disponible
+                    else if (Planete.NePasMarcherSurUnItem(new Tuple<int, int>(positionX - 1, positionY))) //case du dessus disponible
                     {
                         positionX -= 1;
                     }
-                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX, positionY - 1))) //case de gauche disponible
+                    else if (Planete.NePasMarcherSurUnItem(new Tuple<int, int>(positionX, positionY - 1))) //case de gauche disponible
                     {
                         positionY -= 1;
                     }
                 }
                 else if (positionX < x && positionY > y) // vers bas gauche
                 {
-                    if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX + 1, positionY - 1))) // case en diagonale disponible, peut se déplacer
+                    if (Planete.NePasMarcherSurUnItem(new Tuple<int, int>(positionX + 1, positionY - 1))) // case en diagonale disponible, peut se déplacer
                     {
                         positionX += 1;
                         positionY -= 1;
                     }
-                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX + 1, positionY))) //case du bas disponible
+                    else if (Planete.NePasMarcherSurUnItem(new Tuple<int, int>(positionX + 1, positionY))) //case du bas disponible
                     {
                         positionX += 1;
                     }
-                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX, positionY - 1))) //case de gauche disponible
+                    else if (Planete.NePasMarcherSurUnItem(new Tuple<int, int>(positionX, positionY - 1))) //case de gauche disponible
                     {
                         positionY -= 1;
                     }
                 }
                 else if (positionX > x && positionY < y) // vers haut droite
                 {
-                    if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX - 1, positionY + 1))) // case en diagonale disponible, peut se déplacer
+                    if (Planete.NePasMarcherSurUnItem(new Tuple<int, int>(positionX - 1, positionY + 1))) // case en diagonale disponible, peut se déplacer
                     {
                         positionX -= 1;
                         positionY += 1;
                     }
-                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX - 1, positionY))) //case du haut disponible
+                    else if (Planete.NePasMarcherSurUnItem(new Tuple<int, int>(positionX - 1, positionY))) //case du haut disponible
                     {
                         positionX -= 1;
                     }
-                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX, positionY + 1))) //case de droite disponible
+                    else if (Planete.NePasMarcherSurUnItem(new Tuple<int, int>(positionX, positionY + 1))) //case de droite disponible
                     {
                         positionY += 1;
                     }
                 }
                 else if (positionX < x && positionY < y) // vers bas droite
                 {
-                    if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX + 1, positionY + 1))) // case en diagonale disponible, peut se déplacer
+                    if (Planete.NePasMarcherSurUnItem(new Tuple<int, int>(positionX + 1, positionY + 1))) // case en diagonale disponible, peut se déplacer
                     {
                         positionX += 1;
                         positionY += 1;
                     }
-                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX + 1, positionY))) //case du bas disponible
+                    else if (Planete.NePasMarcherSurUnItem(new Tuple<int, int>(positionX + 1, positionY))) //case du bas disponible
                     {
                         positionX += 1;
                     }
-                    else if (Planete.VerifCoordonnees(new Tuple<int, int>(positionX, positionY + 1))) //case de gauche disponible
+                    else if (Planete.NePasMarcherSurUnItem(new Tuple<int, int>(positionX, positionY + 1))) //case de gauche disponible
                     {
                         positionY += 1;
                     }
@@ -374,7 +374,7 @@ namespace TPGestionDeColonie
             switch (typeDuColon)
             {
                 case "TPGestionDeColonie.Bucheron":
-                    List<Tuple<int, int>> listeCoords = new List<Tuple<int, int>>();
+                   /* List<Tuple<int, int>> listeCoords = new List<Tuple<int, int>>();
                     List<int> listeDistances = new List<int>();
                     Arbre[] arrayArbre = Planete.ListeBlocs.OfType<Arbre>().ToArray();
                     foreach (Arbre arb in arrayArbre) {
@@ -383,8 +383,8 @@ namespace TPGestionDeColonie
                        // {
                             listeDistances.Add(CalculerDistancePlusProche(arb));
                        // }
-                    }
-                    /*
+                    }*/
+                    
                     foreach (ObjetFixe arb in Planete.ListeBlocs)
                     {
                         if (arb.GetType() == typeof(Arbre) && arb.EtreCible() == false)
@@ -395,7 +395,7 @@ namespace TPGestionDeColonie
                                 coordonnees = new Tuple<int, int>(arb.GetPositionObjet().FirstOrDefault().Item1, arb.GetPositionObjet().FirstOrDefault().Item2);
                             }
                         }
-                    }*/
+                    }
                     break;
 
                 case "TPGestionDeColonie.Mineur":

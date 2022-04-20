@@ -19,7 +19,7 @@ namespace TPGestionDeColonie
             if (nomMenu == "Principal")
             {
                 //options du menu
-                string[] optionsMenu = { " Jouer ", " Commande à connaître ", " Quitter " };
+                string[] optionsMenu = { " Jouer ", " Tutoriel ", " Quitter " };
 
                 ConsoleKey key;
 
