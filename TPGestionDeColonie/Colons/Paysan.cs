@@ -23,13 +23,22 @@ namespace TPGestionDeColonie
 
         public override void Recolter()
         {
-            Console.WriteLine("================================");
-            Console.WriteLine("Récolte en cours");
-            Console.WriteLine("================================");
             Tuple<int, int> positionBle = new Tuple<int, int>(positionX, positionY);
-            Backpack[0] += 10;
-            Planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(positionBle)).DestructionEnCours(positionX, positionY, this);
+            foreach(ObjetFixe obj in Planete.ListeBlocs)
+            {
+                if (obj.GetType()==typeof(Ble))
+                {
+                    if (obj.GetPositionObjet().Contains(positionBle))
+                    {
+                        Console.WriteLine($"Récolte en cours.... {Backpack[0]}%");
+                        Backpack[0] += 10;
+                        Planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(positionBle)).DestructionEnCours(positionX, positionY, this);
+                        break;
+                    }
+                }
+            }
 
+            
         }
 
         public override void Planter()

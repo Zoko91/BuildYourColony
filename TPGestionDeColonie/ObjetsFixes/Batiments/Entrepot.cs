@@ -21,7 +21,7 @@ namespace TPGestionDeColonie.ObjetsFixes.Batiments
 
         public override string ToString()
         {
-            return $"\t{GetType().Name} :\n\tStock de bois: {StockRessources[0]}\n\tStock de pierre: {StockRessources[1]}\n\tStock de blé: {StockRessources[2]}\n\t________________________";
+            return $"\t{GetType().Name} :\n\tStock de bois: {StockRessources[0]}\n\tStock de pierre: {StockRessources[1]}\n\t________________________";
         }
 
         //Stockage des ressources

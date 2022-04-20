@@ -16,12 +16,11 @@ namespace TPGestionDeColonie.Colons
         // -----------------------------------------------------------------
         public Tavernier(string nom, int positionX, int positionY, int endurance, int sante, int faim, int soif, Monde planete) : base(nom, positionX, positionY, endurance, sante, faim, soif, planete)
         {
-            Backpack = new int[] { 0, 0, 10, 0 };  //Bois/Pierre/Eau/Seau d'eau
+            Backpack = new int[] { 0, 0, 10, 0 };  //Bois / Pierre / Eau / Seau d'eau
         }
 
         public bool VerifierStock(int ressource) // Ressource: 0 => eau, 1 => Blé
         {
-            Console.WriteLine("BLALBALBABL VERIF STOCK");
             // La fonction indique si le stock d'eau ou de blé de l'auberge est vide ou pas
 
             // Vérification de la présence du Tavernier dans l'auberge
@@ -36,10 +35,8 @@ namespace TPGestionDeColonie.Colons
                     Auberge aub = (Auberge)b;
                     if (aub.PresenceTavernier == true) // Le Tavernier est présent dans la taverne
                     {
-                        Console.WriteLine("JE SUIS DANS LA TAVERNE");
-                        if (aub.StockRessources[ressource] <= 0) // Le stock  est vide
+                        if (aub.StockRessources[ressource] <= 0) // Le stock est vide
                         {
-                            Console.WriteLine("LA TAVERNE EST VIDE");
                             stockPlein = false;
                         }
                         break;
@@ -56,16 +53,14 @@ namespace TPGestionDeColonie.Colons
         {
             // La méthode déplace le colon vers le puits et rempli ses seaux d'eau
 
-            if (VerifierStock(0)==false)
+            if (VerifierStock(0) == false)
             {
                 if (Planete.ListeBatiments.OfType<Puits>().Any())
                 {
-                    
                     int x = RechercherPlusProcheItem().Item1;
                     int y = RechercherPlusProcheItem().Item2;
                     AcquerirCible();
                     DefinirCible(x, y);
-                    // IMPLEMENTER LE DEPLACEMENT DU TAVERNIER VERS LA TAVERNE APRES
                 }
                 else
                 {
@@ -74,20 +69,7 @@ namespace TPGestionDeColonie.Colons
             }
             else if (VerifierStock(1) == false)
             {
-                if (Planete.ListeBatiments.OfType<Puits>().Any())
-                {
-
-                    Entrepot ent = Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault();
-                    DefinirCible(ent.GetPositionObjet()[1].Item1, ent.GetPositionObjet()[1].Item2);
-                    SeDeplacer(TargetX, TargetY);
-                    AcquerirCible();
-                    // IMPLEMENTER LE DEPLACEMENT DU TAVERNIER VERS LA TAVERNE APRES
-
-                }
-                else
-                {
-                    Console.WriteLine("Pensez a utiliser le paysan pour produire de la nourriture !");
-                }
+                Console.WriteLine("Pensez a utiliser le paysan pour produire de la nourriture !");
             }
         }
 

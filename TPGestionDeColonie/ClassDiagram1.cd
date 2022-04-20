@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TPGestionDeColonie.Batisseur" Collapsed="true">
+    <Position X="7.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAABAAAACQAEAAAAAAEAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Colons\Batisseur.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.Bucheron" Collapsed="true">
+    <Position X="9.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Colons\Bucheron.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.Chasseur" Collapsed="true">
+    <Position X="14" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Colons\Chasseur.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.Mineur" Collapsed="true">
+    <Position X="16.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Colons\Mineur.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.Paysan" Collapsed="true">
+    <Position X="18.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAACAA=</HashCode>
+      <FileName>Colons\Paysan.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.Colon" Collapsed="true">
+    <Position X="12.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CgAAsQAAAAIABRAECAgEIEcwICgDIAEgAAACDEAIKgI=</HashCode>
+      <FileName>Colon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.ControleurMenu" Collapsed="true">
+    <Position X="28" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ControleurMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.Mob" Collapsed="true">
+    <Position X="8" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Mob.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.Monde" Collapsed="true">
+    <Position X="29.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEiJAAAAAAAABAIAAAEIAAAYAgAAAAAAAgACUECUA=</HashCode>
+      <FileName>Monde.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.ObjetFixe" Collapsed="true">
+    <Position X="16.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAIAAAAEAAAAgEAAACAIAAACAAgAAAAAAAI=</HashCode>
+      <FileName>ObjetFixe.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.Program" Collapsed="true">
+    <Position X="28" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAACAAAAAAAEABABAAAAAAAAAAgBAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.Colons.Tavernier" Collapsed="true">
+    <Position X="11.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Colons\Tavernier.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.Mobs.Loup" Collapsed="true">
+    <Position X="6.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mobs\Loup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.Mobs.Vache" Collapsed="true">
+    <Position X="9" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mobs\Vache.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.ObjetsFixes.Arbre" Collapsed="true">
+    <Position X="25.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ObjetsFixes\Arbre.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.ObjetsFixes.Batiment" Collapsed="true">
+    <Position X="12" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>ObjetsFixes\Batiment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.ObjetsFixes.Ble" Collapsed="true">
+    <Position X="18.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ObjetsFixes\Ble.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.ObjetsFixes.Eau" Collapsed="true">
+    <Position X="21" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ObjetsFixes\Eau.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.ObjetsFixes.Rocher" Collapsed="true">
+    <Position X="23.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ObjetsFixes\Rocher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.ObjetsFixes.Batiments.Auberge" Collapsed="true">
+    <Position X="16.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>ObjetsFixes\Batiments\Auberge.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.ObjetsFixes.Batiments.Entrepot" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ObjetsFixes\Batiments\Entrepot.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.ObjetsFixes.Batiments.Ferme" Collapsed="true">
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>ObjetsFixes\Batiments\Ferme.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.ObjetsFixes.Batiments.Maison" Collapsed="true">
+    <Position X="12" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>ObjetsFixes\Batiments\Maison.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPGestionDeColonie.ObjetsFixes.Batiments.Puits" Collapsed="true">
+    <Position X="14.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ObjetsFixes\Batiments\Puits.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

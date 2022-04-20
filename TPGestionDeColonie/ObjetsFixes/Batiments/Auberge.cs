@@ -22,10 +22,8 @@ namespace TPGestionDeColonie.ObjetsFixes.Batiments
 
         public override string ToString()
         {
-            return $"\t{GetType().Name} :\n\tStock d'eau: {StockRessources[0]}\n\tStock de viande: {StockRessources[1]}\n\t________________________";
+            return $"\t{GetType().Name} :\n\tStock d'eau: {StockRessources[0]}\n\tStock de Blé: {StockRessources[1]}\n\t________________________";
         }
-
-        //Auberge fait perdre de la fatigue
     }
 
     

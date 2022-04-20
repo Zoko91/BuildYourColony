@@ -302,7 +302,7 @@ namespace TPGestionDeColonie
             // Met à jour les cases de la grille // Affichage (méthode appellée à chaque tour de jeu)
 
             List<Tuple<int, int>> listeCoordonneesColons = new List<Tuple<int, int>>();
-
+            
             foreach (Colon col in ListePJ)
             {
                 listeCoordonneesColons.Add(col.getPosition());
@@ -372,13 +372,14 @@ namespace TPGestionDeColonie
                     }
                 }
             }
+
             AfficherMonde();
         }
 
         public void AfficherMonde()
         {
             // Affichage supplémentaire (couleurs, n° colonne etc) une fois que les cases ont été mises à jour dans la grille
-
+            Console.WriteLine();
             Console.Write("   ");
             for (int i = 0; i < grille.GetLength(0); i++)
             {

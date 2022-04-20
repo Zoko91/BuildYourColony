@@ -118,7 +118,7 @@ namespace TPGestionDeColonie
 
         public override string ToString()
         {
-            return $"Colon n°{idColon} : {GetType().Name} {Nom}, santé = {Sante}/100 PV, endurance = {Endurance}/100, faim = {Faim}/100, soif = {Soif}/100\nA-t-il une cible ? ${ATIlCible()}"; // \nA-t-il une cible ? ${ATIlCible()}
+            return $"Colon n°{idColon} : {GetType().Name} {Nom}, santé = {Sante}/100 PV, endurance = {Endurance}/100, faim = {Faim}/100, soif = {Soif}/100\nA-t-il une cible ? ${ATIlCible()} + Coordonnées cible : {RecupererCoordonneesCible().Item1}/{RecupererCoordonneesCible().Item2}"; // \nA-t-il une cible ? ${ATIlCible()}
         }
 
         // -- \\ Activités abtraites des colons
@@ -368,6 +368,9 @@ namespace TPGestionDeColonie
         {
             // Fonction retournant les coordonnées de l'item le plus proche en fonction du métier du colon
             string typeDuColon = GetType().ToString();
+            if (GetType() ==typeof(Colons.Tavernier)) {
+            Console.WriteLine(typeDuColon);
+            }
             int indiceDeDistance = Planete.Hauteur * Planete.Largeur; //indice très grand
             Tuple<int, int> coordonnees = new Tuple<int, int>(positionX, positionY); // Attention au chasseur ça le renvoie en 0,0
 
@@ -416,7 +419,7 @@ namespace TPGestionDeColonie
                     break;
 
                 case "TPGestionDeColonie.Batisseur":
-                    foreach (ObjetFixe ent in Planete.ListeBlocs)
+                    foreach (Batiment ent in Planete.ListeBatiments)
                     {
                         if (ent.GetType().Name == "Entrepot")
                         {
@@ -428,11 +431,13 @@ namespace TPGestionDeColonie
                         }
                     }
                     break;
-                case "TPGestionDeColonie.Tavernier":
-                    foreach (ObjetFixe puits in Planete.ListeBlocs)
+
+                case "TPGestionDeColonie.Colons.Tavernier":
+                    foreach (Batiment puits in Planete.ListeBatiments)
                     {
-                        if (puits.GetType().Name == "Puits")
+                        if (puits.GetType()== typeof(Puits))
                         {
+
                             if (Math.Min(indiceDeDistance, CalculerDistancePlusProche(puits)) == CalculerDistancePlusProche(puits))
                             {
                                 indiceDeDistance = CalculerDistancePlusProche(puits);
