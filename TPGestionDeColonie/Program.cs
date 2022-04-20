@@ -11,18 +11,20 @@ using TPGestionDeColonie.Colons;
 namespace TPGestionDeColonie
 {
 
-
-
     class Program
     {
 
         static void Main(string[] args)
         {
+            
+        // ---------------------------
+        // Menu d'affichage du départ
+        // ---------------------------
+            
             int optionChoisie = 10;
             do
             {
                 optionChoisie = MenuDepart();
-                //Console.WriteLine(optionChoisie);
                 if (optionChoisie == 1)
                 {
                     Console.WriteLine("Commande à connaître");
@@ -34,11 +36,16 @@ namespace TPGestionDeColonie
                 }
             } while (optionChoisie != 0);
 
-            //Console.WindowHeight = 50;
-            //Console.WindowWidth = 200;
+        // -------------------------------------
+        // Définition de la taille de la console
+        // -------------------------------------
 
-            //Console.WindowHeight = Console.LargestWindowHeight - 5;
-            //Console.WindowWidth = Console.LargestWindowWidth - 25;
+            Console.WindowHeight = Console.LargestWindowHeight - 5;
+            Console.WindowWidth = Console.LargestWindowWidth - 25;
+
+        // -------------------
+        // Génération du monde 
+        // -------------------
 
             Monde planete = new Monde();
 
@@ -46,6 +53,11 @@ namespace TPGestionDeColonie
 
             planete.GenererMonde();
             planete.AfficherMonde();
+
+        // ---------------------------------------------------------------------
+        // Gestion des tours de jeu et des propositions d'actions pour le joueur
+        // ---------------------------------------------------------------------
+
             Console.WriteLine();
             Console.WriteLine("===================================");
 
@@ -69,10 +81,21 @@ namespace TPGestionDeColonie
 
         public static void ProposerActions(Monde planete)
         {
+
+        // ---------------------------------------------------------------------------------------------------
+        // Proposer une liste d'actions possibles que le joueur peut demander chaque tour en écrivant "manuel"
+        // ---------------------------------------------------------------------------------------------------
+
             Console.WriteLine("======================================");
             Console.WriteLine("Liste des actions possibles :\n1 - Construire\n2 - Afficher l'état des colons\n3 - Afficher le stock de ressources des batiments\n4 - Planter (paysan)\n5 - Récolter (paysan)\n0 - STOP");
             Console.WriteLine("======================================");
+
+        // ----------------------------------------------------------------------------------
+        // Sélection de l'action et définition du comportement du jeu en fonction de l'action
+        // ----------------------------------------------------------------------------------
+
             int numAction = int.Parse(Console.ReadLine());
+
             while (numAction > 6 || numAction < 0)
             {
                 Console.WriteLine("Veuillez indiquez un numéro d'action correct :");
@@ -80,6 +103,8 @@ namespace TPGestionDeColonie
             }
             if (numAction == 1)
             {
+                // La batisseur se déplace vers la case ciblée par le joueur, une fois arrivé à la case on lui propose un listing des batiments a construire
+
                 foreach (Colon colon in planete.ListePJ)
                 {
                     if (colon.GetType() == typeof(Batisseur))
@@ -106,8 +131,13 @@ namespace TPGestionDeColonie
                 }
 
             }
-            if (numAction == 2) // Afficher l'état des colons
+            if (numAction == 2) 
             {
+
+            // -------------------------
+            // Affiche l'état des colons
+            // -------------------------
+
                 Console.WriteLine();
                 Console.WriteLine(" /\\ ================= État des colons ================= /\\ ");
                 Console.WriteLine();
@@ -121,8 +151,13 @@ namespace TPGestionDeColonie
                 Console.ReadLine();
                 ProposerActions(planete);
             }
-            if (numAction == 3) // Afficher le stock de ressources des batiments
+            if (numAction == 3) 
             {
+
+            // ---------------------------------------------
+            // Afficher le stock de ressources des batiments
+            // ---------------------------------------------
+
                 Console.WriteLine();
                 Console.WriteLine(" /\\ ======== Stock de ressources des bâtiments ======== /\\ ");
                 Console.WriteLine("\t________________________");
@@ -151,9 +186,12 @@ namespace TPGestionDeColonie
                 Console.ReadLine();
                 ProposerActions(planete);
             }
-            if (numAction == 4) // Planter (paysan)
+            if (numAction == 4) 
             {
-                // Ajouter dans la fonction jouer un tour que si le paysan est sur la case de sa cible et bien il plante un blé
+
+            // -----------------------------------------------------------------------
+            // Déplace le paysan sur la case ciblée, une fois sur place, plante un blé
+            // -----------------------------------------------------------------------
 
                 foreach (Colon colon in planete.ListePJ)
                 {
@@ -173,9 +211,13 @@ namespace TPGestionDeColonie
 
 
             }
-            if (numAction == 5) // Récolter (paysan)
+            if (numAction == 5) // 
             {
-                // Mettre un if il est sur du blé alors le récolter dans les actions 
+
+            // ---------------------------------------------------------------------------------------------------------
+            // Déplace le paysan sur la case ciblée, une fois sur place, récolte le blé en 2 tours si la case est un blé
+            // ---------------------------------------------------------------------------------------------------------
+
                 foreach (Colon colon in planete.ListePJ)
                 {
                     if (colon.GetType() == typeof(Paysan))
@@ -196,6 +238,11 @@ namespace TPGestionDeColonie
 
         public static List<Colon> CreerColonsDepart(Monde planete)
         {
+
+        // --------------------------------------------------------------------------------------------------------------
+        // Fonction créant la liste des colons au départ du jeu, les plaçant au milieu de la carte et renvoyant une liste
+        // --------------------------------------------------------------------------------------------------------------
+
             int milieuGrilleHauteur = (int)Math.Floor((double)planete.Hauteur / 2);
             int milieuGrilleLargeur = (int)Math.Floor((double)planete.Largeur / 2);
             List<Colon> listeDepart = new List<Colon>();
@@ -203,8 +250,6 @@ namespace TPGestionDeColonie
             Paysan p = new Paysan("p", milieuGrilleHauteur, milieuGrilleLargeur - 1, 100, 100, 100, 100, planete);
             Bucheron b1 = new Bucheron("p", milieuGrilleHauteur, milieuGrilleLargeur, 100, 100, 100, 100, planete);
             Batisseur ba = new Batisseur("p", milieuGrilleHauteur, milieuGrilleLargeur + 1, 100, 100, 100, 100, planete);
-            Batisseur ba2 = new Batisseur("p", 2, 2, 100, 100, 100, 100, planete);
-
             Mineur m = new Mineur("Mineur", milieuGrilleHauteur + 1, milieuGrilleLargeur - 1, 100, 100, 100, 100, planete);
             Tavernier t = new Tavernier("p", milieuGrilleHauteur + 1, milieuGrilleHauteur, 100, 100, 100, 100, planete);
             Bucheron b2 = new Bucheron("p", milieuGrilleHauteur + 1, milieuGrilleLargeur + 1, 100, 100, 100, 100, planete);
@@ -218,6 +263,11 @@ namespace TPGestionDeColonie
 
             for (int i = 0; i < listeDepart.Count; i++)
             {
+
+        // -----------------------------------------------
+        // On demande à l'utilisateur de nommer les colons
+        // -----------------------------------------------
+        
                 string demande = $"Indiquez le nom du colon {listeDepart[i].GetType().Name} : ";
                 string space = new string(' ', demande.Length - 2);
                 //Console.Write(space);
@@ -235,12 +285,20 @@ namespace TPGestionDeColonie
                 listeDepart[i].Nom = nom;
                 planete.AjouterColon(listeDepart[i]);
             }
-            planete.AjouterColon(ba2);
             return listeDepart;
         }
 
         public static void JouerUnTour(List<Colon> listeColons, Monde planete)
         {
+            
+        // ----------------------------------------------------------------------------------------------------------
+        // Fonction principale du jeu définissant les actions automatiques et manuelles des colons chaque tour de jeu
+        // ----------------------------------------------------------------------------------------------------------
+            
+
+            // JE ME SUIS ARRETE LA DANS LES COMMENTAIRES PROGRAM.CS
+
+
             //Console.Clear();
             foreach (Colon col in listeColons)
             {
@@ -258,9 +316,6 @@ namespace TPGestionDeColonie
                 }
                 else if (col.EtreFatigue())
                 {
-                    Console.WriteLine("FATIGUÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉ");
-                    Console.WriteLine();
-
                     if (planete.ListeBatiments.OfType<Maison>().Any())
                     {
                         Maison maisonCible = planete.ListeBatiments.OfType<Maison>().First();
@@ -272,16 +327,31 @@ namespace TPGestionDeColonie
                 else if (col.ATIlCible() == false) // Si pas de cible définie
                 {
                     if (col.GetType() == typeof(Bucheron) || col.GetType() == typeof(Mineur))
-                    { // Bucherons et mineurs doivent trouver l'objet le plus proche
+                    { // Bûcherons et mineurs doivent trouver l'objet le plus proche
                         Tuple<int, int> coords = col.RechercherPlusProcheItem();
 
                         int targetX = coords.Item1;
                         int targetY = coords.Item2;
 
-                        col.DefinirCible(targetX, targetY);
-                        col.AcquerirCible(); // le colon a une cible
-
-                        planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(new Tuple<int, int>(targetX, targetY))).DevenirCible();
+                        // Déclare l'objet désigné comme étant ciblé
+                        if (planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(new Tuple<int, int>(targetX, targetY))).EtreCible()==false)
+                        {
+                            planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(new Tuple<int, int>(targetX, targetY))).DevenirCible();
+                            col.DefinirCible(targetX, targetY);
+                            col.AcquerirCible(); // le colon a une cible
+                        }
+                        else
+                        {
+                            while (planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(new Tuple<int, int>(targetX, targetY))).EtreCible())
+                            {
+                                coords = col.RechercherPlusProcheItem();
+                                targetX = coords.Item1;
+                                targetY = coords.Item2;
+                            }
+                            planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(new Tuple<int, int>(targetX, targetY))).DevenirCible();
+                            col.DefinirCible(targetX, targetY);
+                            col.AcquerirCible(); // le colon a une cible
+                        }
                         Console.WriteLine($" objet ciblé : {planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(new Tuple<int, int>(targetX, targetY)))}");
                         /*
                         foreach (ObjetFixe obj in planete.ListeBlocs)
@@ -380,6 +450,16 @@ namespace TPGestionDeColonie
 
                 col.VerififierEtat();
             }
+            // Chercher ferme pour production
+
+            if (planete.ListeBatiments.OfType<Ferme>().Any())
+            {
+
+                    int nbFermes = planete.ListeBatiments.OfType<Ferme>().Count();
+                    Ferme[] arrayFerme = planete.ListeBatiments.OfType<Ferme>().ToArray();
+                    for (int i = 0; i < nbFermes; i++){arrayFerme[i].ProductionBle();}                
+            }
+
             planete.MettreAJourMonde();
         }
 

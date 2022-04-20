@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace TPGestionDeColonie
 {
-    class 
-        Mob
+    class Mob
     {
+        // ---------------------------------------------------------
+        // Classe abtraite définissant les caractéristiques d'un mob
+        // ---------------------------------------------------------
+
         protected int id;
         protected int positionX;
         protected int positionY;
@@ -21,8 +24,6 @@ namespace TPGestionDeColonie
             this.positionY = positionY;
             this.sante = sante;
         }
-
-
 
     }
 }

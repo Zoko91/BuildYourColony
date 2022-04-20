@@ -374,10 +374,20 @@ namespace TPGestionDeColonie
             switch (typeDuColon)
             {
                 case "TPGestionDeColonie.Bucheron":
+                    List<Tuple<int, int>> listeCoords = new List<Tuple<int, int>>();
+                    List<int> listeDistances = new List<int>();
+                    Arbre[] arrayArbre = Planete.ListeBlocs.OfType<Arbre>().ToArray();
+                    foreach (Arbre arb in arrayArbre) {
+                        listeCoords.Add(new Tuple<int, int>(arb.GetPositionObjet().First().Item1, arb.GetPositionObjet().First().Item2));
+                        //foreach (Tuple<int, int> tupleCoords in listeCoords)
+                       // {
+                            listeDistances.Add(CalculerDistancePlusProche(arb));
+                       // }
+                    }
+                    /*
                     foreach (ObjetFixe arb in Planete.ListeBlocs)
                     {
-                        //Console.WriteLine(arb.ToString());
-                        if (arb.GetType().Name == "Arbre" && arb.EtreCible() == false)
+                        if (arb.GetType() == typeof(Arbre) && arb.EtreCible() == false)
                         {
                             if (Math.Min(indiceDeDistance, CalculerDistancePlusProche(arb)) == CalculerDistancePlusProche(arb))
                             {
@@ -385,7 +395,7 @@ namespace TPGestionDeColonie
                                 coordonnees = new Tuple<int, int>(arb.GetPositionObjet().FirstOrDefault().Item1, arb.GetPositionObjet().FirstOrDefault().Item2);
                             }
                         }
-                    }
+                    }*/
                     break;
 
                 case "TPGestionDeColonie.Mineur":
@@ -408,7 +418,6 @@ namespace TPGestionDeColonie
                     {
                         if (ble.GetType().Name == "Ble" && ble.EtreCible() == false)
                         {
-
                             if (Math.Min(indiceDeDistance, CalculerDistancePlusProche(ble)) == CalculerDistancePlusProche(ble))
                             {
                                 indiceDeDistance = CalculerDistancePlusProche(ble);
@@ -454,7 +463,8 @@ namespace TPGestionDeColonie
         
         public virtual void SeVider(Entrepot ent)
         {
-            // 
+            // Selon le métier du colon, dépose les ressources dans l'Entrepot
+
             if (GetType() == typeof(Bucheron))
             {
                 Backpack[0] -= 100;
@@ -490,6 +500,9 @@ namespace TPGestionDeColonie
         }
 
         public void BougerSiRempli(){
+
+            // Fonctions permettant de se déplacer vers l'entrepot si le colon est plein et d'y déposer les ressources en trop
+
             if (Planete.ListeBatiments.OfType<Entrepot>().Any()) // s'il existe un entrepôt
             {
                 Entrepot ent = Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault();
@@ -508,25 +521,12 @@ namespace TPGestionDeColonie
                 Console.WriteLine("Au moins un colon a son sac plein, il serait temps de construire un entrepôt.");
             }
         }
-
-        /*
-                if (Planete.ListeBlocs.OfType<Entrepot>().Any())
-                    {
-                        // Se déplace vers l'entrepot et y stocke les ressources puis recommence
-                        Deplacer(ent.GetPositionObjet().FirstOrDefault().Item1,
-                            ent.GetPositionObjet().FirstOrDefault().Item2);
-                        return true;
-                    }
-                    else
-                    {
-                        //Reste sur place, ne fait rien
-                        return true;
-                    }
-         */
           
          
-        public bool EtreRempli() // Renvoie true si Backpack du personnage est plein
+        public bool EtreRempli() 
         {
+            // Fonction binaire renvoyant l'état de remplissage d'un colon 
+
             if (GetType() == typeof(Bucheron))
             {
                 if (Backpack[0] >= 100)

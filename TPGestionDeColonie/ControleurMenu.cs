@@ -9,8 +9,13 @@ namespace TPGestionDeColonie
     class ControleurMenu
     {
         public static int Menu(string nomMenu)
-            // Crée le menu navigable avec les boutons "fleche haut" et "fleche bas"
+        
+            
         {
+        // -----------------------------------------------------------------------------
+        // // Création du menu navigable avec les boutons: "fleche haut" et "fleche bas"
+        // -----------------------------------------------------------------------------
+
             if (nomMenu == "Principal")
             {
                 //options du menu

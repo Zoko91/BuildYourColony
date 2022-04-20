@@ -10,7 +10,14 @@ namespace TPGestionDeColonie
 {
     class Monde
     {
-        // Variables -------------------
+        // ---------------------------------------------------------
+        // Classe définissant l'environnement du jeu :
+            // La carte dans un premier mais permet à tous les élements du jeu d'interagir entre eux
+            // en implémentant des listes de tous les élements présents dans Monde que l'on met à jour a chaque ajout/Suppression
+        // ---------------------------------------------------------
+
+        // -- \\ Variables
+        // -------------------------------------------
         Random rng = new Random();
 
         public string[,] grille = new string[35, 35];
@@ -21,7 +28,7 @@ namespace TPGestionDeColonie
         public List<Colon> ListePJ { get; }
         public List<ObjetFixe> ListeBlocs { get ;  }
         public List<Batiment> ListeBatiments { get ;  }
-        // -----------------------------
+        // -------------------------------------------
 
         public Monde() {
             ListePJ = new List<Colon>();
@@ -31,8 +38,13 @@ namespace TPGestionDeColonie
             Largeur = grille.GetLength(1);
         }
 
-        public bool VerifCoordonnees(Tuple<int, int> coordonnees) // Check Si y'a déjà un block
+        // -- \\ Fonctions de vérification des coordonnées
+        // -----------------------------------------------
+
+        public bool VerifCoordonnees(Tuple<int, int> coordonnees) 
         {
+            // Fonction indiquant si un autre élément (objet ou colon) est présent sur les coordonnées prises en input
+
             List<Tuple<int, int>> listeCoordonneesColons = new List<Tuple<int, int>>();
 
             foreach(Colon col in ListePJ)
@@ -53,23 +65,26 @@ namespace TPGestionDeColonie
             }
             return true; //case disponible
         }
-        public bool VerifCoordonneesBatiment(Tuple<int, int> coordonnees) // Check Si y'a déjà un block
+
+        public bool VerifCoordonneesBatiment(Tuple<int, int> coordonnees) 
         {
+            // Fonction qui vérifie si la case est occupée par un batiment
+
             foreach (Batiment bat in ListeBatiments)
             {
                 List<Tuple<int, int>> listeCoordonnees = bat.GetPositionObjet();
                 if (listeCoordonnees.Contains(coordonnees))
                 {
-                    return false; //case non disponible, occupée par objet fixe
+                    return false; //case non disponible, occupée par un batiment
                 }
             }
             return true; //case disponible
         }
-        
-    
 
-        public bool VerifListeCoordonnees(List<Tuple<int, int>> coordonnees) // Pour la construction des batiments ou des plans d'eau
+        public bool VerifListeCoordonnees(List<Tuple<int, int>> coordonnees) 
         {
+            // Fonction permetant de vérifier une liste de coordonnées, utilisée pour la construction de batiments ou des plans d'eau
+
             for (int i = 0; i < coordonnees.Count; i++)
             {
                 if (VerifCoordonnees(coordonnees[i])==false)
@@ -80,16 +95,21 @@ namespace TPGestionDeColonie
             return true;
         }
 
+        // -- \\ Fonctions de Génération
+        // -----------------------------
 
         public Tuple<int, int> GenererCoupleCoordonnees()
         {
+            // Donne un couple de coordonnées aléatoire sous forme d'un couple de 2 entiers
             Tuple<int,int> coupleXY = new Tuple<int, int>(rng.Next(grille.GetLength(0)),rng.Next(grille.GetLength(1)));
 
             return coupleXY;
         }
 
-        public void GenererBloc(){
-            //Génère un bloc arbre ou rocher
+        public void GenererBloc()
+        {
+            //Génère un bloc arbre ou rocher aléatoirement
+
             Tuple<int, int> coordonnees = GenererCoupleCoordonnees();
 
             while (VerifCoordonnees(coordonnees)==false){
@@ -111,6 +131,8 @@ namespace TPGestionDeColonie
 
         public List<Tuple<int,int>> GenererPremierPlanDEau()
         {
+            // Fonction de génération du premier plan d'eau (forme indiquée ci dessous)
+
             List<Tuple<int, int>> listeCoordEau = new List<Tuple<int, int>>();
             int positionXEau = rng.Next(0, Hauteur - 1);
             int positionYEau = rng.Next(0, Largeur - 1);
@@ -136,6 +158,8 @@ namespace TPGestionDeColonie
 
         public List<Tuple<int, int>> GenererDeuxiemePlanDEau()
         {
+            // Fonction de génération du deuxième plan d'eau (forme indiquée ci dessous)
+
             List<Tuple<int, int>> listeCoordEau = new List<Tuple<int, int>>();
             int positionXEau = rng.Next(0, Hauteur - 1);
             int positionYEau = rng.Next(1, Largeur - 1);
@@ -157,8 +181,11 @@ namespace TPGestionDeColonie
             listeCoordEau.Add(coordEau21);
             return listeCoordEau;
         }
+
         public void GenererMonde()
         {
+            // Fonction de création des élements de la grille fixes ou mobiles
+
             List<Tuple<int, int>> listeCoordonneesColons = new List<Tuple<int, int>>();
 
             foreach (Colon col in ListePJ)
@@ -192,9 +219,19 @@ namespace TPGestionDeColonie
 
             // ============================================================= //
 
+
+            // Génère les rochers et les arbres [Le nombre d'entité est déterminé en fonction de la taille de la grille]
+            // ============================================================= //
+
             for (int i = 0; i< Math.Floor(Largeur*1.57); i++){
                 GenererBloc(); //génère tous les blocs
             }
+            // ============================================================= //
+
+
+            // Affichage des élements du jeu sur la grille à la génération
+            // ============================================================= //
+
             for (int i=0; i<grille.GetLength(0); i++)
             {
                 for (int j = 0; j < grille.GetLength(1); j++)
@@ -238,11 +275,14 @@ namespace TPGestionDeColonie
                     }
                 }   
             }
+            // ============================================================= //
         }
 
 
         public void MettreAJourMonde()
         {
+            // Met à jour les cases de la grille // Affichage (méthode appellée à chaque tour de jeu)
+
             List<Tuple<int, int>> listeCoordonneesColons = new List<Tuple<int, int>>();
 
             foreach (Colon col in ListePJ)
@@ -319,6 +359,8 @@ namespace TPGestionDeColonie
 
         public void AfficherMonde()
         {
+            // Affichage supplémentaire (couleurs, n° colonne etc) une fois que les cases ont été mises à jour dans la grille
+
             Console.Write("   ");
             for (int i = 0; i < grille.GetLength(0); i++)
             {
@@ -413,11 +455,10 @@ namespace TPGestionDeColonie
 
         }
 
-
-
-
         public void AfficherFenetre(int x,int y)
         {
+            // Méthode non utilisée permettant l'affichage d'une portion de la carte (style minimap)
+
             // position X
             int posxhaut = x-5;
             int posxbas = x + 5;
@@ -453,13 +494,9 @@ namespace TPGestionDeColonie
                 }
                 Console.WriteLine();
             }
-
-
             Console.WriteLine(); Console.WriteLine(); Console.WriteLine();
-
-
             // Affichage de la fenetre sur la map générale
-            /*
+            
             int posDepartLigne = posxhaut;
             int posFinLigne = posygauche;
             int var = 0;
@@ -484,17 +521,12 @@ namespace TPGestionDeColonie
                     Console.Write(grille[i, j]);
                 }
                 Console.WriteLine();
-            }*/
+            }
         }
-
-
-        /*public List<ObjetFixe> GenererListe()
-         {
-
-         }*/
 
         public void AjouterColon(Colon c)
         {
+            // Ajoute un colon dans la liste des colons du Monde
             ListePJ.Add(c);
         }
 
@@ -509,7 +541,7 @@ namespace TPGestionDeColonie
         }
 
         public void SupprimerColon(){
-            //supprime le colon de la liste
+            //Supprime le colon de la liste
             for (int i = 0; i < ListePJ.Count; i++)
             {
                 if (ListePJ[i].Sante ==0)
@@ -519,11 +551,6 @@ namespace TPGestionDeColonie
                 }
             }
         }
-
-        public void PresenceItem(){
-            
-        }
-
         
     }
 }

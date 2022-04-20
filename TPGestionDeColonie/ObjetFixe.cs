@@ -8,15 +8,25 @@ namespace TPGestionDeColonie
 {
     abstract class ObjetFixe
     {
+        // -----------------------------------------------------------------------
+        // Classe abstraite définissant un objet non mobile, comme un item ou un batiment
+        // -----------------------------------------------------------------------
+
+        
+
+        // -- \\ Variables
+        // -------------------------------------------
+
         /*Liste de coordonnées d'un objet
          * Tuple Item1 = les x
          * Tuple Item2 = les y
          */
+
         protected List<Tuple<int, int>> positionObjet;
         protected int Sante { get; set; }
         protected Monde Planete { get; }
-
         protected virtual bool EstCible { get; set; }
+
         public ObjetFixe (List<Tuple<int, int>> position, Monde planete)
         {
             this.positionObjet = position;
@@ -25,31 +35,26 @@ namespace TPGestionDeColonie
             EstCible=false;
         }
 
-        public bool EtreCible()
-        {
-            return EstCible;
-        }
-        public void DevenirCible()
-        {
-            EstCible = true;
-        }
-        public void NePlusEtreCible()
-        {
-            EstCible = false;
-        }
+        // -- \\ Gestion des cibles
+        // -------------------------------------------
+        public bool EtreCible() {return EstCible;}
+        public void DevenirCible(){EstCible = true;}
+        public void NePlusEtreCible(){EstCible = false;}
 
-        public List<Tuple<int, int>> GetPositionObjet() //position d'un seul objet
+
+        public List<Tuple<int, int>> GetPositionObjet() 
         {
             return positionObjet;
         }
 
-        public void DestructionEnCours(int x, int y, Colon col) {
+        public void DestructionEnCours(int x, int y, Colon col) 
+        {
+            // Fonction de destruction d'un Item (4 coups sont nécessaire pour casser un bloc)
+
             Tuple<int, int> position = new Tuple<int, int>(x, y);
             Sante -= 25;
             if (Sante <= 0)
             {
-                //Console.WriteLine(x + " "+ y);
-                //Console.WriteLine("L'élément "+ GetType().Name + " est cassé");
                 Planete.grille[x,  y] = " x ";
                 /*
                 foreach(ObjetFixe obj in Planete.ListeBlocs){
@@ -68,15 +73,13 @@ namespace TPGestionDeColonie
                 }
                 Planete.ListeBlocs.Remove(Planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(new Tuple<int, int>(x, y))));
                 col.PerdreCible();
-                //return true; Lors de l'action de destruction on peut lui dire tant que = true;
             }
-            //return false;
         }
 
         
         public override string ToString()
         {
-            return $"{positionObjet.FirstOrDefault().Item1} et {positionObjet.FirstOrDefault().Item2} + nature: {this.GetType().Name} "; //+ Ciblé ? {EtreCible()}
+            return $"{positionObjet.FirstOrDefault().Item1} et {positionObjet.FirstOrDefault().Item2} + nature: {this.GetType().Name} \n+ Ciblé ? {EtreCible()}"; //+ Ciblé ? {EtreCible()}
         }
 
     }
