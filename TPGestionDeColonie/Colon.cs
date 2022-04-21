@@ -129,6 +129,7 @@ namespace TPGestionDeColonie
             }
             return false;
         }
+
         public void VerififierEtat()
         {
             //Vérifie l'état physique du Colon
@@ -143,6 +144,12 @@ namespace TPGestionDeColonie
             else if (Faim <= 0) { pdvPerdus += 2; }
 
             Sante -= pdvPerdus;
+
+            if(Sante <= 0)
+            {
+                Console.WriteLine("Votre colon est mort");
+                Planete.ListePJ.Remove(this);
+            }
         }
 
         public override string ToString()

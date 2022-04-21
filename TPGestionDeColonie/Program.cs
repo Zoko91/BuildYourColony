@@ -50,8 +50,6 @@ namespace TPGestionDeColonie
 
 
 
-
-
             // -------------------
             // Génération du monde 
             // -------------------
@@ -395,7 +393,6 @@ namespace TPGestionDeColonie
                         col.AcquerirCible();
                         if (!col.getPosition().Equals(col.RecupererCoordonneesCible())) // On peut changer ça et mettre si les coordonnées colons sont comprises dans l'auberge
                         {
-                            Console.WriteLine("Je me déplace vers l'auberge parceque j'ai soif ou faim");
                             col.SeDeplacer(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
                         }
                         else
@@ -656,6 +653,7 @@ namespace TPGestionDeColonie
             Console.WriteLine("Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"
                     + "- 2 : Taverne (Bois : 30, Roche : 10\n- 3 : Maison (Bois : 30, Roche : 0)\n"
                      + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)\n- 0 : Quitter");
+            Console.Write("\t |"); 
             string ans = Console.ReadLine();
             string[] dicoReponses = { "1", "2", "3", "4", "5", "0" };
             while (!dicoReponses.Contains(ans))
@@ -664,6 +662,10 @@ namespace TPGestionDeColonie
                 Console.WriteLine("Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"
         + "- 2 : Taverne (Bois : 30, Roche : 10\n- 3 : Maison (Bois : 30, Roche : 0)\n"
          + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)\n- 0 : Quitter");
+
+                Console.Write("\t |");                
+
+                
                 ans = Console.ReadLine();
             }
             int numBat = int.Parse(ans);
@@ -673,6 +675,7 @@ namespace TPGestionDeColonie
                 Console.WriteLine("Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"
                 + "- 2 : Taverne (Bois : 30, Roche : 10\n- 3 : Maison (Bois : 30, Roche : 0)\n"
                 + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)\n- 0 : Quitter");
+                Console.Write("\t |");
                 numBat = int.Parse(Console.ReadLine());
             }
             Console.Clear();
