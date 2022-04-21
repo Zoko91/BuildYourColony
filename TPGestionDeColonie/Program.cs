@@ -75,6 +75,7 @@ namespace TPGestionDeColonie
             {
                 Console.WriteLine();
                 JouerUnTour(listeColons, planete);
+                Console.Write("\t");
                 string test = Console.ReadLine();
                 if (test == "manuel")
                 {
@@ -91,9 +92,9 @@ namespace TPGestionDeColonie
             // Proposer une liste d'actions possibles que le joueur peut demander chaque tour en écrivant "manuel"
             // ---------------------------------------------------------------------------------------------------
 
-            Console.WriteLine("======================================");
+            Console.WriteLine("\t======================================");
             Console.WriteLine("\tListe des actions possibles :\n\t1 - Construire\n\t2 - Afficher l'état des colons\n\t3 - Afficher les Backpacks de colons\n\t4 - Afficher le stock de ressources des bâtiments\n\t5 - Planter (paysan)\n\t6 - Récolter / Déplacement (paysan)\n\t0 - STOP");
-            Console.WriteLine("======================================");
+            Console.WriteLine("\t======================================");
 
             // ----------------------------------------------------------------------------------
             // Sélection de l'action et définition du comportement du jeu en fonction de l'action
@@ -163,9 +164,10 @@ namespace TPGestionDeColonie
                 }
                 Console.WriteLine();
                 Console.WriteLine(" /\\ ___________________________________________________ /\\ ");
-                Console.WriteLine();
+                Console.WriteLine("Appuyez sur Entrée pour continuer ...");
                 Console.ReadLine();
                 ProposerActions(planete);
+
             }
             if (numAction == 3) // 
             {
@@ -178,7 +180,7 @@ namespace TPGestionDeColonie
                 {
                     Console.WriteLine($"Backpack du colon {colon.GetType().Name} {colon.Nom} : {BackpackColon(colon)}");
                 }
-                Console.WriteLine();
+                Console.WriteLine("Appuyez sur Entrée pour continuer ...");
                 Console.ReadLine();
                 ProposerActions(planete);
             }
@@ -213,7 +215,7 @@ namespace TPGestionDeColonie
                 }
                 Console.WriteLine();
                 Console.WriteLine(" /\\ ___________________________________________________ /\\ ");
-                Console.WriteLine();
+                Console.WriteLine("Appuyez sur Entrée pour continuer ...");
                 Console.ReadLine();
                 ProposerActions(planete);
             }
@@ -324,6 +326,7 @@ namespace TPGestionDeColonie
             return listeDepart;
         }
 
+
         public static void JouerUnTour(List<Colon> listeColons, Monde planete)
         {
 
@@ -331,6 +334,8 @@ namespace TPGestionDeColonie
             // Fonction principale du jeu définissant les actions automatiques et manuelles des colons chaque tour de jeu
             // ----------------------------------------------------------------------------------------------------------
 
+
+            Random rng = new Random();
             Console.Clear();
             foreach (Colon col in listeColons)
             {
@@ -351,7 +356,10 @@ namespace TPGestionDeColonie
                 {
                     if (col.ATIlCible())
                     {
-                        planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(col.RecupererCoordonneesCible())).NePlusEtreCible();
+                        if (planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(col.RecupererCoordonneesCible())).Any())
+                        {
+                            planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(col.RecupererCoordonneesCible())).NePlusEtreCible();
+                        }
                     }
 
                     if (planete.ListeBatiments.OfType<Maison>().Any())
@@ -368,7 +376,10 @@ namespace TPGestionDeColonie
                 {
                     if (col.ATIlCible())
                     {
-                        planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(col.RecupererCoordonneesCible())).NePlusEtreCible();
+                        if(planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(col.RecupererCoordonneesCible())).Any())
+                        {
+                            planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(col.RecupererCoordonneesCible())).NePlusEtreCible();
+                        }
                     }
                     if (planete.ListeBatiments.OfType<Auberge>().Any())
                     {
@@ -417,7 +428,7 @@ namespace TPGestionDeColonie
                                     Console.WriteLine("Il n'y a pas assez d'eau, pensez à construire un puits !");
                                 }
                             }
-                            else
+                            if(!col.AvoirFaim() || !col.AvoirSoif())
                             {
                                 col.PerdreCible();
                             }
@@ -489,6 +500,8 @@ namespace TPGestionDeColonie
                         {
                             if (planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet().Contains(bat.getPosition()))
                             {
+                                string[] dicoBatiments = ["l'Entrepôt", "la Taverne", "la Maison", "le Puits", "la Ferme"]
+                                Console.WriteLine($"Le Batisseur {bat.Nom} a rempli son stock de ressources pour construire {dicoBatiments[numBat]}");
                                 bat.RemplirLeStock(numBat);
                             }
                             else
@@ -607,7 +620,11 @@ namespace TPGestionDeColonie
                         col.Miner(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
                     }
                 }
-                col.Soif -= 2; // Avoir soif chaque tour
+                if (rng.Next(0, 5) == 0)
+                {
+                    col.Soif -= 2; // Avoir soif un tour sur 4
+                }
+                 
                 col.VerififierEtat(); // Vérifie l'état vital du colon
             }
             // Chercher ferme pour production
@@ -719,7 +736,10 @@ namespace TPGestionDeColonie
             Console.WriteLine("\tBienvenue sur 'The Game You Wish You Had Known Before'\n\tNotre nouveau jeu de colonie en avant première !!!");
             Console.WriteLine("\t__________________________________________________________________\n");
             Console.WriteLine("\tComment prendre part au développement interractif du jeu en tour par tour?");
-            Console.WriteLine("\tChaque tour, vous avez la possibilité de réaliser une liste d'actions définies en écrivant 'manuel'");
+            Console.Write("\tChaque tour, vous avez la possibilité de réaliser une liste d'actions définies en écrivant "); 
+            Console.ForegroundColor = ConsoleColor.DarkRed; 
+            Console.WriteLine("'manuel'");
+            Console.ResetColor();
             Console.WriteLine("\tOu bien vous pouvez tout simplement laissez les colons opérer, mais attention, vous devrez prendre soin de la colonie !");
             Console.WriteLine("\tIls ne pourront vivre sans vous, il vous faudra nécessairement interragir avec eux ! Pour débuter, je vous conseille de construire un entrepot");
             Console.WriteLine("\tIl faudra très souvent s'enquérir des conditions de colons pour ne pas les perdre, car une fois mort, le colon ne reviendra pas !");

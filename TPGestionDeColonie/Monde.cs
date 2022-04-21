@@ -346,7 +346,7 @@ namespace TPGestionDeColonie
                             {
                                 
                                 if (obj.GetType() == typeof(Auberge)){
-                                    grille[i, j] = "AUB";
+                                    grille[i, j] = "TAV";
                                 }
                                 else if (obj.GetType() == typeof(Entrepot)){
                                     grille[i, j] = "ENT";
@@ -449,7 +449,7 @@ namespace TPGestionDeColonie
                         Console.Write(grille[i, j]);
                         Console.ResetColor();
                     }
-                    else if (grille[i, j] == "AUB" || grille[i, j] == "ENT" || grille[i, j] == "FRM" || grille[i, j] == "MSN" || grille[i, j] == "PUI")
+                    else if (grille[i, j] == "TAV" || grille[i, j] == "ENT" || grille[i, j] == "FRM" || grille[i, j] == "MSN" || grille[i, j] == "PUI")
                     {
                         Console.BackgroundColor = ConsoleColor.DarkMagenta;
                         Console.ForegroundColor = ConsoleColor.White;
@@ -470,7 +470,8 @@ namespace TPGestionDeColonie
             {
                 Console.Write("___");
             }
-            Console.WriteLine();            
+
+            Console.WriteLine();
         }
 
         public void AfficherFenetre(int x,int y)
