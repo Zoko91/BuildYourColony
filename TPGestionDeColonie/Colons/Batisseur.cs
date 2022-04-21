@@ -48,10 +48,10 @@ namespace TPGestionDeColonie
 
         public void RemplirLeStock(int numBat) // Récupère le nombre de ressources nécessaires à l'entrepôt
         {
-            // -----------------------------------------------------------------
-            // La méthode permet de récupérer le nombre de ressources manquantes pour construire un batiment donné en input
-            // -----------------------------------------------------------------
-            
+            // -------------------------------------------------------------------------------------------------------------
+            // La méthode permet de récupérer le nombre de ressources manquantes pour construire un batiment donné en input 
+            // -------------------------------------------------------------------------------------------------------------
+
             int besoinPierre = 0;
             int besoinBois = 0;
             Entrepot ent = Planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault();
@@ -178,7 +178,7 @@ namespace TPGestionDeColonie
         public void ConstructionBatiment(int numBat)
         {
             // ========================================================== //
-            // Construction d'un Entrepot
+            //                Construction d'un Entrepot                  //
             // ========================================================== //
 
             if (numBat == 1)
@@ -230,7 +230,7 @@ namespace TPGestionDeColonie
             }
 
             // ========================================================== //
-            // Construction d'une Auberge
+            //              Construction d'une Auberge                    //
             // ========================================================== //
 
             else if (numBat == 2)
@@ -280,12 +280,12 @@ namespace TPGestionDeColonie
                 {
                     Console.WriteLine("Impossible de construire ici !");
                 }
-
-                // ========================================================== //
-                // Construction d'une Maison
-                // ========================================================== //
-
             }
+
+                                // ========================================================== //
+                                //                 Construction d'une Maison                  //
+                                // ========================================================== //
+
             else if (numBat == 3)
             {
                 if (Backpack[0] >= 30)
@@ -313,9 +313,9 @@ namespace TPGestionDeColonie
 
             }
 
-            // ========================================================== //
-            // Construction d'un Puits
-            // ========================================================== //
+                                // ========================================================== //
+                                //                   Construction d'un Puits                  //
+                                // ========================================================== //
 
             else if (numBat == 4)
             {
@@ -343,9 +343,9 @@ namespace TPGestionDeColonie
 
             }
 
-            // ========================================================== //
-            // Construction d'une Ferme
-            // ========================================================== //
+                                // ========================================================== //
+                                //                 Construction d'une Ferme                   //
+                                // ========================================================== //
 
             else
             {

@@ -19,6 +19,7 @@ namespace TPGestionDeColonie
         // -- \\ Variables
         // -------------------------------------------
         Random rng = new Random();
+        public int compteurTours = 0;
 
         public string[,] grille = new string[35, 35];
 
@@ -247,7 +248,7 @@ namespace TPGestionDeColonie
             // ============================================================= //
 
 
-            // Affichage des élements du jeu sur la grille à la génération
+            // Définition des élements du jeu sur la grille à la génération
             // ============================================================= //
 
             for (int i=0; i<grille.GetLength(0); i++)

@@ -23,9 +23,6 @@ namespace TPGestionDeColonie.Colons
         {
             // La fonction indique si le stock d'eau ou de blé de l'auberge est vide ou pas
 
-            // Vérification de la présence du Tavernier dans l'auberge
-            //bool verifPresence = false; 
-
             // true : Stock est plein ; false : Stock est vide
             bool stockPlein = true;
             foreach (Batiment b in Planete.ListeBatiments)

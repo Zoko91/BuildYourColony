@@ -69,7 +69,7 @@ namespace TPGestionDeColonie
 
 
 
-            while (planete.GameOver() == false)
+            while (planete.GameOver() == true)
             {
                 Console.WriteLine();
                 JouerUnTour(listeColons, planete);
@@ -81,7 +81,7 @@ namespace TPGestionDeColonie
                 }
 
             }
-            AfficherGameOver();
+            AfficherGameOver(planete);
 
         }
 
@@ -93,8 +93,7 @@ namespace TPGestionDeColonie
             // ---------------------------------------------------------------------------------------------------
 
             Console.WriteLine("\t======================================");
-            Console.WriteLine(
-                "\tListe des actions possibles :\n\t1 - Construire\n\t2 - Afficher l'état des colons\n\t3 - Afficher les Backpacks de colons\n\t4 - Afficher le stock de ressources des bâtiments\n\t5 - Planter (paysan)\n\t6 - Récolter / Déplacement (paysan)\n\t0 - STOP");
+            Console.WriteLine("\tListe des actions possibles :\n\t1 - Construire\n\t2 - Afficher l'état des colons\n\t3 - Afficher les Backpacks de colons\n\t4 - Afficher le stock de ressources des bâtiments\n\t5 - Planter (paysan)\n\t6 - Récolter / Déplacement (paysan)\n\t0 - STOP");
             Console.WriteLine("\t======================================");
 
             // ----------------------------------------------------------------------------------
@@ -102,14 +101,11 @@ namespace TPGestionDeColonie
             // ----------------------------------------------------------------------------------
 
             string ans = Console.ReadLine();
-            string[] dicoReponses = {"1", "2", "3", "4", "5", "0"};
+            string[] dicoReponses = {"1", "2", "3", "4", "5", "6", "0" };
             while (!dicoReponses.Contains(ans))
             {
                 Console.WriteLine();
-                Console.WriteLine(
-                    "Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"
-                    + "- 2 : Taverne (Bois : 30, Roche : 10\n- 3 : Maison (Bois : 30, Roche : 0)\n"
-                    + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)\n- 0 : Quitter");
+                Console.WriteLine("\tListe des actions possibles :\n\t1 - Construire\n\t2 - Afficher l'état des colons\n\t3 - Afficher les Backpacks de colons\n\t4 - Afficher le stock de ressources des bâtiments\n\t5 - Planter (paysan)\n\t6 - Récolter / Déplacement (paysan)\n\t0 - STOP");
                 ans = Console.ReadLine();
             }
 
@@ -348,15 +344,15 @@ namespace TPGestionDeColonie
             return listeDepart;
         }
 
-
         public static void JouerUnTour(List<Colon> listeColons, Monde planete)
         {
+
 
             // ----------------------------------------------------------------------------------------------------------
             // Fonction principale du jeu définissant les actions automatiques et manuelles des colons chaque tour de jeu
             // ----------------------------------------------------------------------------------------------------------
 
-
+            planete.compteurTours++;
             Random rng = new Random();
             Console.Clear();
             
@@ -370,7 +366,7 @@ namespace TPGestionDeColonie
                 if (col.EtreRempli()) 
                 {
                     foreach (ObjetFixe obj in planete.ListeBlocs)
-                    {
+                    {       //Décibler l'objet si il est en train de le couper/miner/récolter
                         if (obj.GetPositionObjet().Contains(col.RecupererCoordonneesCible()))
                         {
                             obj.NePlusEtreCible();
@@ -386,6 +382,7 @@ namespace TPGestionDeColonie
                     {
                         foreach (ObjetFixe obj in planete.ListeBlocs)
                         {
+                            //Décibler l'objet si il est en train de le couper/miner/récolter
                             if (obj.GetPositionObjet().Contains(col.RecupererCoordonneesCible()))
                             {
                                 obj.NePlusEtreCible();
@@ -424,9 +421,7 @@ namespace TPGestionDeColonie
                         col.DefinirCible(aubergeCible.GetPositionObjet().First().Item1,
                             aubergeCible.GetPositionObjet().First().Item2);
                         col.AcquerirCible();
-                        if (!col.getPosition()
-                                .Equals(col
-                                    .RecupererCoordonneesCible())) // On peut changer ça et mettre si les coordonnées colons sont comprises dans l'auberge
+                        if (!col.getPosition().Equals(col.RecupererCoordonneesCible()))
                         {
                             col.SeDeplacer(col.RecupererCoordonneesCible().Item1,
                                 col.RecupererCoordonneesCible().Item2);
@@ -548,8 +543,7 @@ namespace TPGestionDeColonie
                             {
                                 string[] dicoBatiments =
                                     {"l'Entrepôt", "la Taverne", "la Maison", "le Puits", "la Ferme"};
-                                Console.WriteLine(
-                                    $"Le Batisseur {bat.Nom} a rempli son stock de ressources pour construire {dicoBatiments[numBat]}");
+                                Console.WriteLine($"Le Batisseur {bat.Nom} a rempli son stock de ressources pour construire {dicoBatiments[numBat-1]}");
                                 bat.RemplirLeStock(numBat);
                             }
                             else
@@ -750,7 +744,6 @@ namespace TPGestionDeColonie
             return numBat;
         }
 
-
         public static string BackpackColon(Colon col)
         {
             if (col.GetType() == typeof(Tavernier))
@@ -846,17 +839,17 @@ namespace TPGestionDeColonie
             Console.Clear();
         }
 
-        public static void AfficherGameOver()
+        public static void AfficherGameOver(Monde planete)
         {
             // ----------------------------
             // Affichage de fin de partie
             // ----------------------------
-            
+            Console.Title = $"       GAME OVER, tout de même {planete.compteurTours} tours survécus !! ";
             Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Clear(); 
 
-            string centrer = new string(' ', Console.WindowHeight / 2); //variable pour centrer le texte;
+            string centrer = new string(' ', (Console.WindowHeight / 2) + 5); //variable pour centrer le texte;
             // Affiche le message "Game Over"
             Console.Write(centrer);
             Console.WriteLine(@"                                  )                    ");
@@ -875,7 +868,11 @@ namespace TPGestionDeColonie
             Console.Write(centrer);
             Console.WriteLine(@"   \___|\__,_||_|_|_| \___|   \___/  \_/  \___| |_|   ");
             Console.WriteLine();
+            Console.WriteLine();
+            
             Console.Write(centrer);
+            Console.WriteLine($" Vous avez survécu à {planete.compteurTours} tours.");
+
             Console.ReadLine();
             Environment.Exit(0);
 

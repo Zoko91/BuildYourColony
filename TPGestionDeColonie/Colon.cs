@@ -93,11 +93,13 @@ namespace TPGestionDeColonie
         {
             Sante -= degats;
         }
+
         public void AvoirFaimEtSoifSiAction()
         {
             Soif -= 1;
             Faim -= 3;
         }
+        
         public bool AvoirFaim() // renvoie true si faim, false sinon
         {
             if (Faim <= 20)
@@ -106,6 +108,7 @@ namespace TPGestionDeColonie
             }
             return false;
         }
+        
         public bool AvoirSoif() // renvoie true si soif, false sinon
         {
             if (GetType() == typeof(Tavernier)) // Le tavernier s'abreuve toute la journée il a soif moins souvent que les autres
@@ -121,6 +124,7 @@ namespace TPGestionDeColonie
             }
             return false;
         }
+        
         public bool EtreFatigue() // renvoie true si fatigué, false sinon
         {
             if (Endurance <= 20)
@@ -173,7 +177,7 @@ namespace TPGestionDeColonie
         // -------------------------------------------
         public void Deplacer(int x, int y)
         {
-            // Fonction de test déplaçant un colon vers la case voulue en un seul tour 
+            // Fonction de TEST déplaçant un colon vers la case voulue en un seul tour 
             Endurance -= Math.Abs(positionX - x) + Math.Abs(positionY - y);
             while (positionX != x && positionY != y)
             {
@@ -503,6 +507,7 @@ namespace TPGestionDeColonie
             }
             PerdreCible();
         }
+
         public virtual void SeVider(Entrepot ent)
         {
             // Selon le métier du colon, dépose les ressources dans l'Entrepot
@@ -582,7 +587,6 @@ namespace TPGestionDeColonie
             }
 
         }
-
 
         public bool EtreRempli()
         {
