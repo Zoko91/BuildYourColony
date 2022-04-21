@@ -4,6 +4,7 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TPGestionDeColonie.Colons;
 using TPGestionDeColonie.ObjetsFixes;
 using TPGestionDeColonie.ObjetsFixes.Batiments;
 
@@ -91,6 +92,34 @@ namespace TPGestionDeColonie
         // Gestion des dégâts subis lors de combats
         {
             Sante -= degats;
+        }
+        public void AvoirFaimEtSoifSiAction()
+        {
+            Soif -= 1;
+            Faim -= 3;
+        }
+        public bool AvoirFaim() // renvoie true si faim, false sinon
+        {
+            if (Faim <= 20)
+            {
+                return true;
+            }
+            return false;
+        }
+        public bool AvoirSoif() // renvoie true si soif, false sinon
+        {
+            if (GetType() == typeof(Tavernier))
+            {
+                if (Soif <= 0)
+                {
+                    return true;
+                }
+            }
+            else if (Soif <= 20)
+            {
+                return true;
+            }
+            return false;
         }
         public bool EtreFatigue() // renvoie true si fatigué, false sinon
         {

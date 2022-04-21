@@ -364,6 +364,67 @@ namespace TPGestionDeColonie
                         maisonCible.SeReposer();
                     }
                 }
+                else if (col.AvoirFaim() || col.AvoirSoif())
+                {
+                    if (col.ATIlCible())
+                    {
+                        planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(col.RecupererCoordonneesCible())).NePlusEtreCible();
+                    }
+                    if (planete.ListeBatiments.OfType<Auberge>().Any())
+                    {
+                        Auberge aubergeCible = planete.ListeBatiments.OfType<Auberge>().First();
+
+                        col.DefinirCible(aubergeCible.GetPositionObjet().First().Item1, aubergeCible.GetPositionObjet().First().Item2);
+                        col.AcquerirCible();
+                        if (!col.getPosition().Equals(col.RecupererCoordonneesCible())) // On peut changer ça et mettre si les coordonnées colons sont comprises dans l'auberge
+                        {
+                            Console.WriteLine("Je me déplace vers l'auberge parceque j'ai soif ou faim");
+                            col.SeDeplacer(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
+                        }
+                        else
+                        {
+                            if (col.AvoirFaim())
+                            {
+                                if (aubergeCible.StockRessources[1]>15)
+                                {
+                                    col.Faim += 15;
+                                    aubergeCible.StockRessources[1] -= 15;
+                                }
+                                else if (aubergeCible.StockRessources[1] >= 0)
+                                {
+                                    col.Faim += aubergeCible.StockRessources[1];
+                                    aubergeCible.StockRessources[1] = 0;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Il n'y a pas assez de blé, pensez à appeler le paysan !");
+                                }
+                            }
+                            else if (col.AvoirSoif())
+                            {
+                                if (aubergeCible.StockRessources[0]>15)
+                                {
+                                    col.Faim += 15;
+                                    aubergeCible.StockRessources[0] -= 15;
+                                }
+                                else if (aubergeCible.StockRessources[0] >= 0)
+                                {
+                                    col.Faim += aubergeCible.StockRessources[1];
+                                    aubergeCible.StockRessources[0] = 0;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Il n'y a pas assez d'eau, pensez à construire un puits !");
+                                }
+                            }
+                            
+                        }
+                        // Dans le code au dessus lui faire perdre sa cible une fois qu'il est restauré
+                        // Implémenter le fait qu'il mange parceque la il se déplace juste....
+                        // ALLO c'est ici qu'il faut travailler
+                    }
+
+                }
                 else if (col.ATIlCible() == false) // Si pas de cible définie
                 {
                     if (col.GetType() == typeof(Bucheron) || col.GetType() == typeof(Mineur))
@@ -541,7 +602,7 @@ namespace TPGestionDeColonie
                         col.Miner(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
                     }
                 }
-
+                col.Soif -= 2; // Avoir soif chaque tour
                 col.VerififierEtat(); // Vérifie l'état vital du colon
             }
             // Chercher ferme pour production
@@ -553,7 +614,6 @@ namespace TPGestionDeColonie
                 // va faire appel à la méthode de production dans toutes les fermes de la map
                 for (int i = 0; i < nbFermes; i++) { arrayFerme[i].ProductionBle(); }
             }
-
             planete.MettreAJourMonde();
         }
 
