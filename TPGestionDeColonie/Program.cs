@@ -81,6 +81,8 @@ namespace TPGestionDeColonie
                 }
 
             }
+            AfficherGameOver();
+
         }
 
         public static void ProposerActions(Monde planete)
@@ -91,7 +93,8 @@ namespace TPGestionDeColonie
             // ---------------------------------------------------------------------------------------------------
 
             Console.WriteLine("\t======================================");
-            Console.WriteLine("\tListe des actions possibles :\n\t1 - Construire\n\t2 - Afficher l'état des colons\n\t3 - Afficher les Backpacks de colons\n\t4 - Afficher le stock de ressources des bâtiments\n\t5 - Planter (paysan)\n\t6 - Récolter / Déplacement (paysan)\n\t0 - STOP");
+            Console.WriteLine(
+                "\tListe des actions possibles :\n\t1 - Construire\n\t2 - Afficher l'état des colons\n\t3 - Afficher les Backpacks de colons\n\t4 - Afficher le stock de ressources des bâtiments\n\t5 - Planter (paysan)\n\t6 - Récolter / Déplacement (paysan)\n\t0 - STOP");
             Console.WriteLine("\t======================================");
 
             // ----------------------------------------------------------------------------------
@@ -99,15 +102,17 @@ namespace TPGestionDeColonie
             // ----------------------------------------------------------------------------------
 
             string ans = Console.ReadLine();
-            string[] dicoReponses = { "1", "2", "3", "4", "5", "0" };
+            string[] dicoReponses = {"1", "2", "3", "4", "5", "0"};
             while (!dicoReponses.Contains(ans))
             {
                 Console.WriteLine();
-                Console.WriteLine("Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"
+                Console.WriteLine(
+                    "Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"
                     + "- 2 : Taverne (Bois : 30, Roche : 10\n- 3 : Maison (Bois : 30, Roche : 0)\n"
                     + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)\n- 0 : Quitter");
                 ans = Console.ReadLine();
             }
+
             int numAction = int.Parse(ans);
 
 
@@ -116,6 +121,7 @@ namespace TPGestionDeColonie
                 Console.WriteLine("Veuillez indiquez un numéro d'action correct :");
                 numAction = int.Parse(Console.ReadLine());
             }
+
             if (numAction == 1)
             {
                 // La batisseur se déplace vers la case ciblée par le joueur, une fois arrivé à la case on lui propose un listing des batiments a construire
@@ -124,7 +130,7 @@ namespace TPGestionDeColonie
                 {
                     if (colon.GetType() == typeof(Batisseur))
                     {
-                        Batisseur bat = (Batisseur)colon;
+                        Batisseur bat = (Batisseur) colon;
                         if (bat.EstOccupe)
                         {
                             Console.WriteLine($"Le batisseur {bat.Nom} est occupé");
@@ -132,7 +138,8 @@ namespace TPGestionDeColonie
                         }
                         else
                         {
-                            Console.WriteLine("Ou souhaitez vous déplacer le Batisseur pour construire votre batiment?");
+                            Console.WriteLine(
+                                "Ou souhaitez vous déplacer le Batisseur pour construire votre batiment?");
                             Console.Write("Coordonnée ligne: ");
                             int posX = int.Parse(Console.ReadLine());
                             Console.Write("Coordonnée colonne: ");
@@ -141,11 +148,13 @@ namespace TPGestionDeColonie
                             bat.DefinirCible(posX, posY);
                             bat.AcquerirCible(); // le batisseur acquiert une cible
                         }
+
                         break;
                     }
                 }
 
             }
+
             if (numAction == 2)
             {
 
@@ -160,6 +169,7 @@ namespace TPGestionDeColonie
                 {
                     Console.WriteLine(col.ToString());
                 }
+
                 Console.WriteLine();
                 Console.WriteLine(" /\\ ___________________________________________________ /\\ ");
                 Console.WriteLine("Appuyez sur Entrée pour continuer ...");
@@ -167,6 +177,7 @@ namespace TPGestionDeColonie
                 ProposerActions(planete);
 
             }
+
             if (numAction == 3) // 
             {
 
@@ -178,10 +189,12 @@ namespace TPGestionDeColonie
                 {
                     Console.WriteLine($"Backpack du colon {colon.GetType().Name} {colon.Nom} : {BackpackColon(colon)}");
                 }
+
                 Console.WriteLine("Appuyez sur Entrée pour continuer ...");
                 Console.ReadLine();
                 ProposerActions(planete);
             }
+
             if (numAction == 4)
             {
 
@@ -198,25 +211,29 @@ namespace TPGestionDeColonie
                     {
                         Console.WriteLine(bat.ToString());
                     }
+
                     if (bat.GetType() == typeof(Auberge))
                     {
                         Console.WriteLine(bat.ToString());
                     }
                 }
+
                 foreach (Colon col in planete.ListePJ)
                 {
                     if (col.GetType() == typeof(Batisseur))
                     {
-                        Batisseur bati = (Batisseur)col;
+                        Batisseur bati = (Batisseur) col;
                         bati.ToString2();
                     }
                 }
+
                 Console.WriteLine();
                 Console.WriteLine(" /\\ ___________________________________________________ /\\ ");
                 Console.WriteLine("Appuyez sur Entrée pour continuer ...");
                 Console.ReadLine();
                 ProposerActions(planete);
             }
+
             if (numAction == 5)
             {
 
@@ -228,7 +245,7 @@ namespace TPGestionDeColonie
                 {
                     if (colon.GetType() == typeof(Paysan))
                     {
-                        Paysan pay = (Paysan)colon;
+                        Paysan pay = (Paysan) colon;
                         Console.WriteLine("Ou souhaitez vous déplacer le Paysan pour qu'il plante du blé ?");
                         Console.Write("Coordonnée ligne: ");
                         int posX = int.Parse(Console.ReadLine());
@@ -237,11 +254,13 @@ namespace TPGestionDeColonie
                         pay.DefinirCible(posX, posY);
                         pay.AcquerirCible(); // le paysan acquiert une cible
                     }
+
                     break;
                 }
 
 
             }
+
             if (numAction == 6) // 
             {
 
@@ -256,7 +275,7 @@ namespace TPGestionDeColonie
                 {
                     if (colon.GetType() == typeof(Paysan))
                     {
-                        Paysan pay = (Paysan)colon;
+                        Paysan pay = (Paysan) colon;
                         Console.WriteLine("Ou souhaitez vous déplacer le Paysan ?");
                         Console.Write("Coordonnée ligne: ");
                         int posX = int.Parse(Console.ReadLine());
@@ -265,10 +284,11 @@ namespace TPGestionDeColonie
                         pay.DefinirCible(posX, posY);
                         pay.AcquerirCible(); // le paysan acquiert une cible
                     }
+
                     break;
                 }
             }
-            
+
 
         }
 
@@ -279,16 +299,19 @@ namespace TPGestionDeColonie
             // Fonction créant la liste des colons au départ du jeu, les plaçant au milieu de la carte et renvoyant une liste
             // --------------------------------------------------------------------------------------------------------------
 
-            int milieuGrilleHauteur = (int)Math.Floor((double)planete.Hauteur / 2);
-            int milieuGrilleLargeur = (int)Math.Floor((double)planete.Largeur / 2);
+            int milieuGrilleHauteur = (int) Math.Floor((double) planete.Hauteur / 2);
+            int milieuGrilleLargeur = (int) Math.Floor((double) planete.Largeur / 2);
             List<Colon> listeDepart = new List<Colon>();
 
             Paysan p = new Paysan("p", milieuGrilleHauteur, milieuGrilleLargeur - 1, 100, 100, 100, 100, planete);
             Bucheron b1 = new Bucheron("p", milieuGrilleHauteur, milieuGrilleLargeur, 100, 100, 100, 100, planete);
-            Batisseur ba = new Batisseur("p", milieuGrilleHauteur, milieuGrilleLargeur + 1, 100, 100, 100, 100, planete);
-            Mineur m = new Mineur("Mineur", milieuGrilleHauteur + 1, milieuGrilleLargeur - 1, 100, 100, 100, 100, planete);
+            Batisseur ba = new Batisseur("p", milieuGrilleHauteur, milieuGrilleLargeur + 1, 100, 100, 100, 100,
+                planete);
+            Mineur m = new Mineur("Mineur", milieuGrilleHauteur + 1, milieuGrilleLargeur - 1, 100, 100, 100, 100,
+                planete);
             Tavernier t = new Tavernier("p", milieuGrilleHauteur + 1, milieuGrilleHauteur, 100, 100, 100, 100, planete);
-            Bucheron b2 = new Bucheron("p", milieuGrilleHauteur + 1, milieuGrilleLargeur + 1, 100, 100, 100, 100, planete);
+            Bucheron b2 = new Bucheron("p", milieuGrilleHauteur + 1, milieuGrilleLargeur + 1, 100, 100, 100, 100,
+                planete);
 
             listeDepart.Add(p);
             listeDepart.Add(b1);
@@ -321,6 +344,7 @@ namespace TPGestionDeColonie
                 listeDepart[i].Nom = nom;
                 planete.AjouterColon(listeDepart[i]);
             }
+
             return listeDepart;
         }
 
@@ -335,10 +359,15 @@ namespace TPGestionDeColonie
 
             Random rng = new Random();
             Console.Clear();
+            
+            // -------------------------------------------------------------------------------------------
+            // Parcours les états des colons pour savoir quels sont les problèmes de santé ou d'inventaire
+            // -------------------------------------------------------------------------------------------
+            
             foreach (Colon col in listeColons)
             {
 
-                if (col.EtreRempli())
+                if (col.EtreRempli()) 
                 {
                     foreach (ObjetFixe obj in planete.ListeBlocs)
                     {
@@ -347,10 +376,11 @@ namespace TPGestionDeColonie
                             obj.NePlusEtreCible();
                         }
                     }
+
                     col.BougerSiRempli();
                 }
 
-                else if (col.EtreFatigue())
+                else if (col.EtreFatigue()) // Si il est fatigué....
                 {
                     if (col.ATIlCible())
                     {
@@ -367,13 +397,14 @@ namespace TPGestionDeColonie
                     {
                         Maison maisonCible = planete.ListeBatiments.OfType<Maison>().First();
 
-                        col.DefinirCible(maisonCible.GetPositionObjet().First().Item1, maisonCible.GetPositionObjet().First().Item2);
+                        col.DefinirCible(maisonCible.GetPositionObjet().First().Item1,
+                            maisonCible.GetPositionObjet().First().Item2);
                         col.AcquerirCible();
                         col.SeDeplacer(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
                         maisonCible.SeReposer();
                     }
                 }
-                else if (col.AvoirFaim() || col.AvoirSoif())
+                else if (col.AvoirFaim() || col.AvoirSoif()) // Si il a soif ou si il a faim ....
                 {
                     if (col.ATIlCible())
                     {
@@ -385,21 +416,26 @@ namespace TPGestionDeColonie
                             }
                         }
                     }
+
                     if (planete.ListeBatiments.OfType<Auberge>().Any())
                     {
                         Auberge aubergeCible = planete.ListeBatiments.OfType<Auberge>().First();
 
-                        col.DefinirCible(aubergeCible.GetPositionObjet().First().Item1, aubergeCible.GetPositionObjet().First().Item2);
+                        col.DefinirCible(aubergeCible.GetPositionObjet().First().Item1,
+                            aubergeCible.GetPositionObjet().First().Item2);
                         col.AcquerirCible();
-                        if (!col.getPosition().Equals(col.RecupererCoordonneesCible())) // On peut changer ça et mettre si les coordonnées colons sont comprises dans l'auberge
+                        if (!col.getPosition()
+                                .Equals(col
+                                    .RecupererCoordonneesCible())) // On peut changer ça et mettre si les coordonnées colons sont comprises dans l'auberge
                         {
-                            col.SeDeplacer(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
+                            col.SeDeplacer(col.RecupererCoordonneesCible().Item1,
+                                col.RecupererCoordonneesCible().Item2);
                         }
                         else
                         {
                             if (col.AvoirFaim())
                             {
-                                if (aubergeCible.StockRessources[1]>15)
+                                if (aubergeCible.StockRessources[1] > 15)
                                 {
                                     col.Faim += 15;
                                     aubergeCible.StockRessources[1] -= 15;
@@ -416,7 +452,7 @@ namespace TPGestionDeColonie
                             }
                             else if (col.AvoirSoif())
                             {
-                                if (aubergeCible.StockRessources[0]>15)
+                                if (aubergeCible.StockRessources[0] > 15)
                                 {
                                     col.Faim += 15;
                                     aubergeCible.StockRessources[0] -= 15;
@@ -431,23 +467,26 @@ namespace TPGestionDeColonie
                                     Console.WriteLine("Il n'y a pas assez d'eau, pensez à construire un puits !");
                                 }
                             }
-                            if(!col.AvoirFaim() || !col.AvoirSoif())
+
+                            if (!col.AvoirFaim() || !col.AvoirSoif())
                             {
                                 col.PerdreCible();
                             }
-                            
+
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Pensez à construire une auberge, c'est URGENT, vos colons ont faim et soif !");
+                        Console.WriteLine(
+                            "Pensez à construire une auberge, c'est URGENT, vos colons ont faim et soif !");
                     }
 
                 }
                 else if (col.ATIlCible() == false) // Si pas de cible définie
                 {
                     if (col.GetType() == typeof(Bucheron) || col.GetType() == typeof(Mineur))
-                    { // Bûcherons et mineurs doivent trouver l'objet le plus proche
+                    {
+                        // Bûcherons et mineurs doivent trouver l'objet le plus proche
 
                         Tuple<int, int> coords = col.RechercherPlusProcheItem();
 
@@ -457,24 +496,27 @@ namespace TPGestionDeColonie
                         col.DefinirCible(targetX, targetY);
                         col.AcquerirCible(); // le colon a une cible
                         foreach (ObjetFixe obj in planete.ListeBlocs)
-                        { // définir l'objet le plus proche comme ciblé    
+                        {
+                            // définir l'objet le plus proche comme ciblé    
                             if (obj.GetPositionObjet().Contains(coords))
                             {
                                 obj.DevenirCible();
                             }
                         }
+
                         col.SeDeplacerVersItem(targetX, targetY);
                     }
                     else if (col.GetType() == typeof(Tavernier))
                     {
                         if (planete.ListeBatiments.OfType<Auberge>().Any())
                         {
-                            Tavernier tav = (Tavernier)col;
+                            Tavernier tav = (Tavernier) col;
                             Auberge aub = planete.ListeBatiments.OfType<Auberge>().FirstOrDefault();
                             if (!aub.GetPositionObjet().Contains(tav.getPosition()))
                             {
                                 tav.AcquerirCible();
-                                tav.DefinirCible(aub.GetPositionObjet().FirstOrDefault().Item1, aub.GetPositionObjet().FirstOrDefault().Item2);
+                                tav.DefinirCible(aub.GetPositionObjet().FirstOrDefault().Item1,
+                                    aub.GetPositionObjet().FirstOrDefault().Item2);
                             }
                             else
                             {
@@ -491,7 +533,7 @@ namespace TPGestionDeColonie
                     }
                     else
                     {
-                        Batisseur bat = (Batisseur)col;
+                        Batisseur bat = (Batisseur) col;
 
                         int numBat = ChoixBatiment(planete);
 
@@ -501,10 +543,13 @@ namespace TPGestionDeColonie
                         }
                         else if (planete.ListeBatiments.OfType<Entrepot>().Any()) // s'il existe un entrepôt
                         {
-                            if (planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet().Contains(bat.getPosition()))
+                            if (planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet()
+                                .Contains(bat.getPosition()))
                             {
-                                string[] dicoBatiments = {"l'Entrepôt", "la Taverne", "la Maison", "le Puits", "la Ferme"};
-                                Console.WriteLine($"Le Batisseur {bat.Nom} a rempli son stock de ressources pour construire {dicoBatiments[numBat]}");
+                                string[] dicoBatiments =
+                                    {"l'Entrepôt", "la Taverne", "la Maison", "le Puits", "la Ferme"};
+                                Console.WriteLine(
+                                    $"Le Batisseur {bat.Nom} a rempli son stock de ressources pour construire {dicoBatiments[numBat]}");
                                 bat.RemplirLeStock(numBat);
                             }
                             else
@@ -514,11 +559,14 @@ namespace TPGestionDeColonie
                         }
                         else
                         {
-                            while (numBat != 1) // Première construction : Il ne peut construire qu'un entrepot car ce batiment est essentiel
+                            while
+                                (numBat !=
+                                 1) // Première construction : Il ne peut construire qu'un entrepot car ce batiment est essentiel
                             {
                                 Console.WriteLine("/!\\ Il faut construire un entrepôt pour bien débuter");
                                 numBat = ChoixBatiment(planete);
                             }
+
                             bat.Construire(numBat);
                         }
                     }
@@ -531,7 +579,7 @@ namespace TPGestionDeColonie
                     }
                     else
                     {
-                        Paysan pay = (Paysan)col;
+                        Paysan pay = (Paysan) col;
                         bool surBle = false;
                         foreach (ObjetFixe obj in planete.ListeBlocs)
                         {
@@ -543,11 +591,13 @@ namespace TPGestionDeColonie
                                     {
                                         pay.Recolter();
                                     }
+
                                     surBle = true;
                                     break;
                                 }
                             }
                         }
+
                         if (surBle == false)
                         {
                             pay.Planter();
@@ -557,20 +607,23 @@ namespace TPGestionDeColonie
                 else if (col.GetType() == typeof(Tavernier))
                 {
 
-                    Tavernier tavernier = (Tavernier)col;
+                    Tavernier tavernier = (Tavernier) col;
                     if (planete.ListeBatiments.OfType<Auberge>().Any())
                     {
                         planete.ListeBatiments.OfType<Auberge>().FirstOrDefault().PresenceTavernier = false;
                     }
-                    
-                    if (!col.getPosition().Equals(col.RecupererCoordonneesCible())) //|| !col.getPosition().Equals(col.PlusProcheDistanceVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2))
+
+                    if (!col.getPosition()
+                            .Equals(col
+                                .RecupererCoordonneesCible())) //|| !col.getPosition().Equals(col.PlusProcheDistanceVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2))
                     {
-                        
+
 
                         Tuple<int, int> coordCible = col.RecupererCoordonneesCible();
                         Auberge aub = planete.ListeBatiments.OfType<Auberge>().FirstOrDefault();
 
-                        col.SeDeplacer(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2); //car on veut rentrer dans l'auberge ...
+                        col.SeDeplacer(col.RecupererCoordonneesCible().Item1,
+                            col.RecupererCoordonneesCible().Item2); //car on veut rentrer dans l'auberge ...
 
                     }
                     else
@@ -593,10 +646,11 @@ namespace TPGestionDeColonie
                                 }
 
                             }
-                            else if (bat.GetType() == typeof(Auberge) && bat.GetPositionObjet().Contains(col.getPosition()))
+                            else if (bat.GetType() == typeof(Auberge) &&
+                                     bat.GetPositionObjet().Contains(col.getPosition()))
                             {
                                 tavernier.PerdreCible();
-                                Auberge aub = (Auberge)bat;
+                                Auberge aub = (Auberge) bat;
                                 aub.PresenceTavernier = true;
                                 if (tavernier.Backpack[3] > 0)
                                 {
@@ -608,12 +662,17 @@ namespace TPGestionDeColonie
                     }
                 }
 
-                else if (!col.getPosition().Equals(col.PlusProcheDistanceVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2))) // si le colon a déjà une cible et n'est pas sur la case adjacente
+                else if (!col.getPosition().Equals(col.PlusProcheDistanceVersItem(col.RecupererCoordonneesCible().Item1,
+                             col.RecupererCoordonneesCible()
+                                 .Item2))) // si le colon a déjà une cible et n'est pas sur la case adjacente
                 {
-                    col.SeDeplacerVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
+                    col.SeDeplacerVersItem(col.RecupererCoordonneesCible().Item1,
+                        col.RecupererCoordonneesCible().Item2);
                 }
-                else if (col.getPosition().Equals(col.PlusProcheDistanceVersItem(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2)))
-                { // colon arrivé à la case adjacente, va pouvoir se mettre à couper/miner
+                else if (col.getPosition().Equals(col.PlusProcheDistanceVersItem(col.RecupererCoordonneesCible().Item1,
+                             col.RecupererCoordonneesCible().Item2)))
+                {
+                    // colon arrivé à la case adjacente, va pouvoir se mettre à couper/miner
                     if (col.GetType() == typeof(Bucheron))
                     {
                         col.Couper(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
@@ -623,11 +682,12 @@ namespace TPGestionDeColonie
                         col.Miner(col.RecupererCoordonneesCible().Item1, col.RecupererCoordonneesCible().Item2);
                     }
                 }
+
                 if (rng.Next(0, 5) == 0)
                 {
                     col.Soif -= 2; // Avoir soif un tour sur 4
                 }
-                 
+
                 col.VerififierEtat(); // Vérifie l'état vital du colon
             }
             // Chercher ferme pour production
@@ -637,8 +697,12 @@ namespace TPGestionDeColonie
                 int nbFermes = planete.ListeBatiments.OfType<Ferme>().Count();
                 Ferme[] arrayFerme = planete.ListeBatiments.OfType<Ferme>().ToArray();
                 // va faire appel à la méthode de production dans toutes les fermes de la map
-                for (int i = 0; i < nbFermes; i++) { arrayFerme[i].ProductionBle(); }
+                for (int i = 0; i < nbFermes; i++)
+                {
+                    arrayFerme[i].ProductionBle();
+                }
             }
+
             planete.MettreAJourMonde();
         }
 
@@ -651,49 +715,59 @@ namespace TPGestionDeColonie
             planete.AfficherMonde();
             Console.WriteLine();
             Console.WriteLine("Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"
-                    + "- 2 : Taverne (Bois : 30, Roche : 10\n- 3 : Maison (Bois : 30, Roche : 0)\n"
-                     + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)\n- 0 : Quitter");
-            Console.Write("\t |"); 
+                              + "- 2 : Taverne (Bois : 30, Roche : 10\n- 3 : Maison (Bois : 30, Roche : 0)\n"
+                              + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)\n- 0 : Quitter");
+            Console.Write("\t |");
             string ans = Console.ReadLine();
-            string[] dicoReponses = { "1", "2", "3", "4", "5", "0" };
+            string[] dicoReponses = {"1", "2", "3", "4", "5", "0"};
             while (!dicoReponses.Contains(ans))
             {
                 Console.WriteLine();
-                Console.WriteLine("Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"
-        + "- 2 : Taverne (Bois : 30, Roche : 10\n- 3 : Maison (Bois : 30, Roche : 0)\n"
-         + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)\n- 0 : Quitter");
+                Console.WriteLine(
+                    "Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"
+                    + "- 2 : Taverne (Bois : 30, Roche : 10\n- 3 : Maison (Bois : 30, Roche : 0)\n"
+                    + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)\n- 0 : Quitter");
 
-                Console.Write("\t |");                
+                Console.Write("\t |");
 
-                
+
                 ans = Console.ReadLine();
             }
+
             int numBat = int.Parse(ans);
             while (numBat > 6 || numBat < 0)
             {
                 Console.WriteLine("Veuillez indiquer un numéro valide\n// ==================================== //");
-                Console.WriteLine("Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"
-                + "- 2 : Taverne (Bois : 30, Roche : 10\n- 3 : Maison (Bois : 30, Roche : 0)\n"
-                + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)\n- 0 : Quitter");
+                Console.WriteLine(
+                    "Choisissez le numéro du batiment à construire:\n- 1 : Entrepôt (Bois : 20, Roche : 30)\n"
+                    + "- 2 : Taverne (Bois : 30, Roche : 10\n- 3 : Maison (Bois : 30, Roche : 0)\n"
+                    + "- 4 : Puits (Bois : 5, Roche : 15)\n- 5 : Ferme (Bois : 40, Roche : 0)\n- 0 : Quitter");
                 Console.Write("\t |");
                 numBat = int.Parse(Console.ReadLine());
             }
+
             Console.Clear();
             return numBat;
         }
 
 
-        public static string BackpackColon(Colon col){
-            if(col.GetType()==typeof(Tavernier)){
-                return "Bois: "+col.Backpack[0]+", Pierre: "+col.Backpack[1]+", Eau: "+col.Backpack[2]+", Seau d'eau: "+col.Backpack[2]; //Bois / Pierre / Eau / Seau d'eau
+        public static string BackpackColon(Colon col)
+        {
+            if (col.GetType() == typeof(Tavernier))
+            {
+                return "Bois: " + col.Backpack[0] + ", Pierre: " + col.Backpack[1] + ", Eau: " + col.Backpack[2] +
+                       ", Seau d'eau: " + col.Backpack[2]; //Bois / Pierre / Eau / Seau d'eau
             }
-            else if(col.GetType()==typeof(Paysan)){
+            else if (col.GetType() == typeof(Paysan))
+            {
                 return $"Blé : {col.Backpack[0]}, Eau : {col.Backpack[1]}"; // ble / eau
             }
-            else{
-                return $"Bois : {col.Backpack[0]}, Pierre : {col.Backpack[1]}, Eau : {col.Backpack[2]} "; // bois ; pierre ; eau ;
+            else
+            {
+                return
+                    $"Bois : {col.Backpack[0]}, Pierre : {col.Backpack[1]}, Eau : {col.Backpack[2]} "; // bois ; pierre ; eau ;
             }
-            
+
         }
 
         public static int MenuDepart()
@@ -742,27 +816,69 @@ namespace TPGestionDeColonie
             Console.WriteLine("\t   ██     ██████     ██     ██████  ██   ██ ██ ███████ ███████");
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("\tBienvenue sur 'The Game You Wish You Had Known Before'\n\tNotre nouveau jeu de colonie en avant première !!!");
+            Console.WriteLine(
+                "\tBienvenue sur 'The Game You Wish You Had Known Before'\n\tNotre nouveau jeu de colonie en avant première !!!");
             Console.WriteLine("\t__________________________________________________________________\n");
             Console.WriteLine("\tComment prendre part au développement interractif du jeu en tour par tour?");
-            Console.Write("\tChaque tour, vous avez la possibilité de réaliser une liste d'actions définies en écrivant "); 
-            Console.ForegroundColor = ConsoleColor.DarkRed; 
+            Console.Write(
+                "\tChaque tour, vous avez la possibilité de réaliser une liste d'actions définies en écrivant ");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("'manuel'");
             Console.ResetColor();
-            Console.WriteLine("\tOu bien vous pouvez tout simplement laissez les colons opérer, mais attention, vous devrez prendre soin de la colonie !");
-            Console.WriteLine("\tIls ne pourront vivre sans vous, il vous faudra nécessairement interragir avec eux ! Pour débuter, je vous conseille de construire un entrepot");
-            Console.WriteLine("\tIl faudra très souvent s'enquérir des conditions de colons pour ne pas les perdre, car une fois mort, le colon ne reviendra pas !");
+            Console.WriteLine(
+                "\tOu bien vous pouvez tout simplement laissez les colons opérer, mais attention, vous devrez prendre soin de la colonie !");
+            Console.WriteLine(
+                "\tIls ne pourront vivre sans vous, il vous faudra nécessairement interragir avec eux ! Pour débuter, je vous conseille de construire un entrepot");
+            Console.WriteLine(
+                "\tIl faudra très souvent s'enquérir des conditions de colons pour ne pas les perdre, car une fois mort, le colon ne reviendra pas !");
             Console.WriteLine("\t__________________________________________________________________\n");
             Console.WriteLine("\tInformations supplémentaires:\n");
-            Console.WriteLine("\tIl faut 4 tours à un bucheron ou un mineur pour casser un arbre ou respectivement un rocher");
+            Console.WriteLine(
+                "\tIl faut 4 tours à un bucheron ou un mineur pour casser un arbre ou respectivement un rocher");
             Console.WriteLine("\tTandis qu'il ne faut que 2 tours au paysan pour récolter du blé");
-            Console.WriteLine("\tSeul le tavernier peut interragir avec le puits. Ce dernier peut servir des bevrages uniquement si il se situe dans l'auberge !");
+            Console.WriteLine(
+                "\tSeul le tavernier peut interragir avec le puits. Ce dernier peut servir des bevrages uniquement si il se situe dans l'auberge !");
             Console.WriteLine("\tLa ferme produira du blé uniquement si le paysan est présent dedans");
-            Console.WriteLine("\t__________________________________________________________________\n\tAppuyez sur ENTR pour continuer...");
+            Console.WriteLine(
+                "\t__________________________________________________________________\n\tAppuyez sur ENTR pour continuer...");
             Console.WriteLine();
             Console.ReadLine();
             Console.Clear();
         }
 
+        public static void AfficherGameOver()
+        {
+            // ----------------------------
+            // Affichage de fin de partie
+            // ----------------------------
+            
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Clear(); 
+
+            string centrer = new string(' ', Console.WindowHeight / 2); //variable pour centrer le texte;
+            // Affiche le message "Game Over"
+            Console.Write(centrer);
+            Console.WriteLine(@"                                  )                    ");
+            Console.Write(centrer);
+            Console.WriteLine(@"  (                            ( /(                    ");
+            Console.Write(centrer);
+            Console.WriteLine(@"   )\ )       )     )      (    )\())   )      (   (    ");
+            Console.Write(centrer);
+            Console.WriteLine(@"  (()/(    ( /(    (      ))\  ((_)\   /((    ))\  )(   ");
+            Console.Write(centrer);
+            Console.WriteLine(@" /(_))_  )(_))   )\  ' /((_)   ((_) (_))\  /((_)(()\  ");
+            Console.Write(centrer);
+            Console.WriteLine(@"(_)) __|((_)_  _((_)) (_))    / _ \ _)((_)(_))   ((_) ");
+            Console.Write(centrer);
+            Console.WriteLine(@"  | (_ |/ _` || '  \()/ -_)  | (_) |\ V / / -_) | '_| ");
+            Console.Write(centrer);
+            Console.WriteLine(@"   \___|\__,_||_|_|_| \___|   \___/  \_/  \___| |_|   ");
+            Console.WriteLine();
+            Console.Write(centrer);
+            Console.ReadLine();
+            Environment.Exit(0);
+
+        }
     }
 }
