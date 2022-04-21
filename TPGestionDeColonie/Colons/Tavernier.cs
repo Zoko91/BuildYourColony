@@ -76,6 +76,7 @@ namespace TPGestionDeColonie.Colons
 
         public void RemplirLeSeau()
         {
+            AvoirFaimEtSoifSiAction();
             Backpack[3] += 20;
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -51,8 +52,13 @@ namespace TPGestionDeColonie
         {
             // Fonction de destruction d'un Item (4 coups sont nécessaire pour casser un bloc)
 
+            Random rng = new Random();
             Tuple<int, int> position = new Tuple<int, int>(x, y);
             Sante -= 25;
+            if (rng.Next(0, 2) == 0)
+            {
+                col.AvoirFaimEtSoifSiAction();
+            }
             if (Sante <= 0)
             {
                 Planete.grille[x,  y] = " x ";

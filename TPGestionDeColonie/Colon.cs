@@ -108,7 +108,7 @@ namespace TPGestionDeColonie
         }
         public bool AvoirSoif() // renvoie true si soif, false sinon
         {
-            if (GetType() == typeof(Tavernier))
+            if (GetType() == typeof(Tavernier)) // Le tavernier s'abreuve toute la journée il a soif moins souvent que les autres
             {
                 if (Soif <= 0)
                 {
@@ -491,6 +491,7 @@ namespace TPGestionDeColonie
                     // vide son ble, et remplit l'auberge
                     Backpack[0] -= 100;
                     aub.StockRessources[1] += 100;
+                    AvoirFaimEtSoifSiAction();
                 }
             }
             PerdreCible();

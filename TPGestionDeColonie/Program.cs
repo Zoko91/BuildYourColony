@@ -417,11 +417,16 @@ namespace TPGestionDeColonie
                                     Console.WriteLine("Il n'y a pas assez d'eau, pensez à construire un puits !");
                                 }
                             }
+                            else
+                            {
+                                col.PerdreCible();
+                            }
                             
                         }
-                        // Dans le code au dessus lui faire perdre sa cible une fois qu'il est restauré
-                        // Implémenter le fait qu'il mange parceque la il se déplace juste....
-                        // ALLO c'est ici qu'il faut travailler
+                    }
+                    else
+                    {
+                        Console.WriteLine("Pensez à construire une auberge, c'est URGENT, vos colons ont faim et soif !");
                     }
 
                 }

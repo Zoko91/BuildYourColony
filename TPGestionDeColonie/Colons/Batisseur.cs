@@ -36,6 +36,7 @@ namespace TPGestionDeColonie
                 Backpack[1] += pierre;
                 ent.StockRessources[0] -= bois;
                 ent.StockRessources[1] -= pierre;
+                AvoirFaimEtSoifSiAction();
             }
             else
             {
@@ -71,6 +72,7 @@ namespace TPGestionDeColonie
 
                         if (ent.GetPositionObjet().Contains(getPosition()))
                         {
+                            
                             ViderEntrepot(besoinBois, besoinPierre);
                             PerdreCible();
                         }
@@ -205,7 +207,8 @@ namespace TPGestionDeColonie
 
                         Backpack[0] -= 20;
                         Backpack[1] -= 30;
-
+                        
+                        AvoirFaimEtSoifSiAction();
                         AjouterBatiment(ent);
                     }
                     else
@@ -260,7 +263,8 @@ namespace TPGestionDeColonie
 
                         Backpack[0] -= 30;
                         Backpack[1] -= 10;
-
+                        
+                        AvoirFaimEtSoifSiAction();
                         AjouterBatiment(aub);
                     }
                     else
@@ -295,7 +299,7 @@ namespace TPGestionDeColonie
                     Backpack[0] -= 30;
                     Backpack[1] -= 0;
 
-
+                    AvoirFaimEtSoifSiAction();
                     AjouterBatiment(maison);
                 }
                 else
@@ -326,6 +330,7 @@ namespace TPGestionDeColonie
                     Backpack[0] -= 5;
                     Backpack[1] -= 15;
                 
+                    AvoirFaimEtSoifSiAction();
                     AjouterBatiment(puits);
                 }
                 else{
@@ -369,6 +374,7 @@ namespace TPGestionDeColonie
                     Backpack[0] -= 40;
                     Backpack[1] -= 0;
                     
+                    AvoirFaimEtSoifSiAction();
                     AjouterBatiment(ferme);
                     }
                     else{

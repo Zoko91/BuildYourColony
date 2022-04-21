@@ -37,8 +37,6 @@ namespace TPGestionDeColonie
                     }
                 }
             }
-
-            
         }
 
         public override void Planter()
@@ -49,6 +47,7 @@ namespace TPGestionDeColonie
                 List<Tuple<int, int>> listePositionPaysan = new List<Tuple<int, int>>();
                 listePositionPaysan.Add(positionPaysan);
                 Ble nouveauBle = new Ble(listePositionPaysan, Planete);
+                AvoirFaimEtSoifSiAction();
                 Planete.ListeBlocs.Add(nouveauBle);
                 Backpack[1] -= 5;
 
