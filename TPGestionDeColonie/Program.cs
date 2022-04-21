@@ -356,9 +356,12 @@ namespace TPGestionDeColonie
                 {
                     if (col.ATIlCible())
                     {
-                        if (planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(col.RecupererCoordonneesCible())).Any())
+                        foreach (ObjetFixe obj in planete.ListeBlocs)
                         {
-                            planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(col.RecupererCoordonneesCible())).NePlusEtreCible();
+                            if (obj.GetPositionObjet().Contains(col.RecupererCoordonneesCible()))
+                            {
+                                obj.NePlusEtreCible();
+                            }
                         }
                     }
 
@@ -376,9 +379,12 @@ namespace TPGestionDeColonie
                 {
                     if (col.ATIlCible())
                     {
-                        if(planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(col.RecupererCoordonneesCible())).Any())
+                        foreach (ObjetFixe obj in planete.ListeBlocs)
                         {
-                            planete.ListeBlocs.Find(z => z.GetPositionObjet().Contains(col.RecupererCoordonneesCible())).NePlusEtreCible();
+                            if (obj.GetPositionObjet().Contains(col.RecupererCoordonneesCible()))
+                            {
+                                obj.NePlusEtreCible();
+                            }
                         }
                     }
                     if (planete.ListeBatiments.OfType<Auberge>().Any())
@@ -500,7 +506,7 @@ namespace TPGestionDeColonie
                         {
                             if (planete.ListeBatiments.OfType<Entrepot>().FirstOrDefault().GetPositionObjet().Contains(bat.getPosition()))
                             {
-                                string[] dicoBatiments = ["l'Entrepôt", "la Taverne", "la Maison", "le Puits", "la Ferme"]
+                                string[] dicoBatiments = {"l'Entrepôt", "la Taverne", "la Maison", "le Puits", "la Ferme"};
                                 Console.WriteLine($"Le Batisseur {bat.Nom} a rempli son stock de ressources pour construire {dicoBatiments[numBat]}");
                                 bat.RemplirLeStock(numBat);
                             }
